@@ -1,0 +1,19 @@
+{
+  "name": "lucas-capability-os-pages",
+  "private": true,
+  "version": "1.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "astro check && astro build"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "astro": "7.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.6",
+    "typescript": "5.9.2"
+  }
+}
