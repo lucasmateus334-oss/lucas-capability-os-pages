@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "product": "Lucas Capability OS",
   "mode": "static_fallback",
   "source_scope": "sanitized_public_snapshot",
+  "revision": "13b2bb0fedd6752f78999d34fbcc433a43f98fca",
   "operator": {
-    "level": 12,
     "consolidation_level": 12,
     "label": "Level 12"
   },
@@ -15,20 +15,81 @@
     "current_tier": "L1"
   },
   "tiers": [
-    {"id": "L0", "label": "Baseline", "state": "sealed"},
-    {"id": "L1", "label": "Integrated candidates", "state": "active_candidate"},
-    {"id": "L2", "label": "Boundary evaluation", "state": "pending"},
-    {"id": "L3", "label": "Scale", "state": "locked"}
+    {
+      "id": "L0",
+      "label": "Baseline",
+      "state": "sealed"
+    },
+    {
+      "id": "L1",
+      "label": "Integrated candidates",
+      "state": "active_candidate"
+    },
+    {
+      "id": "L2",
+      "label": "Boundary evaluation",
+      "state": "pending"
+    },
+    {
+      "id": "L3",
+      "label": "Scale",
+      "state": "locked"
+    }
   ],
   "engines": [
-    {"id": "assessment", "name": "Assessment", "maturity": "materialized_evidence_backed_eval_required", "public_ref": "CAP-ASSESSMENT"},
-    {"id": "opportunity", "name": "Opportunity", "maturity": "materialized_evidence_backed_eval_required", "public_ref": "CAP-OPPORTUNITY"},
-    {"id": "visual_production", "name": "Visual Production", "maturity": "materialized_evidence_backed_eval_required", "public_ref": "CAP-VISUAL"},
-    {"id": "research", "name": "Research", "maturity": "scaffold_unverified", "public_ref": "CAP-RESEARCH"},
-    {"id": "product_strategy", "name": "Product Strategy", "maturity": "scaffold_unverified", "public_ref": "CAP-PRODUCT"},
-    {"id": "ui_prototype", "name": "UI & Prototype", "maturity": "scaffold_unverified", "public_ref": "CAP-UI"},
-    {"id": "presentation", "name": "Presentation", "maturity": "scaffold_unverified", "public_ref": "CAP-PRESENTATION"},
-    {"id": "critic_red_team", "name": "Critic / Red-Team", "maturity": "scaffold_unverified", "public_ref": "CAP-CRITIC"},
-    {"id": "external_ai_orchestration", "name": "External AI", "maturity": "scaffold_unverified", "public_ref": "CAP-EXTERNAL-AI"}
+    {
+      "id": "assessment",
+      "name": "Assessment",
+      "maturity": "materialized_evidence_backed_eval_required",
+      "public_ref": "CAP-ASSESSMENT"
+    },
+    {
+      "id": "critic_red_team",
+      "name": "Critic & Red-Team",
+      "maturity": "scaffold_unverified",
+      "public_ref": "CAP-CRITIC"
+    },
+    {
+      "id": "external_ai_orchestration",
+      "name": "External AI Orchestration",
+      "maturity": "scaffold_unverified",
+      "public_ref": "CAP-EXTERNAL-AI"
+    },
+    {
+      "id": "opportunity",
+      "name": "Opportunity",
+      "maturity": "materialized_evidence_backed_eval_required",
+      "public_ref": "CAP-OPPORTUNITY"
+    },
+    {
+      "id": "presentation",
+      "name": "Presentation",
+      "maturity": "scaffold_unverified",
+      "public_ref": "CAP-PRESENTATION"
+    },
+    {
+      "id": "product_strategy",
+      "name": "Product Strategy",
+      "maturity": "scaffold_unverified",
+      "public_ref": "CAP-PRODUCT"
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "maturity": "scaffold_unverified",
+      "public_ref": "CAP-RESEARCH"
+    },
+    {
+      "id": "ui_prototype",
+      "name": "UI & Prototype",
+      "maturity": "scaffold_unverified",
+      "public_ref": "CAP-UI"
+    },
+    {
+      "id": "visual_production",
+      "name": "Visual Production",
+      "maturity": "materialized_evidence_backed_eval_required",
+      "public_ref": "CAP-VISUAL"
+    }
   ]
 }
