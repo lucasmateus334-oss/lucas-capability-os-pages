@@ -64,7 +64,8 @@ jobs:
           grep -q 'Capability registry' dist/index.html
           grep -q 'CAP-ASSESSMENT' dist/index.html
           grep -q 'data-capability-registry' dist/index.html
-          grep -q 'Capability Operating System' dist/index.html
+          grep -q 'Public system surface' dist/index.html
+          grep -q 'Operational by evidence' dist/index.html
           echo 'CAPABILITY_REGISTRY_BUILD_PASS'
 
   deploy:
