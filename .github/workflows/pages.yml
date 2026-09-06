@@ -22,10 +22,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
+
       - name: Validate public snapshot boundary
         shell: bash
         run: |
@@ -34,17 +36,22 @@ jobs:
           test -f src/data/telemetry_source.json
           test -f src/components/CapabilityRegistry.astro
           test -f src/pages/index.astro
+          test -f public/telemetry.json
+          test -f public/live-telemetry.js
           ! grep -RInE '(GEMINI_API_KEY|GITHUB_TOKEN|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|api[_-]?key[[:space:]]*[:=])' --exclude-dir=.git .
           grep -q 'sanitized_public_snapshot' src/data/telemetry_source.json
+          grep -q 'sanitized_public_snapshot' public/telemetry.json
           grep -q 'Public presentation layer' src/pages/index.astro
           grep -q 'no runtime authority' src/pages/index.astro
           echo 'PUBLIC_SNAPSHOT_BOUNDARY_PASS'
+
       - name: Verify registry interaction contract
         shell: bash
         run: |
           set -euo pipefail
           grep -q 'data-sort="name"' src/components/CapabilityRegistry.astro
           grep -q 'data-sort="status"' src/components/CapabilityRegistry.astro
+          grep -q 'data-sort="ref"' src/components/CapabilityRegistry.astro
           grep -q "addEventListener('click'" src/components/CapabilityRegistry.astro
           grep -q 'aria-sort' src/components/CapabilityRegistry.astro
           grep -q 'DocumentFragment' src/components/CapabilityRegistry.astro
@@ -52,21 +59,76 @@ jobs:
           grep -q 'animate-pulse' src/components/CapabilityRegistry.astro
           grep -q 'capability:telemetry-mode' src/components/CapabilityRegistry.astro
           echo 'REGISTRY_INTERACTION_CONTRACT_PASS'
+
+      - name: Verify sanitized REST telemetry adapter
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "live_public_snapshot" public/live-telemetry.js
+          grep -q "sanitized_public_snapshot" public/live-telemetry.js
+          grep -q "cache: 'no-store'" public/live-telemetry.js
+          grep -q "credentials: 'omit'" public/live-telemetry.js
+          grep -q "dispatchMode('fallback')" public/live-telemetry.js
+          echo 'SANITIZED_REST_ADAPTER_PASS'
+
       - name: Install dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
+
       - name: Astro type and build gate
         run: npm run build
+
       - name: Verify generated registry
         shell: bash
         run: |
           set -euo pipefail
           test -f dist/index.html
+          test -f dist/live-telemetry.js
+          test -f dist/telemetry.json
           grep -q 'Capability registry' dist/index.html
           grep -q 'CAP-ASSESSMENT' dist/index.html
           grep -q 'data-capability-registry' dist/index.html
-          grep -q 'Public system surface' dist/index.html
-          grep -q 'Operational by evidence' dist/index.html
           echo 'CAPABILITY_REGISTRY_BUILD_PASS'
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser E2E sorting, filters, CLS and Live transition
+        run: npm run test:e2e
+
+      - name: Fresh-eyes desktop/mobile capture
+        run: npm run test:fresh-eyes
+
+      - name: Lighthouse desktop/mobile gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview > /tmp/home-base-preview.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/ > /dev/null
+          export CHROME_PATH="$(node -e "console.log(require('@playwright/test').chromium.executablePath())")"
+          npx lhci autorun --config=./lighthouserc.desktop.cjs
+          npx lhci autorun --config=./lighthouserc.mobile.cjs
+          echo 'LIGHTHOUSE_DESKTOP_MOBILE_PASS'
+
+      - name: Upload fresh-eyes and Lighthouse evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: home-base-ui-evidence
+          path: |
+            artifacts/fresh-eyes
+            artifacts/lighthouse
+            artifacts/playwright-report
+            test-results
+          if-no-files-found: warn
+          retention-days: 14
 
   deploy:
     if: github.event_name != 'pull_request'

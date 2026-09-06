@@ -1,10 +1,13 @@
 {
   "name": "lucas-capability-os-pages",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "scripts": {
-    "build": "astro check && astro build"
+    "build": "astro check && astro build",
+    "preview": "astro preview --host 127.0.0.1 --port 4321",
+    "test:e2e": "playwright test tests/registry.spec.ts",
+    "test:fresh-eyes": "playwright test tests/fresh-eyes.spec.ts"
   },
   "engines": {
     "node": ">=22"
@@ -14,6 +17,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.6",
+    "@lhci/cli": "0.15.1",
+    "@playwright/test": "1.55.0",
     "typescript": "5.9.2"
   }
 }
