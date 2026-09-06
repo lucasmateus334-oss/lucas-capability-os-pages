@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
-const capture = async (page, name: string): Promise<void> => {
+const capture = async (page: Page, name: string): Promise<void> => {
   await mkdir('artifacts/fresh-eyes', { recursive: true });
   await page.screenshot({ path: `artifacts/fresh-eyes/${name}.png`, fullPage: true });
 };
