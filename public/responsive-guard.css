@@ -1,14 +1,20 @@
 @media (max-width: 640px) {
   .hero h1 {
+    width: 100%;
     max-width: 100%;
-    font-size: clamp(52px, 16.5vw, 72px);
+    font-size: clamp(48px, 15vw, 64px);
     letter-spacing: -0.075em;
   }
 
   .masthead > *,
   main,
   .hero,
-  .registry-section {
+  .hero-bottom,
+  .system-section,
+  .evidence-section,
+  .tier-section,
+  .registry-section,
+  [data-capability-registry] {
     min-width: 0;
   }
 }
