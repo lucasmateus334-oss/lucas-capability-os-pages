@@ -60,6 +60,17 @@ jobs:
           grep -q 'capability:telemetry-mode' src/components/CapabilityRegistry.astro
           echo 'REGISTRY_INTERACTION_CONTRACT_PASS'
 
+      - name: Verify sanitized REST telemetry adapter
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "live_public_snapshot" public/live-telemetry.js
+          grep -q "sanitized_public_snapshot" public/live-telemetry.js
+          grep -q "cache: 'no-store'" public/live-telemetry.js
+          grep -q "credentials: 'omit'" public/live-telemetry.js
+          grep -q "dispatchMode('fallback')" public/live-telemetry.js
+          echo 'SANITIZED_REST_ADAPTER_PASS'
+
       - name: Install dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
 
