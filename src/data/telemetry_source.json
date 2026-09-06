@@ -4,6 +4,7 @@
   "mode": "static_fallback",
   "source_scope": "sanitized_public_snapshot",
   "operator": {
+    "level": 12,
     "consolidation_level": 12,
     "label": "Level 12"
   },
