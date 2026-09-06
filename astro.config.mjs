@@ -9,9 +9,17 @@ export default defineConfig({
   vite: {
     plugins: [
       {
-        name: 'capability-live-telemetry-client',
+        name: 'capability-public-client-assets',
         transformIndexHtml() {
           return [
+            {
+              tag: 'link',
+              attrs: {
+                rel: 'stylesheet',
+                href: `${base}/responsive-guard.css`,
+              },
+              injectTo: 'head',
+            },
             {
               tag: 'script',
               attrs: {
