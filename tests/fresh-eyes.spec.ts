@@ -1,9 +1,14 @@
 import { expect, test, type Page } from '@playwright/test';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 
 const capture = async (page: Page, name: string): Promise<void> => {
   await mkdir('artifacts/fresh-eyes', { recursive: true });
   await page.screenshot({ path: `artifacts/fresh-eyes/${name}.png`, fullPage: true });
+};
+
+const persistGeometry = async (name: string, geometry: unknown): Promise<void> => {
+  await mkdir('artifacts/fresh-eyes', { recursive: true });
+  await writeFile(`artifacts/fresh-eyes/${name}-geometry.json`, `${JSON.stringify(geometry, null, 2)}\n`, 'utf8');
 };
 
 const documentGeometry = async (page: Page) =>
@@ -21,7 +26,7 @@ const documentGeometry = async (page: Page) =>
           width: Math.round(rect.width * 100) / 100,
         };
       })
-      .filter((item) => item.right > viewport + 1 || item.left < -1)
+      .filter((item) => item.right > viewport || item.left < 0)
       .slice(0, 12);
 
     return {
@@ -37,7 +42,8 @@ test('desktop fresh-eyes surface remains contained', async ({ page }) => {
   await page.goto('./');
   await expect(page.locator('[data-capability-registry]')).toBeVisible();
   const geometry = await documentGeometry(page);
-  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBeLessThanOrEqual(1);
+  await persistGeometry('home-base-desktop', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
   await capture(page, 'home-base-desktop');
 });
 
@@ -46,7 +52,8 @@ test('mobile fresh-eyes surface contains wide registry inside its scroller', asy
   await page.goto('./');
   await expect(page.locator('[data-capability-registry]')).toBeVisible();
   const geometry = await documentGeometry(page);
-  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBeLessThanOrEqual(1);
+  await persistGeometry('home-base-mobile', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
   await expect(page.locator('.table-wrap')).toHaveCSS('overflow-x', 'auto');
   await capture(page, 'home-base-mobile');
 });
