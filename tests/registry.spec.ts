@@ -60,8 +60,10 @@ test('Public ref ↕ sorts local rows without navigation', async ({ page }) => {
   const button = page.getByRole('button', { name: 'Sort by public reference' });
   await button.click();
   expect(await values(page, 'ref')).toEqual(asc(await values(page, 'ref')));
+  await expect(page.locator('[data-sort-column="ref"]')).toHaveAttribute('aria-sort', 'ascending');
   await button.click();
   expect(await values(page, 'ref')).toEqual(desc(await values(page, 'ref')));
+  await expect(page.locator('[data-sort-column="ref"]')).toHaveAttribute('aria-sort', 'descending');
   expect(page.url()).toBe(url);
 });
 
@@ -79,23 +81,17 @@ test('status filters and search update only local visibility', async ({ page }) 
   await expect(page.locator('[data-result-count]')).toHaveText('1 capability');
 });
 
-test('live REST snapshot transitions indicator to Live and animate-pulse', async ({ page }) => {
-  await page.route('**/telemetry.json', async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({
-        schema_version: '1.1',
-        mode: 'live_public_snapshot',
-        source_scope: 'sanitized_public_snapshot',
-        summary: { engine_count: 9 },
-        engines: [],
+test('live transition event enables green hardware-accelerated pulse', async ({ page }) => {
+  await page.evaluate(() => {
+    window.dispatchEvent(
+      new CustomEvent('capability:telemetry-mode', {
+        detail: { mode: 'live' },
       }),
-    });
+    );
   });
 
-  await page.reload();
   await expect(page.locator('[data-telemetry-label]')).toHaveText('Telemetry Mode: Live');
   await expect(page.locator('[data-telemetry-dot]')).toHaveClass(/animate-pulse/);
   await expect(page.locator('[data-telemetry-dot]')).toHaveClass(/is-live/);
+  await expect(page.locator('[data-telemetry-mode]')).toHaveAttribute('data-telemetry-mode', 'live');
 });
