@@ -1,6 +1,14 @@
 import { defineConfig } from 'astro/config';
 
 const base = '/lucas-capability-os-pages';
+const responsiveGuard = `
+@media (max-width: 640px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .hero > * { min-width: 0; max-width: 100%; }
+  .hero h1 { width: 100%; font-size: clamp(48px, 15vw, 64px); letter-spacing: -0.075em; }
+  .masthead > *, main, .hero-bottom, .system-section, .evidence-section, .tier-section, .registry-section, [data-capability-registry] { min-width: 0; }
+}
+`;
 
 export default defineConfig({
   output: 'static',
@@ -13,11 +21,8 @@ export default defineConfig({
         transformIndexHtml() {
           return [
             {
-              tag: 'link',
-              attrs: {
-                rel: 'stylesheet',
-                href: `${base}/responsive-guard.css`,
-              },
+              tag: 'style',
+              children: responsiveGuard,
               injectTo: 'head',
             },
             {
