@@ -39,6 +39,19 @@ jobs:
           grep -q 'Public presentation layer' src/pages/index.astro
           grep -q 'no runtime authority' src/pages/index.astro
           echo 'PUBLIC_SNAPSHOT_BOUNDARY_PASS'
+      - name: Verify registry interaction contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'data-sort="name"' src/components/CapabilityRegistry.astro
+          grep -q 'data-sort="status"' src/components/CapabilityRegistry.astro
+          grep -q "addEventListener('click'" src/components/CapabilityRegistry.astro
+          grep -q 'aria-sort' src/components/CapabilityRegistry.astro
+          grep -q 'DocumentFragment' src/components/CapabilityRegistry.astro
+          grep -q 'table-layout:fixed' src/components/CapabilityRegistry.astro
+          grep -q 'animate-pulse' src/components/CapabilityRegistry.astro
+          grep -q 'capability:telemetry-mode' src/components/CapabilityRegistry.astro
+          echo 'REGISTRY_INTERACTION_CONTRACT_PASS'
       - name: Install dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Astro type and build gate
@@ -51,6 +64,7 @@ jobs:
           grep -q 'Capability registry' dist/index.html
           grep -q 'CAP-ASSESSMENT' dist/index.html
           grep -q 'data-capability-registry' dist/index.html
+          grep -q 'Capability Operating System' dist/index.html
           echo 'CAPABILITY_REGISTRY_BUILD_PASS'
 
   deploy:
