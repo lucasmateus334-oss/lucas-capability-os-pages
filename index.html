@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="color-scheme" content="light" />
+  <title>Lucas Capability OS — Home Base</title>
+  <style>
+    :root{--ink:#111713;--paper:#f2efe8;--paper-2:#e7e1d5;--rail:#101814;--rail-2:#18231e;--green:#197a57;--amber:#a96f19;--line:#cec7bb;--muted:#676b65;--white:#fff}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--paper)}
+    body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;grid-template-columns:272px minmax(0,1fr)}
+    a{color:inherit}
+    .rail{position:sticky;top:0;height:100vh;padding:24px 20px;background:var(--rail);color:#e8efeb;display:flex;flex-direction:column}
+    .operator{display:flex;align-items:center;gap:12px;padding-bottom:24px;border-bottom:1px solid #2d3933}
+    .avatar{width:46px;height:46px;border-radius:999px;overflow:hidden;border:1px solid #42514a;background:#26322d;flex:none;transition:border-color .3s ease,box-shadow .3s ease}
+    .avatar:hover{border-color:#3ba878;box-shadow:0 0 0 3px rgba(59,168,120,.12)}
+    .avatar img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12);transition:filter .5s ease,transform .5s ease;transform:translateZ(0)}
+    .avatar:hover img{filter:grayscale(0) contrast(1.12);transform:scale(1.05) translateZ(0)}
+    .operator strong{display:block;font-size:13px}.operator small{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#90a099}
+    .rail-label{margin:28px 12px 8px;font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:#708078}
+    .nav{display:grid;gap:6px}.nav a{padding:10px 12px;border-radius:8px;text-decoration:none;color:#aab8b1;font-size:13px}.nav a:hover,.nav a[aria-current="page"]{background:var(--rail-2);color:#fff}
+    .rail-meta{margin-top:auto;border-top:1px solid #2d3933;padding-top:16px}.rail-meta div{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#9cabA4}.rail-meta b{color:#e7eee9}
+    main{width:100%;max-width:1540px;padding:28px 36px 54px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+    .crumb{font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:#60655f}
+    .mode{display:flex;align-items:center;gap:8px;font-size:11px;color:#4c514d}.mode i{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+    .hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:64px;padding:58px 0 46px}
+    .eyebrow{margin-bottom:14px;font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:#0f704f}
+    h1{margin:0;max-width:920px;font:500 clamp(42px,5vw,76px)/1.02 Georgia,"Times New Roman",serif;letter-spacing:-.04em}
+    .hero-copy{align-self:end;color:#333a35;font-size:14px;line-height:1.8}.hero-copy p{margin:0 0 22px}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{height:44px;padding:0 17px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;text-decoration:none;font-size:12px;font-weight:700;transition:transform .2s ease,background .2s ease,border-color .2s ease}.btn:hover{transform:translateY(-1px)}.primary{background:var(--ink);color:#fff;border:1px solid var(--ink)}.secondary{background:transparent;color:var(--ink);border:1px solid #bbb4a7}.secondary:hover{background:rgba(255,255,255,.45)}
+    .status-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .status{padding:20px 22px;border-right:1px solid var(--line)}.status:first-child{padding-left:0}.status:last-child{border-right:0}.status span{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.11em;color:#72766f}.status strong{display:block;margin-top:8px;font-size:21px}.status code{display:block;margin-top:7px;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#7d807a}
+    .layout{display:grid;grid-template-columns:1.35fr .9fr;gap:18px;margin-top:28px}.panel{padding:22px;border:1px solid #d5cec2;border-radius:16px;background:rgba(255,255,255,.32)}.panel h2{margin:0;font:500 26px Georgia,serif;letter-spacing:-.02em}.sub{margin:5px 0 20px;font-size:12px;color:#6f736d}
+    .now{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fact{padding:14px 0;border-top:1px solid #d9d2c6}.fact span{display:block;font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:#797d76}.fact strong{display:block;margin-top:8px;font-size:13px;line-height:1.45}
+    .engines{display:grid}.engine{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #ded7cb}.engine:first-child{border-top:0}.node{width:8px;height:8px;border-radius:50%;background:#9fa29d;box-shadow:0 0 0 4px #e9e3d8}.engine.active .node{background:var(--green)}.engine b{font-size:12px}.engine em{font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em;color:#777b74;font-style:normal}.engine.active em{color:#0d704d}
+    .governance{margin-top:18px;padding:14px 16px;border-radius:12px;background:#16211c;color:#dde7e1;font-size:11px;line-height:1.65}.governance b{color:#66d9a3}
+    .lower{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}.big{margin:13px 0 8px;font:600 40px/1 Georgia,serif}.rows{display:grid;gap:10px;margin-top:18px}.row{display:flex;justify-content:space-between;gap:14px;padding-top:10px;border-top:1px solid #ddd6ca;font-size:11px}.row b{font-weight:650}.tierbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px}.tier{height:72px;border-top:2px solid #acaea9;padding-top:9px;font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#747871}.tier.done{border-color:#17201c;color:#17201c}.tier.current{border-color:var(--green);color:#0f704f}
+    .footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em;color:#747871}
+    @media(max-width:1040px){body{grid-template-columns:78px minmax(0,1fr)}.rail{padding:18px 12px}.operator>div:last-child,.rail-label,.nav span,.rail-meta{display:none}.nav a{text-align:center;font-size:0}.nav a::before{content:"•";font-size:18px}.hero,.layout{grid-template-columns:1fr}.lower{grid-template-columns:1fr 1fr}.status-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:680px){body{display:block}.rail{position:static;height:auto;min-height:0;padding:14px 18px}.nav,.rail-meta{display:none}.operator{padding:0;border:0}.operator>div:last-child{display:block}.main,main{padding:20px}.topbar{align-items:flex-start}.hero{padding:36px 0}.status-grid,.now,.lower{grid-template-columns:1fr}.status{padding-left:0;border-right:0;border-bottom:1px solid var(--line)}.status:last-child{border-bottom:0}.tierbar{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <aside class="rail" aria-label="Navegação principal">
+    <div class="operator">
+      <div class="avatar"><img src="https://avatars.githubusercontent.com/u/322756565?v=4" alt="Avatar do operador" loading="lazy" decoding="async" /></div>
+      <div><strong>Lucas</strong><small>Operator · Capability OS</small></div>
+    </div>
+    <div class="rail-label">Workspace</div>
+    <nav class="nav">
+      <a href="#home" aria-current="page"><span>Home Base</span></a>
+      <a href="#capabilities"><span>Capabilities</span></a>
+      <a href="#evidence"><span>Evidence</span></a>
+      <a href="#progress"><span>Progress</span></a>
+      <a href="#boundary"><span>System boundary</span></a>
+    </nav>
+    <div class="rail-meta">
+      <div><span>Surface</span><b>Public snapshot</b></div>
+      <div><span>Tier</span><b>L1</b></div>
+      <div><span>Source</span><b>GitHub</b></div>
+    </div>
+  </aside>
+
+  <main id="home">
+    <div class="topbar">
+      <div class="crumb">Lucas Capability OS / Home Base</div>
+      <div class="mode"><i></i><span>Sanitized public snapshot</span></div>
+    </div>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Personal capability operating system</div>
+        <h1>Build, verify and preserve what can actually be reproduced.</h1>
+      </div>
+      <div class="hero-copy">
+        <p>This surface exposes a bounded public view of capability state. Private source, execution receipts, credentials and internal evidence remain outside this repository.</p>
+        <div class="actions">
+          <a class="btn primary" href="#capabilities">Inspect capability state</a>
+          <a class="btn secondary" href="#boundary">View system boundary</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="status-grid" aria-label="Status resumido">
+      <div class="status"><span>Materialized</span><strong>3 capabilities</strong><code>evidence-backed · eval required</code></div>
+      <div class="status"><span>Scaffold</span><strong>6 unverified</strong><code>no synthetic promotion</code></div>
+      <div class="status"><span>Verification depth</span><strong>L1 active</strong><code>promotion remains gated</code></div>
+      <div class="status"><span>Publication</span><strong>GitHub only</strong><code>public snapshot · sanitized</code></div>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Operating state</h2>
+        <p class="sub">Operational context rather than decorative scoring.</p>
+        <div class="now">
+          <div class="fact"><span>Source of truth</span><strong>Private canonical repository</strong></div>
+          <div class="fact"><span>Public surface</span><strong>Read-only sanitized snapshot</strong></div>
+          <div class="fact"><span>Promotion rule</span><strong>Green ≠ promotable</strong></div>
+          <div class="fact"><span>Execution boundary</span><strong>Planning, authorization and execution remain separated</strong></div>
+        </div>
+        <div class="governance"><b>Governance:</b> evidence precedes claims; implementation does not self-approve; public publication cannot expand runtime authority.</div>
+      </article>
+
+      <article class="panel" id="capabilities">
+        <h2>Capability registry</h2>
+        <p class="sub">High-level status only. Internal contracts and receipts stay private.</p>
+        <div class="engines">
+          <div class="engine active"><span class="node"></span><b>Assessment</b><em>materialized</em></div>
+          <div class="engine active"><span class="node"></span><b>Opportunity</b><em>materialized</em></div>
+          <div class="engine active"><span class="node"></span><b>Visual Production</b><em>materialized</em></div>
+          <div class="engine"><span class="node"></span><b>Research</b><em>scaffold</em></div>
+          <div class="engine"><span class="node"></span><b>Product Strategy</b><em>scaffold</em></div>
+          <div class="engine"><span class="node"></span><b>UI &amp; Prototype</b><em>scaffold</em></div>
+          <div class="engine"><span class="node"></span><b>Presentation</b><em>scaffold</em></div>
+          <div class="engine"><span class="node"></span><b>Critic / Red-Team</b><em>shared candidate</em></div>
+          <div class="engine"><span class="node"></span><b>External AI</b><em>scaffold</em></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="lower">
+      <article class="panel" id="evidence">
+        <h2>Evidence boundary</h2><p class="sub">Public claims remain intentionally coarse.</p>
+        <div class="big">Claim → proof</div>
+        <div class="rows"><div class="row"><b>Execution receipts</b><span>private</span></div><div class="row"><b>Review packets</b><span>private</span></div><div class="row"><b>Public status</b><span>sanitized</span></div></div>
+      </article>
+      <article class="panel" id="boundary">
+        <h2>System boundary</h2><p class="sub">No private repository content is mirrored here.</p>
+        <div class="rows"><div class="row"><b>GitHub Pages</b><span>presentation</span></div><div class="row"><b>Canonical source</b><span>private</span></div><div class="row"><b>Runtime credentials</b><span>excluded</span></div></div>
+      </article>
+      <article class="panel" id="progress">
+        <h2>Progression</h2><p class="sub">Verification depth, not XP.</p>
+        <div class="tierbar"><div class="tier done">L0<br>sealed</div><div class="tier current">L1<br>active</div><div class="tier">L2<br>evals</div><div class="tier">L3<br>promoted</div></div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span>Lucas Capability OS</span><span>Public presentation layer · no runtime authority</span>
+    </footer>
+    <p style="margin:18px 0 0;color:#6f736d;font-size:11px;line-height:1.6">Nota de fluxo — Esta publicação apresenta somente uma visão pública sanitizada do Home Base, para disponibilizar a interface via GitHub Pages sem expor o repositório privado. O fluxo permanece GitHub-only: fonte canônica privada → snapshot público delimitado → GitHub Pages.</p>
+  </main>
+</body>
+</html>
