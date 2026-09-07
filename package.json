@@ -1,12 +1,12 @@
 {
   "name": "lucas-capability-os-pages",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.3.0",
   "type": "module",
   "scripts": {
     "build": "astro check && astro build",
     "preview": "astro preview --host 127.0.0.1 --port 4321",
-    "test:e2e": "playwright test tests/registry.spec.ts",
+    "test:e2e": "playwright test tests/registry.spec.ts tests/i18n.spec.ts",
     "test:fresh-eyes": "playwright test tests/fresh-eyes.spec.ts"
   },
   "engines": {
