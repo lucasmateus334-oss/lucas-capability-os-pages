@@ -33,7 +33,7 @@ test('about story exposes a clickable evidence trail in both languages', async (
   await expect(page.getByRole('link', { name: /Protocol spec/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /JSON Schema/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /Example receipt/ })).toBeVisible();
-  await expect(page.getByText('EXPERIMENTAL', { exact: true })).toBeVisible();
+  await expect(page.locator('.status-experimental')).toHaveText('EXPERIMENTAL');
 
   await page.getByRole('button', { name: 'Português do Brasil' }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
