@@ -1,0 +1,37 @@
+---
+import OperatorProfile from '../components/OperatorProfile.astro';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="About Lucas Mateus — a non-software-engineer building and learning with AI through Capability Lab." />
+  <title>About Lucas Mateus — Capability Lab</title>
+</head>
+<body>
+  <header class="about-bar">
+    <a href="./">← Capability OS</a>
+    <div class="language-switcher" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">🇺🇸 EN</button>
+      <button type="button" data-lang="pt-BR" aria-pressed="false">🇧🇷 PT-BR</button>
+    </div>
+  </header>
+  <main><OperatorProfile /></main>
+  <script is:inline>
+    const applyLanguage = (lang) => {
+      const selected = lang === 'pt-BR' ? 'pt-BR' : 'en';
+      document.documentElement.lang = selected;
+      document.querySelectorAll('[data-lang]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.lang === selected)));
+      try { localStorage.setItem('capability-os-language', selected); } catch {}
+    };
+    const preferred = (() => { try { return localStorage.getItem('capability-os-language'); } catch { return null; } })();
+    applyLanguage(preferred || (navigator.language?.toLowerCase().startsWith('pt') ? 'pt-BR' : 'en'));
+    document.querySelectorAll('[data-lang]').forEach((button) => button.addEventListener('click', () => applyLanguage(button.dataset.lang)));
+  </script>
+</body>
+</html>
+<style is:global>
+:root{--ink:#11110f;--paper:#f4f4f0;--line:#c8c8c1}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}.about-bar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;min-height:64px;padding:0 28px;border-bottom:1px solid #111;background:rgba(244,244,240,.94);backdrop-filter:blur(10px)}.about-bar>a{font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;text-decoration:none}.language-switcher{display:flex;border:1px solid #c9c9c2;border-radius:999px;padding:2px;background:#fff}.language-switcher button{border:0;background:transparent;border-radius:999px;padding:6px 9px;font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace;cursor:pointer;color:#666}.language-switcher button[aria-pressed="true"]{background:#111;color:#fff}main{width:min(100%,1600px);margin:0 auto;padding:0 28px 42px}@media(max-width:640px){.about-bar{padding:0 18px}main{padding:0 18px 32px}}
+</style>
