@@ -1,288 +1,76 @@
 ---
 import telemetry from '../data/telemetry_source.json';
-
 type Maturity = 'materialized_evidence_backed_eval_required' | 'scaffold_unverified';
-
-type Engine = {
-  id: string;
-  name: string;
-  maturity: Maturity;
-  public_ref: string;
-};
-
+type Engine = { id: string; name: string; maturity: Maturity; public_ref: string; };
 const engines = telemetry.engines as Engine[];
-
-const labelFor = (maturity: Maturity): string =>
-  maturity === 'materialized_evidence_backed_eval_required'
-    ? 'Materialized · eval required'
-    : 'Scaffold · unverified';
-
-const shortStateFor = (maturity: Maturity): 'materialized' | 'scaffold' =>
-  maturity === 'materialized_evidence_backed_eval_required' ? 'materialized' : 'scaffold';
+const labelFor = (maturity: Maturity): string => maturity === 'materialized_evidence_backed_eval_required' ? 'Materialized · eval required' : 'Scaffold · unverified';
+const shortStateFor = (maturity: Maturity): 'materialized' | 'scaffold' => maturity === 'materialized_evidence_backed_eval_required' ? 'materialized' : 'scaffold';
 ---
 
 <section class="registry" aria-labelledby="capability-registry-title" data-capability-registry>
   <header class="registry-head">
-    <div>
-      <span class="section-index">03 / REGISTRY</span>
-      <h2 id="capability-registry-title">Capability registry</h2>
-    </div>
+    <div><span class="section-index" data-registry-copy="index">03 / REGISTRY</span><h2 id="capability-registry-title" data-registry-copy="title">Capability registry</h2></div>
     <div class="registry-meta" aria-label="Registry summary">
-      <span><b>{telemetry.summary.engine_count}</b> indexed</span>
-      <span><b>{telemetry.summary.materialized_candidate_count}</b> materialized</span>
-      <span><b>{telemetry.summary.scaffold_unverified_count}</b> scaffold</span>
+      <span><b>{telemetry.summary.engine_count}</b> <i data-registry-copy="indexed">indexed</i></span>
+      <span><b>{telemetry.summary.materialized_candidate_count}</b> <i data-registry-copy="materialized">materialized</i></span>
+      <span><b>{telemetry.summary.scaffold_unverified_count}</b> <i data-registry-copy="scaffold">scaffold</i></span>
     </div>
   </header>
-
-  <div class="registry-copy">
-    <p>Telemetry-backed public status. Internal contracts, execution receipts and credentials remain private.</p>
-  </div>
-
+  <div class="registry-copy"><p data-registry-copy="description">Telemetry-backed public status. Internal contracts, execution receipts and credentials remain private.</p></div>
   <div class="registry-controls" aria-label="Capability registry controls">
-    <label class="search-wrap">
-      <span class="sr-only">Search capabilities</span>
-      <input type="search" placeholder="Search capability" autocomplete="off" data-registry-search />
-    </label>
+    <label class="search-wrap"><span class="sr-only" data-registry-copy="searchSr">Search capabilities</span><input type="search" placeholder="Search capability" autocomplete="off" data-registry-search /></label>
     <div class="filters" role="group" aria-label="Filter by status">
-      <button type="button" data-filter="all" aria-pressed="true">All</button>
-      <button type="button" data-filter="materialized" aria-pressed="false">Materialized</button>
-      <button type="button" data-filter="scaffold" aria-pressed="false">Scaffold</button>
+      <button type="button" data-filter="all" aria-pressed="true" data-registry-copy="all">All</button>
+      <button type="button" data-filter="materialized" aria-pressed="false" data-registry-copy="filterMaterialized">Materialized</button>
+      <button type="button" data-filter="scaffold" aria-pressed="false" data-registry-copy="filterScaffold">Scaffold</button>
     </div>
   </div>
-
-  <div class="table-wrap">
-    <table>
-      <colgroup>
-        <col class="col-capability" />
-        <col class="col-status" />
-        <col class="col-ref" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th scope="col" aria-sort="ascending" data-sort-column="name">
-            <button type="button" data-sort="name" aria-label="Sort by capability">
-              <span>Capability</span><span class="sort-glyph" aria-hidden="true">↕</span>
-            </button>
-          </th>
-          <th scope="col" aria-sort="none" data-sort-column="status">
-            <button type="button" data-sort="status" aria-label="Sort by status">
-              <span>Status</span><span class="sort-glyph" aria-hidden="true">↕</span>
-            </button>
-          </th>
-          <th scope="col" aria-sort="none" data-sort-column="ref">
-            <button type="button" data-sort="ref" aria-label="Sort by public reference">
-              <span>Public ref</span><span class="sort-glyph" aria-hidden="true">↕</span>
-            </button>
-          </th>
-        </tr>
-      </thead>
-      <tbody data-registry-body>
-        {engines.map((engine) => {
-          const status = shortStateFor(engine.maturity);
-          return (
-            <tr
-              data-registry-row
-              data-status={status}
-              data-name={engine.name.toLowerCase()}
-              data-ref={engine.public_ref.toLowerCase()}
-              data-search={`${engine.name} ${engine.public_ref} ${labelFor(engine.maturity)}`.toLowerCase()}
-            >
-              <td>
-                <div class="capability-name">
-                  <span class:list={['status-dot', status === 'materialized' && 'is-materialized']} aria-hidden="true"></span>
-                  <span>
-                    <strong>{engine.name}</strong>
-                    <code>{engine.id}</code>
-                  </span>
-                </div>
-              </td>
-              <td><span class:list={['state-label', status === 'materialized' && 'is-materialized']}>{labelFor(engine.maturity)}</span></td>
-              <td><code>{engine.public_ref}</code></td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  </div>
-
-  <footer class="registry-foot">
-    <span data-result-count>{engines.length} capabilities</span>
-    <span class="telemetry-mode" data-telemetry-mode="fallback">
-      <span class="telemetry-dot" data-telemetry-dot aria-hidden="true"></span>
-      <span data-telemetry-label>Telemetry Mode: Fallback</span>
-    </span>
-  </footer>
+  <div class="table-wrap"><table>
+    <colgroup><col class="col-capability" /><col class="col-status" /><col class="col-ref" /></colgroup>
+    <thead><tr>
+      <th scope="col" aria-sort="ascending" data-sort-column="name"><button type="button" data-sort="name" aria-label="Sort by capability"><span data-registry-copy="capability">Capability</span><span class="sort-glyph" aria-hidden="true">↕</span></button></th>
+      <th scope="col" aria-sort="none" data-sort-column="status"><button type="button" data-sort="status" aria-label="Sort by status"><span data-registry-copy="status">Status</span><span class="sort-glyph" aria-hidden="true">↕</span></button></th>
+      <th scope="col" aria-sort="none" data-sort-column="ref"><button type="button" data-sort="ref" aria-label="Sort by public reference"><span data-registry-copy="publicRef">Public ref</span><span class="sort-glyph" aria-hidden="true">↕</span></button></th>
+    </tr></thead>
+    <tbody data-registry-body>{engines.map((engine) => { const status = shortStateFor(engine.maturity); return (
+      <tr data-registry-row data-status={status} data-name={engine.name.toLowerCase()} data-ref={engine.public_ref.toLowerCase()} data-search={`${engine.name} ${engine.public_ref} ${labelFor(engine.maturity)}`.toLowerCase()}>
+        <td><div class="capability-name"><span class:list={['status-dot', status === 'materialized' && 'is-materialized']} aria-hidden="true"></span><span><strong>{engine.name}</strong><code>{engine.id}</code></span></div></td>
+        <td><span class:list={['state-label', status === 'materialized' && 'is-materialized']} data-state-label={status}>{labelFor(engine.maturity)}</span></td><td><code>{engine.public_ref}</code></td>
+      </tr>); })}</tbody>
+  </table></div>
+  <footer class="registry-foot"><span data-result-count>{engines.length} capabilities</span><span class="telemetry-mode" data-telemetry-mode="fallback"><span class="telemetry-dot" data-telemetry-dot aria-hidden="true"></span><span data-telemetry-label>Telemetry Mode: Fallback</span></span></footer>
 </section>
 
 <script>
-  type SortKey = 'name' | 'status' | 'ref';
-  type SortDirection = 'asc' | 'desc';
-  type TelemetryMode = 'fallback' | 'live';
-
+  type SortKey = 'name' | 'status' | 'ref'; type SortDirection = 'asc' | 'desc'; type TelemetryMode = 'fallback' | 'live'; type Lang = 'en' | 'pt-BR';
   const roots = document.querySelectorAll<HTMLElement>('[data-capability-registry]');
-
+  const copy = {
+    en:{index:'03 / REGISTRY',title:'Capability registry',indexed:'indexed',materialized:'materialized',scaffold:'scaffold',description:'Telemetry-backed public status. Internal contracts, execution receipts and credentials remain private.',searchSr:'Search capabilities',searchPlaceholder:'Search capability',all:'All',filterMaterialized:'Materialized',filterScaffold:'Scaffold',capability:'Capability',status:'Status',publicRef:'Public ref',materializedState:'Materialized · eval required',scaffoldState:'Scaffold · unverified',capabilityOne:'capability',capabilityMany:'capabilities',telemetry:'Telemetry Mode',live:'Live',fallback:'Fallback'},
+    'pt-BR':{index:'03 / REGISTRO',title:'Registro de capacidades',indexed:'indexadas',materialized:'materializadas',scaffold:'estruturas',description:'Status público sustentado por telemetria. Contratos internos, recibos de execução e credenciais permanecem privados.',searchSr:'Buscar capacidades',searchPlaceholder:'Buscar capacidade',all:'Todas',filterMaterialized:'Materializadas',filterScaffold:'Estruturas',capability:'Capacidade',status:'Status',publicRef:'Ref. pública',materializedState:'Materializada · avaliação necessária',scaffoldState:'Estrutura · não verificada',capabilityOne:'capacidade',capabilityMany:'capacidades',telemetry:'Modo de telemetria',live:'Ao vivo',fallback:'Fallback'}
+  } as const;
   for (const root of roots) {
-    const input = root.querySelector<HTMLInputElement>('[data-registry-search]');
-    const body = root.querySelector<HTMLTableSectionElement>('[data-registry-body]');
-    const count = root.querySelector<HTMLElement>('[data-result-count]');
-    const filterButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]'));
-    const sortButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-sort]'));
-    const sortHeaders = Array.from(root.querySelectorAll<HTMLTableCellElement>('[data-sort-column]'));
-    const telemetryMode = root.querySelector<HTMLElement>('[data-telemetry-mode]');
-    const telemetryDot = root.querySelector<HTMLElement>('[data-telemetry-dot]');
-    const telemetryLabel = root.querySelector<HTMLElement>('[data-telemetry-label]');
-
-    if (!input || !body || !count || !telemetryMode || !telemetryDot || !telemetryLabel) continue;
-
-    let activeFilter = 'all';
-    let sortKey: SortKey = 'name';
-    let sortDirection: SortDirection = 'asc';
-
-    const rows = (): HTMLTableRowElement[] =>
-      Array.from(body.querySelectorAll<HTMLTableRowElement>('[data-registry-row]'));
-
-    const statusRank = (row: HTMLTableRowElement): number =>
-      row.dataset.status === 'materialized' ? 0 : 1;
-
-    const keyFor = (row: HTMLTableRowElement, key: SortKey): string | number => {
-      if (key === 'status') return statusRank(row);
-      if (key === 'ref') return row.dataset.ref ?? '';
-      return row.dataset.name ?? '';
-    };
-
-    const compareRows = (a: HTMLTableRowElement, b: HTMLTableRowElement): number => {
-      const aValue = keyFor(a, sortKey);
-      const bValue = keyFor(b, sortKey);
-      const result = typeof aValue === 'number' && typeof bValue === 'number'
-        ? aValue - bValue
-        : String(aValue).localeCompare(String(bValue));
-      return sortDirection === 'asc' ? result : -result;
-    };
-
-    const syncSortA11y = (): void => {
-      for (const header of sortHeaders) {
-        const key = header.dataset.sortColumn as SortKey | undefined;
-        const value = key === sortKey ? (sortDirection === 'asc' ? 'ascending' : 'descending') : 'none';
-        header.setAttribute('aria-sort', value);
-      }
-    };
-
-    const sortRows = (): void => {
-      const fragment = document.createDocumentFragment();
-      for (const row of rows().sort(compareRows)) fragment.appendChild(row);
-      body.appendChild(fragment);
-      syncSortA11y();
-    };
-
-    const applyVisibility = (): void => {
-      const query = input.value.trim().toLowerCase();
-      let visible = 0;
-
-      for (const row of rows()) {
-        const status = row.dataset.status ?? '';
-        const haystack = row.dataset.search ?? '';
-        const matchesFilter = activeFilter === 'all' || status === activeFilter;
-        const matchesQuery = query === '' || haystack.includes(query);
-        const show = matchesFilter && matchesQuery;
-        row.hidden = !show;
-        if (show) visible += 1;
-      }
-
-      count.textContent = `${visible} ${visible === 1 ? 'capability' : 'capabilities'}`;
-    };
-
-    const setTelemetryMode = (mode: TelemetryMode): void => {
-      const live = mode === 'live';
-      telemetryMode.dataset.telemetryMode = mode;
-      telemetryLabel.textContent = `Telemetry Mode: ${live ? 'Live' : 'Fallback'}`;
-      telemetryDot.classList.toggle('is-live', live);
-      telemetryDot.classList.toggle('animate-pulse', live);
-    };
-
-    for (const button of filterButtons) {
-      button.addEventListener('click', () => {
-        activeFilter = button.dataset.filter ?? 'all';
-        for (const candidate of filterButtons) {
-          candidate.setAttribute('aria-pressed', String(candidate === button));
-        }
-        applyVisibility();
-      });
-    }
-
-    input.addEventListener('input', applyVisibility, { passive: true });
-
-    for (const button of sortButtons) {
-      button.addEventListener('click', () => {
-        const nextKey = (button.dataset.sort ?? 'name') as SortKey;
-        if (sortKey === nextKey) {
-          sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-          sortKey = nextKey;
-          sortDirection = 'asc';
-        }
-        sortRows();
-      });
-    }
-
-    window.addEventListener('capability:telemetry-mode', (event: Event) => {
-      const custom = event as CustomEvent<{ mode?: TelemetryMode }>;
-      const mode = custom.detail?.mode;
-      if (mode === 'live' || mode === 'fallback') setTelemetryMode(mode);
-    });
-
-    sortRows();
-    applyVisibility();
-    setTelemetryMode('fallback');
+    const input=root.querySelector<HTMLInputElement>('[data-registry-search]'); const body=root.querySelector<HTMLTableSectionElement>('[data-registry-body]'); const count=root.querySelector<HTMLElement>('[data-result-count]'); const filterButtons=Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]')); const sortButtons=Array.from(root.querySelectorAll<HTMLButtonElement>('[data-sort]')); const sortHeaders=Array.from(root.querySelectorAll<HTMLTableCellElement>('[data-sort-column]')); const telemetryMode=root.querySelector<HTMLElement>('[data-telemetry-mode]'); const telemetryDot=root.querySelector<HTMLElement>('[data-telemetry-dot]'); const telemetryLabel=root.querySelector<HTMLElement>('[data-telemetry-label]');
+    if(!input||!body||!count||!telemetryMode||!telemetryDot||!telemetryLabel) continue;
+    let activeFilter='all'; let sortKey:SortKey='name'; let sortDirection:SortDirection='asc'; let lang:Lang='en'; let currentTelemetry:TelemetryMode='fallback';
+    const rows=():HTMLTableRowElement[]=>Array.from(body.querySelectorAll<HTMLTableRowElement>('[data-registry-row]'));
+    const statusRank=(row:HTMLTableRowElement):number=>row.dataset.status==='materialized'?0:1;
+    const keyFor=(row:HTMLTableRowElement,key:SortKey):string|number=>key==='status'?statusRank(row):key==='ref'?(row.dataset.ref??''):(row.dataset.name??'');
+    const compareRows=(a:HTMLTableRowElement,b:HTMLTableRowElement):number=>{const av=keyFor(a,sortKey),bv=keyFor(b,sortKey);const result=typeof av==='number'&&typeof bv==='number'?av-bv:String(av).localeCompare(String(bv));return sortDirection==='asc'?result:-result;};
+    const syncSortA11y=():void=>{for(const header of sortHeaders){const key=header.dataset.sortColumn as SortKey|undefined;header.setAttribute('aria-sort',key===sortKey?(sortDirection==='asc'?'ascending':'descending'):'none');}};
+    const sortRows=():void=>{const fragment=document.createDocumentFragment();for(const row of rows().sort(compareRows)) fragment.appendChild(row);body.appendChild(fragment);syncSortA11y();};
+    const applyVisibility=():void=>{const query=input.value.trim().toLowerCase();let visible=0;for(const row of rows()){const status=row.dataset.status??'',haystack=row.dataset.search??'';const show=(activeFilter==='all'||status===activeFilter)&&(query===''||haystack.includes(query));row.hidden=!show;if(show)visible+=1;}const t=copy[lang];count.textContent=`${visible} ${visible===1?t.capabilityOne:t.capabilityMany}`;};
+    const setTelemetryMode=(mode:TelemetryMode):void=>{currentTelemetry=mode;const live=mode==='live',t=copy[lang];telemetryMode.dataset.telemetryMode=mode;telemetryLabel.textContent=`${t.telemetry}: ${live?t.live:t.fallback}`;telemetryDot.classList.toggle('is-live',live);telemetryDot.classList.toggle('animate-pulse',live);};
+    const applyLanguage=(next:Lang):void=>{lang=next;const t=copy[lang];root.querySelectorAll<HTMLElement>('[data-registry-copy]').forEach((el)=>{const key=el.dataset.registryCopy as keyof typeof t|undefined;if(key&&key in t)el.textContent=String(t[key]);});input.placeholder=t.searchPlaceholder;root.querySelectorAll<HTMLElement>('[data-state-label]').forEach((el)=>{el.textContent=el.dataset.stateLabel==='materialized'?t.materializedState:t.scaffoldState;});applyVisibility();setTelemetryMode(currentTelemetry);};
+    for(const button of filterButtons){button.addEventListener('click',()=>{activeFilter=button.dataset.filter??'all';for(const candidate of filterButtons)candidate.setAttribute('aria-pressed',String(candidate===button));applyVisibility();});}
+    input.addEventListener('input',applyVisibility,{passive:true});
+    for(const button of sortButtons){button.addEventListener('click',()=>{const nextKey=(button.dataset.sort??'name') as SortKey;if(sortKey===nextKey)sortDirection=sortDirection==='asc'?'desc':'asc';else{sortKey=nextKey;sortDirection='asc';}sortRows();});}
+    window.addEventListener('capability:telemetry-mode',(event:Event)=>{const mode=(event as CustomEvent<{mode?:TelemetryMode}>).detail?.mode;if(mode==='live'||mode==='fallback')setTelemetryMode(mode);});
+    window.addEventListener('capability:language',(event:Event)=>{const next=(event as CustomEvent<{lang?:Lang}>).detail?.lang;if(next==='en'||next==='pt-BR')applyLanguage(next);});
+    sortRows();applyVisibility();setTelemetryMode('fallback');
+    const stored=(()=>{try{return localStorage.getItem('capability-os-language')}catch{return null}})();applyLanguage(stored==='pt-BR'?'pt-BR':'en');
   }
 </script>
 
 <style>
-  .registry{border-top:1px solid #151515;border-bottom:1px solid #151515;background:#f4f4f0}
-  .registry-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;padding:28px 0 20px}
-  .section-index{display:block;margin-bottom:14px;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#6b6b66}
-  .registry-head h2{margin:0;font:500 clamp(32px,4vw,56px)/.96 Arial,Helvetica,sans-serif;letter-spacing:-.055em}
-  .registry-meta{display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#70706a;text-transform:uppercase;letter-spacing:.04em}
-  .registry-meta b{color:#111}
-  .registry-copy{max-width:620px;padding:0 0 26px}
-  .registry-copy p{margin:0;font-size:13px;line-height:1.65;color:#565651}
-  .registry-controls{display:grid;grid-template-columns:minmax(240px,1fr) auto;gap:20px;align-items:center;padding:14px 0;border-top:1px solid #c9c9c2}
-  .search-wrap{max-width:520px}
-  input{width:100%;height:42px;border:0;border-bottom:1px solid #8e8e88;background:transparent;color:#111;padding:0;font:500 13px Arial,Helvetica,sans-serif;outline:none;border-radius:0}
-  input::placeholder{color:#8b8b85}
-  input:focus{border-bottom-color:#111}
-  .filters{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
-  .filters button{height:36px;padding:0 12px;border:1px solid transparent;background:transparent;color:#666661;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
-  .filters button:hover{border-color:#bcbcb5;color:#111}
-  .filters button[aria-pressed="true"]{border-color:#111;color:#111}
-  .table-wrap{overflow-x:auto;border-top:1px solid #151515;contain:layout paint}
-  table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:760px}
-  .col-capability{width:44%}.col-status{width:32%}.col-ref{width:24%}
-  th,td{text-align:left;border-bottom:1px solid #cdcdc6;vertical-align:middle}
-  th{height:44px;padding:0 16px 0 0;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.06em;color:#686863}
-  th:last-child,td:last-child{padding-right:0}
-  th button{display:inline-flex;align-items:center;gap:8px;min-height:44px;border:0;background:transparent;padding:0;color:inherit;font:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer;white-space:nowrap}
-  th[aria-sort="ascending"] button,th[aria-sort="descending"] button{color:#111}
-  .sort-glyph{display:inline-grid;place-items:center;width:14px;height:14px;flex:0 0 14px;font-size:12px;line-height:1;transition:transform .18s ease}
-  th[aria-sort="descending"] .sort-glyph{transform:rotate(180deg)}
-  td{height:68px;padding:12px 16px 12px 0;font-size:12px}
-  tbody tr{min-height:68px;background:transparent;transition:background-color .15s ease;contain:layout paint}
-  tbody tr:hover{background:#ecece6}
-  tbody tr:last-child td{border-bottom:0}
-  .capability-name{display:flex;align-items:center;gap:14px;min-height:44px}
-  .capability-name strong{display:block;font-size:14px;line-height:1.25;color:#111;font-weight:600}
-  code{display:block;margin-top:5px;font:500 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#777772;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .status-dot{width:8px;height:8px;border-radius:50%;background:#a4a49e;flex:0 0 8px}
-  .status-dot.is-materialized{background:#17865b}
-  .state-label{display:inline-flex;align-items:center;min-height:26px;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#70706a;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap}
-  .state-label.is-materialized{color:#106d49}
-  .registry-foot{display:flex;justify-content:space-between;gap:16px;min-height:52px;align-items:center;border-top:1px solid #151515;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6d6d68;text-transform:uppercase;letter-spacing:.05em}
-  .telemetry-mode{display:inline-flex;align-items:center;gap:8px}
-  .telemetry-dot{width:7px;height:7px;border-radius:999px;background:#999992;transform:translateZ(0);will-change:transform,opacity}
-  .telemetry-dot.is-live{background:#16a36a}
-  .animate-pulse{animation:registry-pulse 1.6s cubic-bezier(.4,0,.6,1) infinite}
-  @keyframes registry-pulse{0%,100%{opacity:1;transform:translateZ(0) scale(1)}50%{opacity:.42;transform:translateZ(0) scale(.78)}}
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  [hidden]{display:none!important}
-  @media(prefers-reduced-motion:reduce){.animate-pulse{animation:none}.sort-glyph{transition:none}}
-  @media(max-width:760px){.registry-head{grid-template-columns:1fr}.registry-meta{justify-content:flex-start}.registry-controls{grid-template-columns:1fr}.filters{justify-content:flex-start}.registry-foot{align-items:flex-start;flex-direction:column;padding:14px 0}.col-capability{width:42%}.col-status{width:36%}.col-ref{width:22%}}
+.registry{border-top:1px solid #151515;border-bottom:1px solid #151515;background:#f4f4f0}.registry-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;padding:28px 0 20px}.section-index{display:block;margin-bottom:14px;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#6b6b66}.registry-head h2{margin:0;font:500 clamp(32px,4vw,56px)/.96 Arial,Helvetica,sans-serif;letter-spacing:-.055em}.registry-meta{display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#70706a;text-transform:uppercase}.registry-meta i{font-style:normal}.registry-meta b{color:#111}.registry-copy{max-width:620px;padding:0 0 26px}.registry-copy p{margin:0;font-size:13px;line-height:1.65;color:#565651}.registry-controls{display:grid;grid-template-columns:minmax(240px,1fr) auto;gap:20px;align-items:center;padding:14px 0;border-top:1px solid #c9c9c2}.search-wrap{max-width:520px}input{width:100%;height:42px;border:0;border-bottom:1px solid #8e8e88;background:transparent;color:#111;padding:0;font:500 13px Arial,Helvetica,sans-serif;outline:none;border-radius:0}.filters{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.filters button{height:36px;padding:0 12px;border:1px solid transparent;background:transparent;color:#666661;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;cursor:pointer}.filters button[aria-pressed="true"]{border-color:#111;color:#111}.table-wrap{overflow-x:auto;border-top:1px solid #151515;contain:layout paint}table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:760px}.col-capability{width:44%}.col-status{width:32%}.col-ref{width:24%}th,td{text-align:left;border-bottom:1px solid #cdcdc6;vertical-align:middle}th{height:44px;padding:0 16px 0 0;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;color:#686863}th button{display:inline-flex;align-items:center;gap:8px;min-height:44px;border:0;background:transparent;padding:0;color:inherit;font:inherit;text-transform:inherit;cursor:pointer}.sort-glyph{width:14px;height:14px;font-size:12px;transition:transform .18s ease}th[aria-sort="descending"] .sort-glyph{transform:rotate(180deg)}td{height:68px;padding:12px 16px 12px 0;font-size:12px}.capability-name{display:flex;align-items:center;gap:14px}.capability-name strong{display:block;font-size:14px}.capability-name code,td code{display:block;margin-top:5px;font:500 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#777772}.status-dot{width:8px;height:8px;border-radius:50%;background:#a4a49e;flex:0 0 8px}.status-dot.is-materialized{background:#17865b}.state-label{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#70706a;text-transform:uppercase}.state-label.is-materialized{color:#106d49}.registry-foot{display:flex;justify-content:space-between;gap:16px;min-height:52px;align-items:center;border-top:1px solid #151515;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6d6d68;text-transform:uppercase}.telemetry-mode{display:inline-flex;align-items:center;gap:8px}.telemetry-dot{width:7px;height:7px;border-radius:999px;background:#999992}.telemetry-dot.is-live{background:#16a36a}.animate-pulse{animation:registry-pulse 1.6s cubic-bezier(.4,0,.6,1) infinite}@keyframes registry-pulse{0%,100%{opacity:1;transform:translateZ(0) scale(1)}50%{opacity:.42;transform:translateZ(0) scale(.78)}}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}[hidden]{display:none!important}@media(max-width:760px){.registry-head{grid-template-columns:1fr}.registry-meta{justify-content:flex-start}.registry-controls{grid-template-columns:1fr}.filters{justify-content:flex-start}.registry-foot{align-items:flex-start;flex-direction:column;padding:14px 0}}
 </style>
