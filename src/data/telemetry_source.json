@@ -3,7 +3,7 @@
   "product": "Lucas Capability OS",
   "mode": "static_fallback",
   "source_scope": "sanitized_public_snapshot",
-  "revision": "946aba65d983af37bf577d69842166f6efd1e014",
+  "revision": "f81ecd4ef8693b33588a0618b483294d96dc69ea",
   "operator": {
     "level": 12,
     "consolidation_level": 12,
