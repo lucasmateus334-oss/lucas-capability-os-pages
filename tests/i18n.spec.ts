@@ -4,7 +4,7 @@ test('language switcher toggles EN and PT-BR and persists preference', async ({ 
   await page.goto('./');
   await page.getByRole('button', { name: 'Português do Brasil' }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
-  await expect(page.getByRole('link', { name: 'Patrocinar' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Patrocinar', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Sobre' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Registro de capacidades' })).toBeVisible();
   await expect(page.getByPlaceholder('Buscar capacidade')).toBeVisible();
