@@ -1,120 +1,105 @@
-# Legal Recruiter Lab — Product Study v0.1
+# Legal Recruiter Lab — Product & Launch State
 
-## Recommendation
+## Product thesis
 
-Do not launch the source as a standalone ebook first. Use the ebook as the curriculum/IP layer of a small digital learning product with a free playable demo, a paid interactive tier, and a premium implementation tier.
+**Legal Recruiter Lab** converts *Thinking Like a Legal Recruiter* from a passive ebook into a practical learning system for people entering U.S.-market legal recruiting.
 
-## Why the source supports this
+The source material supports a six-path progression across market context, legal work, talent evaluation, search execution, closing, ethics, AI and a first-90-days operating plan. The commercial model should therefore sell **judgment and operating readiness**, not page count.
 
-The source already contains the core components of a learning product rather than a passive book:
+## Product ladder
 
-- six sequenced parts and twenty-nine chapters;
-- chapter learning objectives, exercises, suggested answers, key takeaways and glossary links;
-- two extended master case studies;
-- an Operator Toolkit with eighteen reusable working tools;
-- a first-90-days implementation plan;
-- explicit chapters on ethics, cross-cultural evaluation and responsible AI use.
+### 1. Free practice mission
+Three browser-based scenario decisions with instant feedback and XP. Purpose: demonstrate the evidence-first learning method before purchase.
 
-This means the highest-leverage transformation is packaging and interaction, not rewriting the content.
+### 2. Field Guide — entry product
+**Price configured:** R$119.99, one-time.
 
-## Product architecture
+Includes:
+- 29-chapter digital guide
+- exercises with suggested reasoning
+- two master cases
+- 18 operator tools / reference frameworks
+- first-90-days progression
+- PDF delivery through Lemon Squeezy
 
-### 1. Free — Playable Mission
-Purpose: acquisition and product validation.
+### 3. Operator Lab — next product
+Planned interactive layer: additional scenario missions, scorecards, practice cases, progress tracking and a certificate of completion. Any completion credential must not be marketed as a professional certification.
 
-- 3–5 scenario decisions;
-- instant feedback;
-- XP/readiness score;
-- email capture once a brand/support mailbox exists;
-- CTA to paid product.
+### 4. 90-Day Sprint — later product
+Planned application layer: implementation path, AI practice prompts and portfolio-ready capstone work.
 
-### 2. Entry — Field Guide
-Validation price hypothesis: USD 19–29.
+## Positioning
 
-- polished PDF;
-- operator toolkit;
-- quick-reference sheets;
-- printable 90-day plan.
+Core principle: **Do not trust the label. Test the underlying evidence.**
 
-### 3. Core — Operator Lab
-Validation price hypothesis: USD 49–79.
+The learning experience should repeatedly train users to:
+- distinguish résumé language from proven work ownership;
+- translate vague client demand into concrete search criteria;
+- separate temporary frustration from durable candidate motivation;
+- reduce ambiguity before forming conclusions;
+- operate with ethical and job-related evidence.
 
-- six interactive learning paths;
-- scenario questions derived from chapter exercises;
-- progress persistence;
-- case-based decisions;
-- downloadable working templates;
-- completion record/certificate (not a professional certification).
+## Public brand architecture
 
-### 4. Premium — 90-Day Sprint
-Validation price hypothesis: USD 99–149.
+Public-facing identity: **Recruiter Lab** umbrella brand, with **Legal Recruiter Lab** as the first product line.
 
-- full Operator Lab;
-- structured 90-day practice path;
-- mock-search capstone;
-- AI practice prompts with privacy warnings;
-- portfolio-ready outputs created from fictional or public information only.
+The legal-recruiting route must remain isolated from the personal Capability OS identity in customer-facing navigation. Founder identity, personal social channels and personal branding are not required for the public sales experience.
 
-## Faceless operating model
+Payment processors, tax providers and other regulated services may still require the operator's legal identity privately for KYC and compliance.
 
-Public brand can remain separate from the operator's personal identity in marketing. Use a product brand, product mailbox, text-based support, written tutorials and no founder video requirement.
-
-Important limitation: payment processors, merchant-of-record providers, banking and tax systems may require the seller's legal identity privately for KYC/tax compliance. A faceless storefront is not the same as anonymous commerce.
-
-## Suggested stack
-
-### MVP / lowest complexity
-- Frontend: Astro + GitHub Pages (already available).
-- Product demo: static JavaScript, local progress state.
-- Checkout/delivery: merchant-of-record or digital-download platform.
-- Email: product alias/domain mailbox.
-- Analytics: privacy-conscious, minimal analytics after launch.
-
-### Interactive paid version
-- Frontend: Lovable or existing Astro site.
-- Auth/data: Supabase if persistent accounts/progress are needed.
-- Payment: Stripe through an appropriate checkout stack or a merchant-of-record platform.
-- Hosting: GitHub Pages for static surfaces or a server-capable platform for authenticated paid experiences.
-
-## Commercial positioning
-
-Avoid promising legal expertise, legal advice, guaranteed placement outcomes or an accredited credential. Position the product as professional learning and market-fluency training for recruiters entering U.S. legal recruiting.
-
-Strong differentiator: evidence-first recruiter judgment. The source repeatedly teaches users to distinguish labels from evidence — e.g. job title vs actual work, resume claim vs verified ownership, stated motivation vs structural readiness. This can become the product's central mechanic: every mission asks the learner to choose the next evidence-producing action.
-
-## Launch sequence
-
-1. Publish free playable MVP.
-2. Create product brand + support mailbox.
-3. Run a factual/legal-content review for time-sensitive U.S. bar, compensation and market claims.
-4. Produce the Field Guide package.
-5. Connect checkout and delivery.
-6. Test demand before building login-heavy features.
-7. Build the six-path Operator Lab only after paid validation.
-
-## Already implemented
+## Current implementation
 
 Branch: `feat/legal-recruiter-lab-mvp`
 
-Route: `/legal-recruiter-lab/`
+PR: `#6 — feat: Legal Recruiter Lab playable MVP`
 
-Current MVP includes:
-- dedicated product landing surface;
-- learning-path framing;
-- three playable scenario decisions;
-- instant feedback and XP score;
-- tiered product hypothesis;
-- faceless-commerce boundary disclosure;
-- explicit educational/not-legal-advice positioning;
-- no live checkout yet, intentionally.
+Implemented:
+- customer-facing sales page at `/legal-recruiter-lab/`;
+- three playable practice scenarios with feedback and XP;
+- six-path curriculum presentation;
+- Field Guide offer at R$119.99;
+- Lemon Squeezy Test Mode checkout connection;
+- Privacy, Terms, Refunds, Support and Copyright pages;
+- support contact configured as `recruiter.lab.sales@gmail.com`;
+- buyer-facing navigation separated from Capability OS;
+- policy/support links exposed in the sales-page footer;
+- `noindex,nofollow` retained during pre-launch.
 
-## Manual gates before taking money
+## Checkout validation completed
 
-- select product/brand name after trademark/domain screening;
-- choose checkout platform and complete private KYC/tax setup;
-- create Terms, Privacy, Refund and educational-disclaimer pages;
-- perform current-facts review of legal-market content;
-- choose final prices and refund policy;
-- add support mailbox and customer-delivery workflow.
+- Lemon Squeezy store created under Recruiter Lab;
+- Field Guide product configured as an eBook;
+- storefront exposure OFF;
+- Test Mode checkout connected;
+- test purchase succeeded;
+- order creation succeeded;
+- receipt succeeded;
+- invoice generation succeeded;
+- PDF attached to order and shown in fulfillment;
+- actual file download cannot be validated in Test Mode because the platform disables test downloads.
 
-Nota de fluxo — Este documento transforma o ebook em uma hipótese de produto digital validável e registra a sequência mínima para lançar com baixo custo, mantendo a identidade pessoal fora do marketing sem confundir isso com anonimato perante plataformas de pagamento e autoridades fiscais.
+## Remaining launch gates
+
+1. Complete Lemon Squeezy store activation / KYC privately.
+2. Wait for merchant approval if review is required.
+3. Copy the Field Guide product to Live Mode.
+4. Obtain the new Live checkout URL.
+5. Replace the Test Mode URL and remove all test-mode messaging from the site.
+6. Run final production build/CI and review the commercial page.
+7. Change robots policy from `noindex,nofollow` to launch indexing only when ready.
+8. Merge PR #6 to `main`.
+9. Perform one controlled real purchase and verify final PDF delivery/download.
+10. Keep a launch receipt with the production checkout, deployed commit and delivery validation.
+
+## Risk controls
+
+- Educational product; not legal advice.
+- No professional-certification claim.
+- No public collection of card data by the GitHub Pages site.
+- Do not publish KYC documents, tax identifiers, bank details, passwords, API keys or authentication codes.
+- Refund terms must preserve mandatory consumer rights where applicable.
+- Privacy language must be revised if accounts, analytics, newsletters, community features or behavioral tracking are added.
+
+---
+
+Flow note — This document records the commercial architecture and launch gates for Recruiter Lab so the product can move from validated Test Mode to a controlled public launch without exposing private operator credentials or conflating completion with professional certification.
