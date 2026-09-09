@@ -1,5 +1,10 @@
 const STORAGE_KEY = 'caplab.relay.self.v1';
 const PBKDF2_ITERATIONS = 250000;
+const MAX_MESSAGE_LENGTH = 4000;
+const ALLOWED_HANDOFF_KEYS = new Set(['m', 'text']);
+const FORBIDDEN_DESTINATION_KEYS = new Set([
+  'phone', 'phoneNumber', 'number', 'recipient', 'destination', 'jid', 'chat', 'contact',
+]);
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 
@@ -26,6 +31,13 @@ function validatePin(value) {
   const pin = String(value || '');
   if (pin.length < 6) throw new Error('PIN_TOO_SHORT');
   return pin;
+}
+
+function validateMessage(value) {
+  const message = String(value || '').trim();
+  if (!message) throw new Error('MESSAGE_REQUIRED');
+  if (message.length > MAX_MESSAGE_LENGTH) throw new Error('MESSAGE_TOO_LONG');
+  return message;
 }
 
 function b64url(bytes) {
@@ -116,15 +128,40 @@ function refreshBindingStatus() {
 }
 
 function loadMessageFromFragment() {
+  const rawFragment = location.hash.slice(1);
+  if (!rawFragment) return;
+
+  history.replaceState(null, '', location.pathname + location.search);
+
   try {
-    const params = new URLSearchParams(location.hash.slice(1));
+    const params = new URLSearchParams(rawFragment);
+    const keys = [...params.keys()];
+
+    if (keys.some((key) => FORBIDDEN_DESTINATION_KEYS.has(key))) {
+      throw new Error('DESTINATION_OVERRIDE_FORBIDDEN');
+    }
+    if (keys.some((key) => !ALLOWED_HANDOFF_KEYS.has(key))) {
+      throw new Error('HANDOFF_FIELD_FORBIDDEN');
+    }
+
     const packed = params.get('m');
-    if (!packed) return;
-    const text = dec.decode(fromB64url(packed));
-    if (text && text.length <= 4000) messageInput.value = text;
-    history.replaceState(null, '', location.pathname + location.search);
-  } catch {
-    setStatus(sendStatus, 'Não foi possível ler a mensagem do link. Cole o texto manualmente.', 'error');
+    const plain = params.get('text');
+    if (packed && plain) throw new Error('AMBIGUOUS_MESSAGE_INPUT');
+
+    let text = '';
+    if (packed) text = dec.decode(fromB64url(packed));
+    else if (plain) text = plain;
+    else return;
+
+    messageInput.value = validateMessage(text);
+    setStatus(sendStatus, 'Mensagem recebida da IA. Confirme o conteúdo e use seu PIN para abrir seu próprio WhatsApp.', 'ok');
+  } catch (error) {
+    const code = error?.message || 'HANDOFF_INVALID';
+    if (code === 'DESTINATION_OVERRIDE_FORBIDDEN' || code === 'HANDOFF_FIELD_FORBIDDEN') {
+      setStatus(sendStatus, 'Link rejeitado: a IA só pode preencher a mensagem, nunca o destinatário.', 'error');
+    } else {
+      setStatus(sendStatus, 'Não foi possível ler a mensagem do link. Cole o texto manualmente.', 'error');
+    }
   }
 }
 
@@ -161,9 +198,7 @@ $('send').addEventListener('click', async () => {
   let phone = '';
   let pin = '';
   try {
-    const message = String(messageInput.value || '').trim();
-    if (!message) throw new Error('MESSAGE_REQUIRED');
-    if (message.length > 4000) throw new Error('MESSAGE_TOO_LONG');
+    const message = validateMessage(messageInput.value);
     pin = validatePin(sendPinInput.value);
     setStatus(sendStatus, 'Desbloqueando destino local...');
     phone = await decryptPhone(pin);
@@ -177,6 +212,7 @@ $('send').addEventListener('click', async () => {
     const code = error?.message || 'RELAY_ERROR';
     if (code === 'BINDING_MISSING') setStatus(sendStatus, 'Crie primeiro o vínculo local do seu WhatsApp.', 'error');
     else if (code === 'MESSAGE_REQUIRED') setStatus(sendStatus, 'Digite ou cole uma mensagem.', 'error');
+    else if (code === 'MESSAGE_TOO_LONG') setStatus(sendStatus, `A mensagem deve ter no máximo ${MAX_MESSAGE_LENGTH} caracteres.`, 'error');
     else if (code === 'PIN_TOO_SHORT') setStatus(sendStatus, 'PIN inválido.', 'error');
     else setStatus(sendStatus, 'Não foi possível desbloquear o vínculo. Confira o PIN.', 'error');
   } finally {
@@ -185,7 +221,8 @@ $('send').addEventListener('click', async () => {
   }
 });
 
+window.addEventListener('hashchange', loadMessageFromFragment);
 refreshBindingStatus();
 loadMessageFromFragment();
 
-// O que isso faz: mantém o self-destination criptografado localmente e só o desbloqueia no instante de abrir wa.me, sem backend, billing ou autoridade da IA sobre o destinatário.
+// O que isso faz: mantém o self-destination criptografado localmente, permite à IA preencher apenas a mensagem via fragmento local e processa handoffs na mesma aba sem conceder à IA autoridade sobre o destinatário.
