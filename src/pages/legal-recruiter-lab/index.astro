@@ -1,54 +1,67 @@
 ---
 const modules = [
-  ['01','Market Map','Legal market, firm types, careers'],
-  ['02','Read the Work','Practice areas, jurisdiction, economics'],
-  ['03','Read Talent','Resume signals, ownership, motivation'],
-  ['04','Run the Search','Intake, mapping, sourcing, outreach'],
-  ['05','Close the Search','Offers, counteroffers, senior search'],
-  ['06','Operate Well','Ethics, inclusion, AI, first 90 days'],
+  ['01','Market Map','Understand the U.S. legal market, firm types and career paths.'],
+  ['02','Read the Work','Decode practice areas, jurisdictions and the economics behind legal work.'],
+  ['03','Read Talent','Assess résumé signals, ownership, trajectory and motivation with evidence.'],
+  ['04','Run the Search','Build stronger intake, mapping, sourcing and outreach decisions.'],
+  ['05','Close the Search','Navigate offers, counteroffers and higher-stakes search dynamics.'],
+  ['06','Operate Well','Apply ethics, inclusion, AI judgment and a structured first-90-days plan.'],
 ];
 const testCheckoutUrl = 'https://recruitinglab.lemonsqueezy.com/checkout/buy/024bd629-dc0b-4d14-969a-cabbcdcca960';
+const policyLinks = [
+  ['Privacy','./privacy'],
+  ['Terms','./terms'],
+  ['Refunds','./refund'],
+  ['Support','./support'],
+  ['Copyright','./copyright'],
+];
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="A scenario-based learning experience for people entering U.S. legal recruiting." />
+  <meta name="description" content="A practical, scenario-based learning system for people entering U.S. legal recruiting." />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Legal Recruiter Lab — Playable MVP</title>
+  <title>Legal Recruiter Lab — Learn to Think Like a Legal Recruiter</title>
 </head>
 <body>
   <main>
-    <nav class="nav"><a href="/lucas-capability-os-pages/">Capability OS</a><span>Experimental learning product</span></nav>
+    <nav class="nav">
+      <a href="#top" aria-label="Recruiter Lab home">RECRUITER LAB</a>
+      <span>Legal recruiting learning system</span>
+    </nav>
 
-    <section class="hero">
-      <div class="eyebrow">LEGAL RECRUITER LAB / PLAYABLE MVP</div>
+    <section class="hero" id="top">
+      <div class="eyebrow">LEGAL RECRUITER LAB</div>
       <h1>Learn to think like a<br/><em>legal recruiter.</em></h1>
-      <p class="lede">Not another PDF to finish. A guided, scenario-based training path built from a 29-chapter professional learning guide for people entering U.S. legal recruiting.</p>
+      <p class="lede">A practical beginner's system for learning how strong legal recruiters read the market, evaluate talent, qualify searches and make better decisions with evidence.</p>
       <div class="actions">
-        <a class="primary" href="#mission">Try a mission</a>
-        <a href="#product">See the product model</a>
+        <a class="primary" href="#mission">Try the free mission</a>
+        <a href="#field-guide">Explore the Field Guide</a>
         <a class="test-checkout" href={testCheckoutUrl} target="_blank" rel="noopener noreferrer">Test checkout ↗</a>
       </div>
-      <p class="test-note">TEST MODE ONLY · no live payments · do not enter a real card</p>
+      <p class="test-note">PRE-LAUNCH TEST MODE · no live payments · use test credentials only</p>
       <div class="proof"><span>6 learning paths</span><span>29 chapters</span><span>2 master cases</span><span>18 operator tools</span><span>90-day plan</span></div>
     </section>
 
     <section class="problem">
-      <div><span>THE SHIFT</span><h2>From reading<br/>to operating.</h2></div>
-      <p>The source guide already behaves more like a training system than a conventional ebook: it sequences the market, legal work, talent evaluation, end-to-end search execution, senior search, ethics and a first-90-days plan. The product layer turns those assets into missions, decisions, feedback and reusable tools.</p>
+      <div><span>THE PROBLEM</span><h2>Recruiting is easy to describe.<br/>Harder to judge well.</h2></div>
+      <div class="copy">
+        <p>Beginners can learn sourcing tools quickly. The harder skill is knowing what matters: what a client actually needs, what a résumé really proves, whether motivation is durable and which questions reduce uncertainty.</p>
+        <p>Legal Recruiter Lab trains that judgment through structured explanations, exercises, cases and operator tools instead of passive reading alone.</p>
+      </div>
     </section>
 
-    <section class="paths" id="product">
-      <header><span>LEARNING MAP</span><h2>Six paths. One operator journey.</h2></header>
+    <section class="paths" id="curriculum">
+      <header><span>CURRICULUM</span><h2>Six paths. One operator journey.</h2></header>
       <div class="pathgrid">
-        {modules.map(([n,t,d]) => <article><b>{n}</b><h3>{t}</h3><p>{d}</p><small>LOCKED IN MVP</small></article>)}
+        {modules.map(([n,t,d]) => <article><b>{n}</b><h3>{t}</h3><p>{d}</p></article>)}
       </div>
     </section>
 
     <section class="mission" id="mission">
-      <div class="mission-head"><div><span>FREE MISSION 01</span><h2>Spot the real signal.</h2></div><div class="xp"><strong id="xp">0</strong><small>XP</small></div></div>
+      <div class="mission-head"><div><span>FREE PRACTICE MISSION</span><h2>Spot the real signal.</h2><p>Three short decisions. Immediate feedback. No account required.</p></div><div class="xp"><strong id="xp">0</strong><small>XP</small></div></div>
       <div class="case">
         <p class="case-label">CANDIDATE SNAPSHOT</p>
         <blockquote>“Assisted senior partner on multiple cross-border M&A transactions in the technology sector.”</blockquote>
@@ -72,7 +85,7 @@ const testCheckoutUrl = 'https://recruitinglab.lemonsqueezy.com/checkout/buy/024
         <div class="feedback" id="q2-feedback" aria-live="polite"></div>
       </div>
       <div class="case">
-        <p class="case-label">READINESS</p>
+        <p class="case-label">CANDIDATE MOTIVATION</p>
         <blockquote>“My staffing partner assigned me to a deal I did not want last month. It has been a rough few weeks.”</blockquote>
         <p>What should you test next?</p>
         <div class="choices" data-question="q3">
@@ -82,26 +95,72 @@ const testCheckoutUrl = 'https://recruitinglab.lemonsqueezy.com/checkout/buy/024
         </div>
         <div class="feedback" id="q3-feedback" aria-live="polite"></div>
       </div>
-      <div class="result" id="result"><span>MISSION STATUS</span><strong id="status">0 / 3 complete</strong><p>Complete the three decisions to unlock your Operator Readiness score.</p></div>
+      <div class="result" id="result"><span>MISSION STATUS</span><strong id="status">0 / 3 complete</strong><p>Complete all three decisions to reveal your Operator Readiness score.</p></div>
     </section>
 
-    <section class="model">
-      <header><span>MONETIZATION DESIGN</span><h2>Sell outcomes, not pages.</h2></header>
-      <div class="tiers">
-        <article class="entry"><small>ENTRY · TEST PRODUCT</small><h3>Field Guide</h3><strong>R$119,99</strong><p>PDF + operator toolkit + quick-reference sheets.</p><a class="buy" href={testCheckoutUrl} target="_blank" rel="noopener noreferrer">Open test checkout ↗</a></article>
-        <article class="featured"><small>CORE · NEXT</small><h3>Operator Lab</h3><strong>Planned</strong><p>Interactive missions, scorecards, cases, progress tracking and certificate of completion.</p></article>
-        <article><small>PRO · LATER</small><h3>90-Day Sprint</h3><strong>Planned</strong><p>Full lab + 90-day implementation path + AI practice prompts + portfolio-ready capstone.</p></article>
+    <section class="field" id="field-guide">
+      <div class="field-intro"><span>FIELD GUIDE</span><h2>Thinking Like a Legal Recruiter</h2><p>A practical entry point for people learning international legal recruiting with a U.S.-market focus.</p></div>
+      <div class="offer">
+        <small>DIGITAL EDITION</small>
+        <h3>Legal Recruiter Lab — Field Guide</h3>
+        <strong>R$119,99</strong>
+        <ul>
+          <li>29-chapter structured learning guide</li>
+          <li>Exercises with suggested reasoning</li>
+          <li>Two master case studies</li>
+          <li>18 operator tools and reference frameworks</li>
+          <li>First-90-days progression</li>
+          <li>PDF delivery through the payment platform</li>
+        </ul>
+        <a class="buy" href={testCheckoutUrl} target="_blank" rel="noopener noreferrer">Open test checkout ↗</a>
+        <p class="test-note inside">TEST MODE ONLY · live sales remain disabled pending store activation</p>
       </div>
-      <p class="note"><b>Current validation state:</b> Field Guide checkout is connected in Lemon Squeezy Test Mode. The storefront remains hidden and live payments are not enabled.</p>
     </section>
 
-    <section class="anonymous">
-      <div><span>FACELESS BY DESIGN</span><h2>Brand-first.<br/>Operator-private.</h2></div>
-      <div class="anon-grid"><p><b>Public:</b> product brand, curriculum, demo missions, learning outcomes, support alias, terms and privacy.</p><p><b>Private:</b> personal identity in marketing, video presence, personal social channels and founder-led sales.</p><p><b>Required:</b> payment processors and tax platforms may still require legal identity privately for KYC, even when customers only see the product brand.</p></div>
+    <section class="who">
+      <header><span>WHO IT IS FOR</span><h2>Built for the beginning of the curve.</h2></header>
+      <div class="who-grid">
+        <article><h3>New recruiters</h3><p>Build a stronger mental model before relying on scripts, intuition or résumé keywords.</p></article>
+        <article><h3>Career changers</h3><p>Learn how legal recruiting decisions differ from generalist talent acquisition.</p></article>
+        <article><h3>Recruiting operators</h3><p>Use structured questions and reusable tools to reduce ambiguity in search work.</p></article>
+      </div>
     </section>
 
-    <footer><span>LEGAL RECRUITER LAB · EXPERIMENTAL MVP</span><span>Educational product · not legal advice</span></footer>
-    <p class="flow-note">Flow note — This MVP connects the public learning demo to a Lemon Squeezy test checkout only. Live payments, storefront discovery and production delivery remain disabled until launch review.</p>
+    <section class="principle">
+      <span>CORE PRINCIPLE</span>
+      <blockquote>Do not trust the label. Test the underlying evidence.</blockquote>
+      <p>The recurring discipline across the guide is evidence-first judgment: clarify work ownership, define the real client need, distinguish durable motivation from temporary frustration and avoid drawing conclusions before the facts support them.</p>
+    </section>
+
+    <section class="roadmap">
+      <header><span>LEARNING ROADMAP</span><h2>Start with the guide. Practice with the system.</h2></header>
+      <div class="tiers">
+        <article class="entry"><small>AVAILABLE IN TEST MODE</small><h3>Field Guide</h3><strong>R$119,99</strong><p>Structured guide, exercises, cases and operator tools.</p></article>
+        <article><small>IN DEVELOPMENT</small><h3>Operator Lab</h3><strong>Interactive</strong><p>Scenario missions, scorecards, practice cases, progress tracking and certificate of completion.</p></article>
+        <article><small>PLANNED</small><h3>90-Day Sprint</h3><strong>Applied</strong><p>Implementation path, AI practice prompts and portfolio-ready capstone work.</p></article>
+      </div>
+    </section>
+
+    <section class="faq">
+      <header><span>FAQ</span><h2>Before you start.</h2></header>
+      <div class="faq-grid">
+        <article><h3>Is this legal advice?</h3><p>No. It is an educational product about recruiting practice and professional judgment.</p></article>
+        <article><h3>Is this a professional certification?</h3><p>No. Future completion credentials, if offered, will only represent completion of Recruiter Lab learning activities.</p></article>
+        <article><h3>How is the product delivered?</h3><p>The Field Guide is delivered digitally through the payment platform. The current checkout is still in Test Mode.</p></article>
+        <article><h3>Do I need recruiting experience?</h3><p>No. The guide is designed for people entering the field, while still emphasizing practical operating judgment.</p></article>
+      </div>
+    </section>
+
+    <section class="prelaunch">
+      <span>PRE-LAUNCH STATUS</span>
+      <p>The product, policy surface and test checkout are connected. Live payments remain disabled until private merchant verification, live-mode checkout activation and one controlled production purchase validate final delivery.</p>
+    </section>
+
+    <footer>
+      <div><strong>RECRUITER LAB</strong><span>Legal Recruiter Lab · Educational product · not legal advice</span></div>
+      <nav aria-label="Legal and support links">{policyLinks.map(([label,href]) => <a href={href}>{label}</a>)}</nav>
+    </footer>
+    <p class="flow-note">Flow note — This page presents the customer-facing learning experience while keeping checkout in pre-launch Test Mode until production validation is complete.</p>
   </main>
 <script is:inline>
   const answered = new Set(); let xp = 0;
@@ -112,15 +171,15 @@ const testCheckoutUrl = 'https://recruitinglab.lemonsqueezy.com/checkout/buy/024
       group.querySelectorAll('button').forEach(b => b.disabled = true);
       btn.classList.add(ok ? 'correct' : 'wrong');
       const fb = document.getElementById(q+'-feedback');
-      fb.textContent = ok ? 'Correct — the discipline is to test the underlying evidence, not trust the label.' : 'Not quite — the next move should reduce ambiguity with job-related evidence.';
+      fb.textContent = ok ? 'Correct — test the underlying evidence before trusting the label.' : 'Not quite — the stronger next move reduces ambiguity with job-related evidence.';
       if (ok) xp += 100; document.getElementById('xp').textContent = xp;
       document.getElementById('status').textContent = answered.size+' / 3 complete';
-      if (answered.size === 3) document.querySelector('#result p').textContent = xp === 300 ? 'Operator Readiness: 100%. You consistently tested evidence before inference.' : 'Operator Readiness: '+Math.round(xp/3)+'%. Review the evidence-first pattern and retry in the full product.';
+      if (answered.size === 3) document.querySelector('#result p').textContent = xp === 300 ? 'Operator Readiness: 100%. You consistently tested evidence before inference.' : 'Operator Readiness: '+Math.round(xp/3)+'%. Review the evidence-first pattern and try the scenarios again later.';
     }))
   })
 </script>
 </body>
 </html>
 <style is:global>
-:root{--ink:#111;--paper:#f5f3ed;--line:#c8c5bb;--accent:#0d6b4d;--muted:#69675f}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}main{max-width:1500px;margin:auto;padding:0 28px}.nav{height:64px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink);font:700 10px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.06em}.nav a{color:inherit;text-decoration:none}.hero{min-height:calc(100vh - 64px);display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--ink);padding:60px 0}.eyebrow,.paths header span,.model header span,.problem span,.mission-head span,.anonymous span,.result span{font:700 10px ui-monospace,monospace;letter-spacing:.08em;color:var(--muted)}h1{font-size:clamp(68px,10vw,150px);line-height:.82;letter-spacing:-.07em;margin:36px 0;font-weight:600}h1 em{font-style:normal;color:var(--accent)}.lede{max-width:800px;font-size:22px;line-height:1.4}.actions{display:flex;gap:12px;margin:28px 0;flex-wrap:wrap}.actions a,.buy{border:1px solid var(--ink);padding:13px 18px;text-decoration:none;color:inherit;font-size:12px;display:inline-block}.actions .primary{background:var(--ink);color:var(--paper)}.actions .test-checkout,.buy{border-color:var(--accent);color:var(--accent);font-weight:700}.test-note{margin:-12px 0 16px;font:700 9px ui-monospace,monospace;letter-spacing:.06em;color:var(--accent)}.proof{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}.proof span{border:1px solid var(--line);padding:8px 10px;font:600 10px ui-monospace,monospace}.problem,.anonymous{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;padding:100px 0;border-bottom:1px solid var(--ink)}h2{font-size:clamp(44px,6vw,82px);line-height:.94;letter-spacing:-.055em;margin:18px 0}.problem>p{font-size:19px;line-height:1.7;max-width:760px}.paths,.mission,.model{padding:100px 0;border-bottom:1px solid var(--ink)}.paths header,.model header{display:grid;grid-template-columns:220px 1fr}.pathgrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink)}.pathgrid article{padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:210px}.pathgrid h3{font-size:28px;margin:45px 0 8px}.pathgrid p{color:var(--muted);line-height:1.5}.pathgrid small{font:700 9px ui-monospace,monospace;color:var(--muted)}.mission-head{display:flex;justify-content:space-between;align-items:end}.xp{text-align:right}.xp strong{display:block;font-size:72px;line-height:.8}.xp small{font:700 9px ui-monospace,monospace}.case{max-width:920px;margin:32px auto;padding:30px;border:1px solid var(--ink);background:#fbfaf6}.case-label{font:700 9px ui-monospace,monospace;color:var(--accent)}blockquote{font-size:24px;line-height:1.35;margin:22px 0;border-left:3px solid var(--accent);padding-left:18px}.choices{display:grid;gap:10px}.choices button{text-align:left;border:1px solid var(--line);background:transparent;padding:15px;cursor:pointer;font-size:14px}.choices button:hover:not(:disabled){border-color:var(--ink)}.choices button.correct{border-color:var(--accent);background:#e8f3ed}.choices button.wrong{background:#f4e8e6}.feedback{min-height:22px;margin-top:14px;font-size:13px;color:var(--muted)}.result{max-width:920px;margin:32px auto 0;padding:26px;background:var(--ink);color:var(--paper)}.result strong{display:block;font-size:32px;margin:10px 0}.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:50px}.tiers article{border:1px solid var(--ink);padding:28px;min-height:330px}.tiers h3{font-size:30px;margin:60px 0 14px}.tiers strong{font-size:42px}.tiers p{line-height:1.6;color:var(--muted)}.tiers .featured{background:var(--ink);color:var(--paper)}.tiers .featured p{color:#c9c7bf}.buy{margin-top:14px}.note{font-size:11px;color:var(--muted);line-height:1.6}.anon-grid{display:grid;gap:18px}.anon-grid p{margin:0;padding:16px 0;border-top:1px solid var(--line);line-height:1.6}footer{display:flex;justify-content:space-between;padding:30px 0 0;font:700 9px ui-monospace,monospace;color:var(--muted)}.flow-note{max-width:900px;margin:18px 0 0;font-size:10px;line-height:1.55;color:var(--muted)}@media(max-width:850px){main{padding:0 18px}.problem,.anonymous,.paths header,.model header{grid-template-columns:1fr;gap:20px}.pathgrid,.tiers{grid-template-columns:1fr}.pathgrid article{border-right:0}h1{font-size:clamp(58px,18vw,100px)}.proof{margin-top:16px}.mission,.paths,.model,.problem,.anonymous{padding:64px 0}.case{padding:20px}footer{gap:20px;flex-wrap:wrap}}
+:root{--ink:#111;--paper:#f5f3ed;--line:#c8c5bb;--accent:#0d6b4d;--muted:#69675f;--panel:#fbfaf6}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}main{max-width:1500px;margin:auto;padding:0 28px}.nav{height:64px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink);font:700 10px ui-monospace,monospace;text-transform:uppercase;letter-spacing:.06em}.nav a{color:inherit;text-decoration:none}.hero{min-height:calc(100vh - 64px);display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--ink);padding:60px 0}.eyebrow,.paths header span,.roadmap header span,.problem span,.mission-head span,.field-intro span,.who header span,.principle>span,.faq header span,.prelaunch span,.result span{font:700 10px ui-monospace,monospace;letter-spacing:.08em;color:var(--muted)}h1{font-size:clamp(68px,10vw,150px);line-height:.82;letter-spacing:-.07em;margin:36px 0;font-weight:600}h1 em{font-style:normal;color:var(--accent)}.lede{max-width:850px;font-size:22px;line-height:1.4}.actions{display:flex;gap:12px;margin:28px 0;flex-wrap:wrap}.actions a,.buy{border:1px solid var(--ink);padding:13px 18px;text-decoration:none;color:inherit;font-size:12px;display:inline-block}.actions .primary{background:var(--ink);color:var(--paper)}.actions .test-checkout,.buy{border-color:var(--accent);color:var(--accent);font-weight:700}.test-note{margin:-12px 0 16px;font:700 9px ui-monospace,monospace;letter-spacing:.06em;color:var(--accent)}.test-note.inside{margin:12px 0 0}.proof{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}.proof span{border:1px solid var(--line);padding:8px 10px;font:600 10px ui-monospace,monospace}.problem,.field{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;padding:100px 0;border-bottom:1px solid var(--ink)}h2{font-size:clamp(44px,6vw,82px);line-height:.94;letter-spacing:-.055em;margin:18px 0}.copy p,.field-intro p,.principle p{font-size:19px;line-height:1.7;max-width:760px}.paths,.mission,.who,.roadmap,.faq,.principle,.prelaunch{padding:100px 0;border-bottom:1px solid var(--ink)}.paths header,.roadmap header,.who header,.faq header{display:grid;grid-template-columns:220px 1fr}.pathgrid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:50px;border-top:1px solid var(--ink)}.pathgrid article{padding:24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:210px}.pathgrid h3{font-size:28px;margin:45px 0 8px}.pathgrid p{color:var(--muted);line-height:1.5}.mission-head{display:flex;justify-content:space-between;gap:40px;align-items:end}.mission-head>div:first-child p{color:var(--muted)}.xp{text-align:right}.xp strong{display:block;font-size:72px;line-height:.8}.xp small{font:700 9px ui-monospace,monospace}.case{max-width:920px;margin:32px auto;padding:30px;border:1px solid var(--ink);background:var(--panel)}.case-label{font:700 9px ui-monospace,monospace;color:var(--accent)}blockquote{font-size:24px;line-height:1.35;margin:22px 0;border-left:3px solid var(--accent);padding-left:18px}.choices{display:grid;gap:10px}.choices button{text-align:left;border:1px solid var(--line);background:transparent;padding:15px;cursor:pointer;font-size:14px}.choices button:hover:not(:disabled){border-color:var(--ink)}.choices button.correct{border-color:var(--accent);background:#e8f3ed}.choices button.wrong{background:#f4e8e6}.feedback{min-height:22px;margin-top:14px;font-size:13px;color:var(--muted)}.result{max-width:920px;margin:32px auto 0;padding:26px;background:var(--ink);color:var(--paper)}.result strong{display:block;font-size:32px;margin:10px 0}.offer{border:1px solid var(--ink);background:var(--panel);padding:34px}.offer small{font:700 9px ui-monospace,monospace;color:var(--muted)}.offer h3{font-size:34px;margin:32px 0 12px}.offer>strong{font-size:48px}.offer ul{padding-left:20px;line-height:1.8;color:var(--muted)}.who-grid,.tiers,.faq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:50px}.who-grid article,.tiers article,.faq-grid article{border:1px solid var(--ink);padding:28px;min-height:240px}.who-grid h3,.faq-grid h3{font-size:24px;margin-top:60px}.who-grid p,.tiers p,.faq-grid p{line-height:1.6;color:var(--muted)}.principle blockquote{font-size:clamp(36px,5vw,72px);max-width:1100px;margin:34px 0}.tiers h3{font-size:30px;margin:60px 0 14px}.tiers strong{font-size:38px}.prelaunch{display:grid;grid-template-columns:220px 1fr;gap:20px}.prelaunch p{font-size:18px;line-height:1.65;margin:0;max-width:900px}footer{display:flex;justify-content:space-between;gap:30px;padding:34px 0 0;font:700 9px ui-monospace,monospace;color:var(--muted)}footer>div{display:grid;gap:6px}footer nav{display:flex;gap:14px;flex-wrap:wrap}footer a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}.flow-note{max-width:900px;margin:18px 0 30px;font-size:10px;line-height:1.55;color:var(--muted)}@media(max-width:850px){main{padding:0 18px}.problem,.field,.paths header,.roadmap header,.who header,.faq header,.prelaunch{grid-template-columns:1fr;gap:20px}.pathgrid,.who-grid,.tiers,.faq-grid{grid-template-columns:1fr}.pathgrid article{border-right:0}h1{font-size:clamp(58px,18vw,100px)}.proof{margin-top:16px}.mission,.paths,.roadmap,.problem,.field,.who,.faq,.principle,.prelaunch{padding:64px 0}.case{padding:20px}.mission-head{align-items:flex-start}.xp strong{font-size:52px}footer{flex-direction:column}.field{gap:40px}}
 </style>
