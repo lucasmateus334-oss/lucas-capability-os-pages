@@ -1,13 +1,17 @@
 import { expect, test } from '@playwright/test';
 
+async function saveBinding(page, phone = '5511999999999', pin = '123456') {
+  await page.getByLabel('Meu número').fill(phone);
+  await page.getByLabel('PIN local').first().fill(pin);
+  await page.getByRole('button', { name: 'Salvar vínculo criptografado' }).click();
+  await expect(page.getByText('Vínculo salvo. O telefone em texto puro não foi persistido.')).toBeVisible();
+}
+
 test('zero-cost relay encrypts self binding and opens only the bound destination', async ({ page }) => {
   await page.goto('relay/');
 
   await expect(page.getByRole('heading', { name: 'Capability Lab Relay' })).toBeVisible();
-  await page.getByLabel('Meu número').fill('5511999999999');
-  await page.getByLabel('PIN local').first().fill('123456');
-  await page.getByRole('button', { name: 'Salvar vínculo criptografado' }).click();
-  await expect(page.getByText('Vínculo salvo. O telefone em texto puro não foi persistido.')).toBeVisible();
+  await saveBinding(page);
 
   const stored = await page.evaluate(() => localStorage.getItem('caplab.relay.self.v1'));
   expect(stored).toBeTruthy();
@@ -25,4 +29,46 @@ test('zero-cost relay encrypts self binding and opens only the bound destination
   expect(request.url()).toContain('https://wa.me/5511999999999?text=CAPLAB-RELAY-ZERO-COST-TEST');
 });
 
-// O que isso faz: valida em navegador real que o destino vem do vínculo criptografado e não de um campo controlado pela IA.
+test('AI handoff pre-fills only the message and removes it from the URL', async ({ page }) => {
+  const message = 'Mensagem criada pela IA — ação real sem escolher destinatário.';
+  await page.goto(`relay/#text=${encodeURIComponent(message)}`);
+
+  await expect(page.getByLabel('Mensagem')).toHaveValue(message);
+  await expect(page.getByText('Mensagem recebida da IA. Confirme o conteúdo e use seu PIN para abrir seu próprio WhatsApp.')).toBeVisible();
+  await expect(page).toHaveURL(/\/relay\/$/);
+});
+
+test('AI handoff cannot override the locally bound destination', async ({ page }) => {
+  await page.goto('relay/');
+  await saveBinding(page, '5511999999999', '123456');
+
+  await page.goto(`relay/#text=${encodeURIComponent('CAPLAB-AI-PREFILL')}&phone=5511888888888`);
+
+  await expect(page.getByText('Link rejeitado: a IA só pode preencher a mensagem, nunca o destinatário.')).toBeVisible();
+  await expect(page.getByLabel('Mensagem')).toHaveValue('');
+  await expect(page).toHaveURL(/\/relay\/$/);
+});
+
+test('legacy packed fragment remains compatible and still uses the local destination', async ({ page }) => {
+  await page.goto('relay/');
+  await saveBinding(page, '5511999999999', '123456');
+
+  const packed = Buffer.from('CAPLAB-PACKED-AI-HANDOFF', 'utf8')
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '');
+
+  await page.goto(`relay/#m=${packed}`);
+  await expect(page.getByLabel('Mensagem')).toHaveValue('CAPLAB-PACKED-AI-HANDOFF');
+  await page.getByLabel('PIN local').last().fill('123456');
+
+  await page.route('https://wa.me/**', (route) => route.abort());
+  const requestPromise = page.waitForRequest((request) => request.url().startsWith('https://wa.me/'));
+  await page.getByRole('button', { name: 'Abrir meu WhatsApp' }).click();
+  const request = await requestPromise;
+
+  expect(request.url()).toContain('https://wa.me/5511999999999?text=CAPLAB-PACKED-AI-HANDOFF');
+});
+
+// O que isso faz: valida em navegador real que mensagens vindas da IA podem ser pré-preenchidas sem expor ou permitir alteração do destino criptografado localmente.
