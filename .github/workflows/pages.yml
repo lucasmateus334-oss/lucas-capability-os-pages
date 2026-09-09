@@ -47,6 +47,21 @@ jobs:
           grep -q 'no runtime authority' src/pages/index.astro
           echo 'PUBLIC_SNAPSHOT_BOUNDARY_PASS'
 
+      - name: Verify Recruiter Lab pre-launch commerce boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f src/data/recruiterLabCommerce.ts
+          test -f src/pages/legal-recruiter-lab/index.astro
+          grep -q "provider: 'lemonsqueezy'" src/data/recruiterLabCommerce.ts
+          grep -q "mode: 'test'" src/data/recruiterLabCommerce.ts
+          grep -q 'liveSalesEnabled: false' src/data/recruiterLabCommerce.ts
+          grep -q 'noindex,nofollow' src/pages/legal-recruiter-lab/index.astro
+          grep -q 'recruiterLabCommerce.checkoutUrl' src/pages/legal-recruiter-lab/index.astro
+          ! grep -q 'lemonsqueezy.com/checkout' src/pages/legal-recruiter-lab/index.astro
+          ! grep -q '/lucas-capability-os-pages/' src/pages/legal-recruiter-lab/index.astro
+          echo 'RECRUITER_LAB_PRELAUNCH_COMMERCE_BOUNDARY_PASS'
+
       - name: Verify registry interaction contract
         shell: bash
         run: |
