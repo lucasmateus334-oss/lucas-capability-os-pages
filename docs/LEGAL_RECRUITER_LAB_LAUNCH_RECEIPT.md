@@ -1,6 +1,6 @@
 # Legal Recruiter Lab — Production Launch Receipt
 
-Status: **PRE-LAUNCH / NOT YET PROMOTED**
+Status: **PRE-LAUNCH / COMMERCE PROVIDER-AGNOSTIC / NOT PROMOTED**
 
 ## Release identity
 
@@ -9,16 +9,28 @@ Status: **PRE-LAUNCH / NOT YET PROMOTED**
 - Sales page: `/legal-recruiter-lab/`
 - Repository: `lucasmateus334-oss/lucas-capability-os-pages`
 - Release branch: `feat/legal-recruiter-lab-mvp`
+- Current validated head: `5996e416de1f285eaec4f802822fe0c0c1876d9b`
 - Production commit: `PENDING`
-- Deployment run: `PENDING`
+
+## Commerce architecture
+
+- Commerce configuration: `src/data/recruiterLabCommerce.ts`
+- Customer-facing checkout implementation: provider-agnostic
+- Current provider: `lemonsqueezy`
+- Current mode: `test`
+- Live sales enabled: `false`
+- Provider-specific checkout URL isolated from the sales page: `PASS`
+- Provider migration without landing-page rewrite: `READY`
 
 ## Merchant gate
 
+- Lemon Squeezy W-8/tax form: `EXTERNAL BLOCKER` — platform returns `Unable to set up tax form. Please try again or contact support.`
+- Lemon Squeezy support contact form: `FAILED` during escalation attempt
+- Direct support email with screenshots: `SENT`
+- Manual Gmail response check before next provider decision: `REQUIRED` — no polling/automation
 - Lemon Squeezy store activation/KYC: `PENDING`
-- Merchant approval: `PENDING`
-- Product copied to Live Mode: `PENDING`
-- Live checkout URL configured in source: `PENDING`
-- Live checkout URL recorded privately/safely: `PENDING`
+- Alternative Brazil-compatible provider decision: `PENDING IF BLOCKER PERSISTS`
+- Live checkout configuration: `PENDING`
 
 ## Public surface gate
 
@@ -32,7 +44,7 @@ Status: **PRE-LAUNCH / NOT YET PROMOTED**
 - Support mailbox configured: `PASS`
 - Educational/not-legal-advice positioning: `PASS`
 - Professional-certification claim absent: `PASS`
-- Search indexing enabled: `PENDING` — intentionally `noindex,nofollow` pre-launch
+- Search indexing enabled: `NO` — intentionally `noindex,nofollow` pre-launch
 
 ## Checkout and fulfillment validation
 
@@ -43,7 +55,7 @@ Status: **PRE-LAUNCH / NOT YET PROMOTED**
 - Receipt: `PASS`
 - Invoice: `PASS`
 - PDF attached to fulfillment: `PASS`
-- File download: `NOT TESTABLE` — platform disables test-mode downloads
+- File download: `NOT TESTABLE` — current provider disables test-mode downloads
 
 ### Live Mode
 - Controlled real purchase: `PENDING`
@@ -52,32 +64,38 @@ Status: **PRE-LAUNCH / NOT YET PROMOTED**
 - Final PDF download: `PENDING`
 - Refund/support route verified from customer perspective: `PENDING`
 
-## CI / deployment gate
+## QA gate
 
-- Final build: `PENDING`
-- Browser/E2E checks: `PENDING`
-- Lighthouse gate: `PENDING`
-- Production deployment: `PENDING`
-- Production URL smoke test: `PENDING`
+GitHub Actions run: `#122` / run id `34315139774`
+
+- Recruiter Lab pre-launch commerce boundary: `PASS`
+- Astro type/build: `PASS`
+- Browser E2E including Recruiter Lab playable mission: `PASS`
+- Fresh-eyes desktop/mobile capture: `PASS`
+- Lighthouse desktop/mobile gate: `PASS`
+- Current exact-head validation: `GREEN`
+- Production deployment: `PENDING` — PR is intentionally unmerged
 
 ## Promotion rule
 
 Change status to **LIVE / PROMOTED** only after all of the following are true:
 
-1. merchant/KYC approval is complete;
-2. the product exists in Live Mode;
-3. the source contains the Live checkout URL and no Test Mode warning;
-4. final CI is green;
-5. the release is deployed from the intended production commit;
-6. one controlled real purchase succeeds;
-7. the customer can download the final PDF;
-8. no private KYC, tax, bank or credential material is present in the repository.
+1. one supported merchant/provider is fully approved for live sales and payout;
+2. `recruiterLabCommerce.ts` is switched to the approved live provider, live checkout URL and `mode: 'live'`;
+3. `liveSalesEnabled` is deliberately changed to `true` only with launch authorization;
+4. all Test Mode/pre-launch checkout messaging is absent from the production build;
+5. final CI is green on the intended production commit;
+6. the release is merged and deployed from that exact commit;
+7. one controlled real purchase succeeds;
+8. the customer can download the final PDF;
+9. no private KYC, tax, bank or credential material is present in the repository.
 
 ## Final evidence
 
 - Production commit SHA: `PENDING`
-- GitHub Actions run: `PENDING`
+- Production Actions run: `PENDING`
 - Production page: `PENDING`
+- Live provider: `PENDING`
 - Live checkout: `PENDING`
 - Controlled order reference: `PENDING`
 - Delivery/download result: `PENDING`
@@ -85,4 +103,4 @@ Change status to **LIVE / PROMOTED** only after all of the following are true:
 
 ---
 
-Flow note — This receipt prevents a false launch declaration by requiring merchant approval, production checkout, green CI, deployed exact commit and a real end-to-end fulfillment test before Recruiter Lab is marked live.
+Flow note — This receipt keeps the product independent from a single payment provider and prevents a false launch declaration while the current Lemon Squeezy fiscal gate remains externally blocked.
