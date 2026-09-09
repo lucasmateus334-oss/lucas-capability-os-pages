@@ -19,6 +19,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -33,6 +34,7 @@ jobs:
         run: |
           set -euo pipefail
           test -f README.md
+          test -f package-lock.json
           test -f src/data/telemetry_source.json
           test -f src/components/CapabilityRegistry.astro
           test -f src/pages/index.astro
@@ -71,8 +73,8 @@ jobs:
           grep -q "dispatchMode('fallback')" public/live-telemetry.js
           echo 'SANITIZED_REST_ADAPTER_PASS'
 
-      - name: Install dependencies
-        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Install dependencies from lock
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
       - name: Astro type and build gate
         run: npm run build
@@ -113,8 +115,8 @@ jobs:
           done
           curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/ > /dev/null
           export CHROME_PATH="$(node -e "console.log(require('@playwright/test').chromium.executablePath())")"
-          npx lhci autorun --config=./lighthouserc.desktop.cjs
-          npx lhci autorun --config=./lighthouserc.mobile.cjs
+          timeout 240s npx lhci autorun --config=./lighthouserc.desktop.cjs
+          timeout 240s npx lhci autorun --config=./lighthouserc.mobile.cjs
           echo 'LIGHTHOUSE_DESKTOP_MOBILE_PASS'
 
       - name: Upload fresh-eyes and Lighthouse evidence
@@ -137,6 +139,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -144,8 +147,8 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
-      - name: Install dependencies
-        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Install dependencies from lock
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Build static site
         run: npm run build
       - name: Configure Pages
@@ -157,3 +160,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+
+# O que isso faz: valida e publica o snapshot público usando dependências fixadas pelo package-lock, preservando o boundary sanitizado e encerrando execuções travadas de forma fail-fast.
