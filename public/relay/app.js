@@ -131,7 +131,6 @@ function loadMessageFromFragment() {
   const rawFragment = location.hash.slice(1);
   if (!rawFragment) return;
 
-  // Remove a mensagem da barra/histórico assim que a página assume o handoff.
   history.replaceState(null, '', location.pathname + location.search);
 
   try {
@@ -222,7 +221,8 @@ $('send').addEventListener('click', async () => {
   }
 });
 
+window.addEventListener('hashchange', loadMessageFromFragment);
 refreshBindingStatus();
 loadMessageFromFragment();
 
-// O que isso faz: mantém o self-destination criptografado localmente, permite à IA preencher apenas a mensagem via fragmento local e nunca concede à IA autoridade sobre o destinatário.
+// O que isso faz: mantém o self-destination criptografado localmente, permite à IA preencher apenas a mensagem via fragmento local e processa handoffs na mesma aba sem conceder à IA autoridade sobre o destinatário.
