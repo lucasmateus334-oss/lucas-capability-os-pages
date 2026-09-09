@@ -19,6 +19,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -114,8 +115,8 @@ jobs:
           done
           curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/ > /dev/null
           export CHROME_PATH="$(node -e "console.log(require('@playwright/test').chromium.executablePath())")"
-          npx lhci autorun --config=./lighthouserc.desktop.cjs
-          npx lhci autorun --config=./lighthouserc.mobile.cjs
+          timeout 240s npx lhci autorun --config=./lighthouserc.desktop.cjs
+          timeout 240s npx lhci autorun --config=./lighthouserc.mobile.cjs
           echo 'LIGHTHOUSE_DESKTOP_MOBILE_PASS'
 
       - name: Upload fresh-eyes and Lighthouse evidence
@@ -138,6 +139,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -159,4 +161,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
 
-# O que isso faz: valida e publica o snapshot público usando dependências fixadas pelo package-lock, preservando o boundary sanitizado.
+# O que isso faz: valida e publica o snapshot público usando dependências fixadas pelo package-lock, preservando o boundary sanitizado e encerrando execuções travadas de forma fail-fast.
