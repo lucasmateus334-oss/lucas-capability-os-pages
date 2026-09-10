@@ -1,6 +1,7 @@
 ---
 import CapabilityRegistry from '../components/CapabilityRegistry.astro';
 import ImpactDemo from '../components/ImpactDemo.astro';
+import CapabilityEvolutionLab from '../components/CapabilityEvolutionLab.astro';
 import telemetry from '../data/telemetry_source.json';
 ---
 
@@ -24,6 +25,7 @@ import telemetry from '../data/telemetry_source.json';
         <a href="./portfolio/">Professional portfolio</a>
         <a href="#system">System</a>
         <a href="#impact-demo">In practice</a>
+        <a href="#experiment">Experiment</a>
         <a href="#capabilities">Registry</a>
         <a href="#evidence">Evidence</a>
       </nav>
@@ -94,6 +96,7 @@ import telemetry from '../data/telemetry_source.json';
       </section>
 
       <ImpactDemo />
+      <CapabilityEvolutionLab />
 
       <section id="capabilities" class="registry-section">
         <CapabilityRegistry />

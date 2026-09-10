@@ -1,0 +1,148 @@
+<section class="evolution-lab" id="experiment" aria-labelledby="experiment-title">
+  <header class="lab-head">
+    <span>03 / PUBLIC EXPERIMENT</span>
+    <div>
+      <p class="eyebrow">Capability Evolution Lab · Experiment 01</p>
+      <h2 id="experiment-title">Can a method make AI<br />work measurably better?</h2>
+      <p class="intro">Judge three answers to the same messy task without knowing how they were produced. Reveal the methods only after your choice.</p>
+    </div>
+  </header>
+
+  <div class="lab-shell" data-evolution-lab>
+    <div class="challenge">
+      <div class="challenge-meta"><span>THE SAME INPUT</span><b>01 / 04</b></div>
+      <p class="challenge-text">A small team is launching a community mentoring program in 30 days. Build a practical plan that makes progress visible, handles uncertainty, and can be reviewed by someone who was not in the room.</p>
+      <button type="button" class="begin" data-begin>Start blind test →</button>
+    </div>
+
+    <div class="blind-stage" data-stage hidden>
+      <div class="stage-head">
+        <div><span>BLIND COMPARISON</span><strong>Pick the strongest answer</strong></div>
+        <small>No method labels until you vote.</small>
+      </div>
+      <div class="answer-grid" data-answer-grid></div>
+      <div class="rubric">
+        <span>JUDGE ON</span>
+        <b>Clarity</b><b>Traceability</b><b>Uncertainty</b><b>Reviewability</b>
+      </div>
+    </div>
+
+    <div class="reveal" data-reveal hidden aria-live="polite">
+      <div class="reveal-kicker"><span>METHOD REVEALED</span><b>Your choice: <strong data-choice></strong></b></div>
+      <div class="method-grid" data-method-grid></div>
+      <div class="thesis">
+        <span>C LAB THESIS UNDER TEST</span>
+        <p>Capability does not improve only because a stronger model is added. It improves when context, decomposition, evidence, critique and explicit evaluation are designed as a repeatable operating loop.</p>
+      </div>
+      <button type="button" class="again" data-again>Run again ↺</button>
+    </div>
+
+    <p class="lab-note">Public experiment v1 uses fixed, disclosed benchmark outputs and randomizes presentation order locally in your browser. It does not claim statistical validation and does not collect visitor data.</p>
+  </div>
+</section>
+
+<script>
+  const variants = [
+    {
+      id: 'baseline',
+      method: 'Unaided baseline',
+      badge: 'BASELINE',
+      score: '1.9 / 4',
+      text: 'Create a launch checklist, recruit mentors and participants, set dates, promote the program, run kickoff, then survey participants at the end. Assign owners to each workstream and meet weekly to track progress.',
+      why: 'Useful direction, but weak evidence links, no explicit uncertainty handling and limited review structure.'
+    },
+    {
+      id: 'single',
+      method: 'Single-pass AI',
+      badge: 'AI · ONE PASS',
+      score: '2.8 / 4',
+      text: 'Split the 30 days into setup, recruitment, matching and launch. Track applications, match rate, attendance and satisfaction. Use a shared dashboard, weekly risk review and participant feedback. Define owners, deadlines and escalation points.',
+      why: 'More complete and structured, but the reasoning path and evidence behind choices remain mostly implicit.'
+    },
+    {
+      id: 'clab',
+      method: 'C Lab operating loop',
+      badge: 'AI + METHOD',
+      score: '3.8 / 4',
+      text: 'Define the launch claim first: “a safe, usable mentoring pilot can start in 30 days.” Break it into five testable conditions: mentor supply, participant demand, matching quality, safeguarding readiness and operating continuity. For each condition, name an owner, evidence source, minimum threshold, open uncertainty and review date. Run weekly red-team checks against the evidence, log exceptions, and publish a launch/no-launch decision packet that another reviewer can reproduce from source records.',
+      why: 'Makes claims, evidence, thresholds, uncertainty and independent review explicit instead of treating output quality as a single generation step.'
+    }
+  ];
+
+  const lab = document.querySelector<HTMLElement>('[data-evolution-lab]');
+  if (lab) {
+    const stage = lab.querySelector<HTMLElement>('[data-stage]');
+    const reveal = lab.querySelector<HTMLElement>('[data-reveal]');
+    const grid = lab.querySelector<HTMLElement>('[data-answer-grid]');
+    const methodGrid = lab.querySelector<HTMLElement>('[data-method-grid]');
+    const choice = lab.querySelector<HTMLElement>('[data-choice]');
+    const begin = lab.querySelector<HTMLButtonElement>('[data-begin]');
+    const again = lab.querySelector<HTMLButtonElement>('[data-again]');
+
+    const shuffle = <T,>(items: T[]) => {
+      const copy = [...items];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const left = copy[i];
+        const right = copy[j];
+        if (left === undefined || right === undefined) continue;
+        copy[i] = right;
+        copy[j] = left;
+      }
+      return copy;
+    };
+
+    const start = () => {
+      const ordered = shuffle(variants);
+      if (grid) {
+        grid.innerHTML = '';
+        ordered.forEach((variant, index) => {
+          const card = document.createElement('button');
+          card.type = 'button';
+          card.className = 'blind-card';
+          card.dataset.variant = variant.id;
+          card.innerHTML = `<span class="answer-id">ANSWER ${String.fromCharCode(65 + index)}</span><p>${variant.text}</p><span class="choose">Choose this answer →</span>`;
+          card.addEventListener('click', () => vote(variant.id, String.fromCharCode(65 + index), ordered));
+          grid.appendChild(card);
+        });
+      }
+      if (stage) stage.hidden = false;
+      if (reveal) reveal.hidden = true;
+      stage?.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+
+    const vote = (id: string, letter: string, ordered: typeof variants) => {
+      const picked = variants.find((v) => v.id === id);
+      if (choice && picked) choice.textContent = `${letter} · ${picked.method}`;
+      if (methodGrid) {
+        methodGrid.innerHTML = '';
+        ordered.forEach((variant, index) => {
+          const article = document.createElement('article');
+          article.className = variant.id === id ? 'method-card is-picked' : 'method-card';
+          article.innerHTML = `<div><span>ANSWER ${String.fromCharCode(65 + index)}</span><b>${variant.badge}</b></div><h3>${variant.method}</h3><strong>${variant.score}</strong><p>${variant.why}</p>`;
+          methodGrid.appendChild(article);
+        });
+      }
+      if (reveal) reveal.hidden = false;
+      reveal?.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+
+    begin?.addEventListener('click', start);
+    again?.addEventListener('click', start);
+  }
+</script>
+
+<style>
+  .evolution-lab{padding:92px 0;border-bottom:1px solid #111}
+  .lab-head{display:grid;grid-template-columns:220px 1fr;gap:38px;margin-bottom:46px}.lab-head>span,.eyebrow{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;color:#6c6c67}.eyebrow{margin:0 0 14px;text-transform:uppercase}.lab-head h2{margin:0;font-size:clamp(50px,7vw,108px);line-height:.88;letter-spacing:-.075em;font-weight:500}.intro{max-width:760px;margin:24px 0 0;font-size:17px;line-height:1.55;color:#52524e}
+  .lab-shell{border:1px solid #111;background:#0f0f0e;color:#f5f5f0;box-shadow:0 24px 70px rgba(17,17,15,.14)}
+  .challenge{display:grid;grid-template-columns:180px 1fr auto;gap:32px;align-items:center;padding:34px;border-bottom:1px solid #3a3a37}.challenge-meta{display:grid;gap:34px;align-self:stretch}.challenge-meta span,.stage-head span,.rubric span,.reveal-kicker span,.thesis span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#9b9b94}.challenge-meta b{font-size:22px}.challenge-text{max-width:900px;margin:0;font-size:clamp(22px,2.6vw,38px);line-height:1.08;letter-spacing:-.035em}.begin,.again{border:1px solid #777;background:#f5f5f0;color:#111;padding:15px 18px;font-weight:700;cursor:pointer}.begin:hover,.again:hover{background:#fff}
+  .blind-stage,.reveal{padding:34px}.stage-head,.reveal-kicker{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:24px}.stage-head div{display:grid;gap:8px}.stage-head strong{font-size:24px}.stage-head small{color:#9b9b94}
+  .answer-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #555;border-left:1px solid #555}.blind-card{min-height:390px;display:flex;flex-direction:column;align-items:flex-start;padding:26px;border:0;border-right:1px solid #555;border-bottom:1px solid #555;background:#151513;color:#f5f5f0;text-align:left;cursor:pointer;transition:transform .2s ease,background .2s ease}.blind-card:hover{background:#20201d;transform:translateY(-3px)}.answer-id,.choose{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#a9a9a2}.blind-card p{margin:46px 0 30px;font-size:17px;line-height:1.55}.choose{margin-top:auto;color:#fff}
+  .rubric{display:grid;grid-template-columns:180px repeat(4,1fr);gap:18px;padding:20px 0 0}.rubric b{font-size:11px;text-transform:uppercase;color:#c9c9c2}
+  .reveal{border-top:1px solid #3a3a37}.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#4b4b47;border:1px solid #4b4b47}.method-card{min-height:290px;padding:24px;background:#171715}.method-card.is-picked{outline:2px solid #f5f5f0;outline-offset:-2px}.method-card>div{display:flex;justify-content:space-between;gap:12px}.method-card span,.method-card b{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#9b9b94}.method-card h3{margin:46px 0 10px;font-size:24px}.method-card>strong{font-size:48px;letter-spacing:-.05em}.method-card p{margin:18px 0 0;font-size:12px;line-height:1.6;color:#bdbdb6}.thesis{display:grid;grid-template-columns:180px 1fr;gap:34px;margin:34px 0;padding:30px 0;border-top:1px solid #4b4b47;border-bottom:1px solid #4b4b47}.thesis p{max-width:900px;margin:0;font-size:22px;line-height:1.35;letter-spacing:-.02em}
+  .lab-note{margin:0;padding:18px 34px;border-top:1px solid #3a3a37;font:500 9px ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.5;color:#8f8f89}
+  [hidden]{display:none!important}
+  @media(max-width:980px){.lab-head{grid-template-columns:1fr}.challenge{grid-template-columns:1fr}.answer-grid,.method-grid{grid-template-columns:1fr}.blind-card{min-height:260px}.rubric{grid-template-columns:1fr 1fr}.thesis{grid-template-columns:1fr}}
+  @media(max-width:640px){.evolution-lab{padding:58px 0}.blind-stage,.reveal,.challenge{padding:22px}.lab-note{padding:16px 22px}.stage-head,.reveal-kicker{align-items:flex-start;flex-direction:column}.rubric{grid-template-columns:1fr 1fr}.blind-card p{margin-top:28px}.thesis p{font-size:18px}}
+</style>
