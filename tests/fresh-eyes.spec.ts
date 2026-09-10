@@ -37,6 +37,33 @@ const documentGeometry = async (page: Page) =>
     };
   });
 
+const mockLiveExperiment = async (page: Page) => {
+  await page.route('https://capability-os-home-base-cs16-previe.vercel.app/api/live-experiment', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        baseline: 'Make a checklist, assign owners and meet weekly.',
+        trace: {
+          goal: 'Launch a reviewable process without losing important context.',
+          known: 'The team has many applicants and information is scattered.',
+          plan: 'Separate criteria, evidence, owners and checkpoints.',
+          critique: 'The first draft could still hide assumptions and inconsistent criteria.',
+          review: 'A person should verify criteria, exceptions and final prioritization.'
+        },
+        clab: 'Define the goal, separate known facts from assumptions, create explicit review criteria, link each conclusion to evidence, mark unknowns, and add a human checkpoint before prioritization.',
+        evaluation: {
+          clarity: { baseline: 2.5, clab: 3.8, why: 'B makes the operating steps explicit.' },
+          traceability: { baseline: 1.5, clab: 4, why: 'B links conclusions to evidence and checkpoints.' },
+          uncertainty: { baseline: 1.5, clab: 3.8, why: 'B keeps assumptions and unknowns visible.' },
+          reviewability: { baseline: 2, clab: 4, why: 'B adds explicit human review points.' }
+        },
+        disclosure: 'Visible trace contains concise work-state summaries, not private chain-of-thought. Scores are model-assisted comparison, not scientific validation.'
+      })
+    });
+  });
+};
+
 test('desktop fresh-eyes surface remains contained', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./');
@@ -106,6 +133,41 @@ test('mobile impact demo keeps scenario, step and result interactions readable',
   const geometry = await documentGeometry(page);
   expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
   await capture(page, 'impact-demo-mobile');
+});
+
+test('desktop live experiment shows visible C Lab work and comparison result', async ({ page }) => {
+  await mockLiveExperiment(page);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./#live-experiment');
+  const live = page.locator('[data-live-lab]');
+  await expect(live).toBeVisible();
+  await live.locator('[data-sample]').first().click();
+  await live.locator('[data-run]').click();
+  await expect(live.locator('[data-working]')).toBeVisible();
+  await expect(live.locator('[data-results]')).toBeVisible({ timeout: 10000 });
+  await expect(live.locator('[data-trace="goal"]')).toContainText('reviewable process');
+  await expect(live.locator('[data-clab-answer]')).toContainText('human checkpoint');
+  await expect(live.locator('[data-score-grid]')).toContainText('Traceability');
+  await expect(live).toContainText('not private chain-of-thought');
+  const geometry = await documentGeometry(page);
+  await persistGeometry('live-experiment-desktop', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'live-experiment-desktop');
+});
+
+test('mobile live experiment remains usable and contained', async ({ page }) => {
+  await mockLiveExperiment(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./#live-experiment');
+  const live = page.locator('[data-live-lab]');
+  await expect(live).toBeVisible();
+  await live.locator('[data-sample]').nth(1).click();
+  await live.locator('[data-run]').click();
+  await expect(live.locator('[data-results]')).toBeVisible({ timeout: 10000 });
+  const geometry = await documentGeometry(page);
+  await persistGeometry('live-experiment-mobile', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'live-experiment-mobile');
 });
 
 test('desktop professional portfolio is recruiter-readable and contained', async ({ page }) => {
