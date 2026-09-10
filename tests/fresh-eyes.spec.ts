@@ -57,3 +57,28 @@ test('mobile fresh-eyes surface contains wide registry inside its scroller', asy
   await expect(page.locator('.table-wrap')).toHaveCSS('overflow-x', 'auto');
   await capture(page, 'home-base-mobile');
 });
+
+test('desktop professional portfolio is recruiter-readable and contained', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./portfolio/');
+  await expect(page.locator('#page-title')).toContainText('Talent Acquisition');
+  await expect(page.locator('.experience-list')).toBeVisible();
+  await expect(page.locator('#evidence')).toBeVisible();
+  await expect(page.locator('#rnd')).toBeVisible();
+  const geometry = await documentGeometry(page);
+  await persistGeometry('professional-portfolio-desktop', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'professional-portfolio-desktop');
+});
+
+test('mobile professional portfolio keeps identity, CTA and sections readable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./portfolio/');
+  await expect(page.locator('#page-title')).toContainText('Recruiting Operations');
+  await expect(page.locator('.actions .primary')).toHaveText('View LinkedIn');
+  await expect(page.locator('.experience-list')).toBeVisible();
+  const geometry = await documentGeometry(page);
+  await persistGeometry('professional-portfolio-mobile', geometry);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'professional-portfolio-mobile');
+});
