@@ -58,31 +58,51 @@ test('mobile fresh-eyes surface contains wide registry inside its scroller', asy
   await capture(page, 'home-base-mobile');
 });
 
-test('interactive impact demo switches contexts without leaving the public snapshot', async ({ page }) => {
+test('interactive impact demo exposes clear scenario and progressive step controls', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./#impact-demo');
   const demo = page.locator('[data-impact-demo]');
   await expect(demo).toBeVisible();
   await expect(demo.locator('[data-field="label"]')).toHaveText('Recruiting scenario');
+  await expect(demo.locator('[data-progress]')).toHaveText('1');
+  await expect(demo.locator('[data-step="0"]')).toHaveAttribute('aria-current', 'step');
+
+  await demo.locator('[data-next]').click();
+  await expect(demo.locator('[data-progress]')).toHaveText('2');
+  await expect(demo.locator('[data-step="1"]')).toHaveAttribute('aria-current', 'step');
+  await expect(demo.locator('[data-active-kicker]')).toContainText('STRUCTURE');
+
+  await demo.locator('[data-step="3"]').click();
+  await expect(demo.locator('[data-progress]')).toHaveText('4');
+  await expect(demo.locator('[data-result]')).toHaveClass(/is-revealed/);
+  await expect(demo.locator('[data-next]')).toHaveText('Restart ↺');
+
   await demo.locator('[data-scenario="learning"]').click();
   await expect(demo.locator('[data-field="label"]')).toHaveText('Learning & Operations scenario');
   await expect(demo.locator('[data-field="title"]')).toContainText('onboarding');
+  await expect(demo.locator('[data-progress]')).toHaveText('1');
+
   await demo.locator('[data-scenario="community"]').click();
   await expect(demo.locator('[data-field="label"]')).toHaveText('Community / Public Value scenario');
   await expect(demo.locator('[data-field="value"]')).toContainText('transparency');
   await expect(demo).toContainText('does not send or store visitor data');
+
   const geometry = await documentGeometry(page);
   expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
   await capture(page, 'impact-demo-desktop');
 });
 
-test('mobile impact demo remains readable and interactive', async ({ page }) => {
+test('mobile impact demo keeps scenario, step and result interactions readable', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('./#impact-demo');
   const demo = page.locator('[data-impact-demo]');
   await expect(demo).toBeVisible();
   await demo.locator('[data-scenario="community"]').click();
   await expect(demo.locator('[data-field="label"]')).toHaveText('Community / Public Value scenario');
+  await demo.locator('[data-next]').click();
+  await expect(demo.locator('[data-progress]')).toHaveText('2');
+  await demo.locator('[data-step="3"]').click();
+  await expect(demo.locator('[data-result]')).toHaveClass(/is-revealed/);
   const geometry = await documentGeometry(page);
   expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
   await capture(page, 'impact-demo-mobile');
