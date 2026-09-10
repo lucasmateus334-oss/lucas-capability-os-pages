@@ -4,38 +4,39 @@ import telemetry from '../data/telemetry_source.json';
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#f4f4f0" />
-    <title>Lucas Capability OS — Home Base</title>
+    <title>Capability Lab / Capability OS — Independent Applied R&D</title>
   </head>
   <body>
     <header class="masthead">
-      <a class="brand" href="#home" aria-label="Lucas Capability OS home">
+      <a class="brand" href="#home" aria-label="Capability OS home">
         <span class="brand-mark">LC</span>
         <span>Capability OS</span>
       </a>
       <nav aria-label="Primary">
+        <a href="./portfolio/">Professional portfolio</a>
         <a href="#system">System</a>
         <a href="#capabilities">Registry</a>
         <a href="#evidence">Evidence</a>
       </nav>
       <div class="operator-chip">
         <span>{telemetry.operator.label}</span>
-        <img src="https://avatars.githubusercontent.com/u/322756565?v=4" alt="Avatar do operador" loading="lazy" decoding="async" />
+        <img src="https://avatars.githubusercontent.com/u/322756565?v=4" alt="Lucas Mateus" loading="lazy" decoding="async" />
       </div>
     </header>
 
     <main id="home">
       <section class="hero" aria-labelledby="home-title">
-        <div class="hero-kicker">Public system surface / 2026</div>
+        <div class="hero-kicker">Independent Applied R&D · Public system surface / 2026</div>
         <h1 id="home-title">Capability<br />Operating<br />System</h1>
         <div class="hero-bottom">
-          <p>Build, verify and preserve what can actually be reproduced.</p>
+          <p>An independent project exploring how AI-assisted workflows, evidence, evaluation and reproducibility can help structure and validate complex work.</p>
           <dl>
             <div><dt>Surface</dt><dd>Sanitized public snapshot</dd></div>
             <div><dt>Source</dt><dd>Private canonical repository</dd></div>
@@ -78,8 +79,8 @@ import telemetry from '../data/telemetry_source.json';
         </header>
         <div class="system-grid">
           <div class="system-copy">
-            <p class="lead">The Home Base is a bounded read surface over the Capability OS. It exposes only states that can be represented without leaking private contracts, execution receipts or credentials.</p>
-            <p>Public publication cannot expand runtime authority. Planning, authorization, execution and promotion remain separate concerns.</p>
+            <p class="lead">Capability OS is an independent Applied R&D project by Lucas Mateus. The public Home Base exposes only high-level states that can be shown without publishing private contracts, execution receipts or credentials.</p>
+            <p>This work is separate from Lucas's core professional career in Talent Acquisition and Recruiting Operations. Public publication cannot expand runtime authority; planning, authorization, execution and promotion remain separate concerns.</p>
           </div>
           <dl class="facts">
             <div><dt>Promotion rule</dt><dd>Green ≠ promotable</dd></div>
@@ -140,9 +141,11 @@ import telemetry from '../data/telemetry_source.json';
           <span>Lucas Capability OS</span>
           <span>Public presentation layer · no runtime authority</span>
         </div>
-        <a href="#home">Back to top ↑</a>
+        <div>
+          <a href="./portfolio/">Professional portfolio</a>
+          <a href="#home">Back to top ↑</a>
+        </div>
       </footer>
-      <p class="flow-note">Nota de fluxo — Esta publicação apresenta somente uma visão pública sanitizada do Home Base, para disponibilizar a interface via GitHub Pages sem expor o repositório privado. O fluxo permanece GitHub-only: fonte canônica privada → snapshot público delimitado → GitHub Pages.</p>
     </main>
   </body>
 </html>
@@ -164,7 +167,7 @@ import telemetry from '../data/telemetry_source.json';
   .hero{min-height:calc(100vh - 64px);display:grid;grid-template-rows:auto 1fr auto;padding:28px 0 36px;border-bottom:1px solid #111}
   .hero-kicker{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.06em;color:#686863}
   .hero h1{align-self:center;margin:34px 0;font-size:clamp(76px,13vw,210px);line-height:.78;letter-spacing:-.085em;font-weight:600;text-transform:uppercase}
-  .hero-bottom{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:end}.hero-bottom>p{max-width:620px;margin:0;font-size:clamp(22px,2.6vw,38px);line-height:1.05;letter-spacing:-.035em}.hero-bottom dl{margin:0;display:grid}.hero-bottom dl div{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.hero-bottom dt{color:var(--muted)}.hero-bottom dd{margin:0;text-align:right}
+  .hero-bottom{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:end}.hero-bottom>p{max-width:680px;margin:0;font-size:clamp(22px,2.6vw,38px);line-height:1.05;letter-spacing:-.035em}.hero-bottom dl{margin:0;display:grid}.hero-bottom dl div{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:10px 0;border-top:1px solid var(--line);font-size:11px}.hero-bottom dt{color:var(--muted)}.hero-bottom dd{margin:0;text-align:right}
   .metric-band{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #111}.metric-band article{min-height:200px;padding:18px 20px 22px 0;border-right:1px solid var(--line)}.metric-band article+article{padding-left:20px}.metric-band article:last-child{border-right:0}.metric-band span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#777772}.metric-band strong{display:block;margin-top:24px;font-size:clamp(54px,6vw,96px);line-height:.9;letter-spacing:-.06em;font-weight:500}.metric-band p{margin:18px 0 5px;font-size:12px}.metric-band code{font:500 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#797973}
   .system-section,.evidence-section,.tier-section{padding:86px 0;border-bottom:1px solid #111}
   .section-head{display:grid;grid-template-columns:220px 1fr;gap:38px;align-items:start;margin-bottom:58px}.section-head>span,.tier-copy>span{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6c6c67;letter-spacing:.05em}.section-head h2,.tier-copy h2{margin:0;font-size:clamp(44px,6vw,88px);line-height:.94;letter-spacing:-.065em;font-weight:500}
@@ -173,7 +176,7 @@ import telemetry from '../data/telemetry_source.json';
   .registry-section{padding:86px 0}
   .evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #111}.evidence-grid article{min-height:270px;padding:22px 28px 26px 0;border-right:1px solid var(--line)}.evidence-grid article+article{padding-left:28px}.evidence-grid article:last-child{border-right:0}.number{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6c6c67}.evidence-grid h3{margin:54px 0 16px;font-size:30px;letter-spacing:-.04em}.evidence-grid p{max-width:400px;margin:0;font-size:13px;line-height:1.65;color:#5d5d58}
   .tier-section{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px}.tier-copy h2{margin-top:18px;font-size:clamp(42px,5vw,72px)}.tier-list{list-style:none;margin:0;padding:0;border-top:1px solid #111}.tier-list li{display:grid;grid-template-columns:48px 56px 1fr auto;align-items:center;gap:18px;min-height:72px;border-bottom:1px solid var(--line)}.tier-list li span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#85857f}.tier-list li b{font-size:14px}.tier-list li em{font-style:normal;font-size:13px}.tier-list li small{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;color:#75756f}.tier-list li.is-current b,.tier-list li.is-current small{color:var(--green)}.tier-list li.is-current{border-bottom-color:#9cc7b5}.tier-list li.is-done{color:#383835}
-  .footer{display:flex;justify-content:space-between;gap:30px;padding:24px 0 0}.footer div{display:flex;gap:18px;flex-wrap:wrap}.footer span,.footer a{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em;color:#696963}.footer a{text-decoration:none}.flow-note{max-width:940px;margin:18px 0 0;font-size:10px;line-height:1.6;color:#7a7a74}
+  .footer{display:flex;justify-content:space-between;gap:30px;padding:24px 0 0}.footer div{display:flex;gap:18px;flex-wrap:wrap}.footer span,.footer a{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.05em;color:#696963}.footer a{text-decoration:none}
   @media(max-width:980px){.masthead{grid-template-columns:1fr auto}.masthead nav{display:none}.hero{min-height:auto}.hero h1{margin:90px 0}.hero-bottom,.system-grid,.tier-section{grid-template-columns:1fr}.system-grid{margin-left:0}.metric-band{grid-template-columns:1fr 1fr}.metric-band article:nth-child(2){border-right:0}.metric-band article:nth-child(-n+2){border-bottom:1px solid var(--line)}.section-head{grid-template-columns:1fr;gap:18px}.evidence-grid{grid-template-columns:1fr}.evidence-grid article,.evidence-grid article+article{padding-left:0;border-right:0;border-bottom:1px solid var(--line)}.evidence-grid article:last-child{border-bottom:0}}
-  @media(max-width:640px){.masthead{padding:0 18px}.operator-chip span{display:none}main{padding:0 18px 32px}.hero h1{font-size:clamp(64px,20vw,112px);line-height:.82}.hero-bottom{gap:36px}.hero-bottom dl div{grid-template-columns:90px 1fr}.metric-band{grid-template-columns:1fr}.metric-band article,.metric-band article+article{padding:18px 0;border-right:0;border-bottom:1px solid var(--line)}.system-section,.evidence-section,.tier-section,.registry-section{padding:58px 0}.tier-list li{grid-template-columns:36px 44px 1fr;gap:12px}.tier-list li small{grid-column:3}}
+  @media(max-width:640px){.masthead{padding:0 18px}.operator-chip span{display:none}main{padding:0 18px 32px}.hero h1{font-size:clamp(64px,20vw,112px);line-height:.82}.hero-bottom{gap:36px}.hero-bottom dl div{grid-template-columns:90px 1fr}.metric-band{grid-template-columns:1fr}.metric-band article,.metric-band article+article{padding:18px 0;border-right:0;border-bottom:1px solid var(--line)}.system-section,.evidence-section,.tier-section,.registry-section{padding:58px 0}.tier-list li{grid-template-columns:36px 44px 1fr;gap:12px}.tier-list li small{grid-column:3}.footer{flex-direction:column}}
 </style>

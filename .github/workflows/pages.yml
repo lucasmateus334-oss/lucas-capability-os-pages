@@ -34,10 +34,12 @@ jobs:
         run: |
           set -euo pipefail
           test -f README.md
+          test -f PROFILE_README_READY.md
           test -f package-lock.json
           test -f src/data/telemetry_source.json
           test -f src/components/CapabilityRegistry.astro
           test -f src/pages/index.astro
+          test -f src/pages/portfolio/index.astro
           test -f public/telemetry.json
           test -f public/live-telemetry.js
           ! grep -RInE '(GEMINI_API_KEY|GITHUB_TOKEN|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|api[_-]?key[[:space:]]*[:=])' --exclude-dir=.git .
@@ -91,6 +93,21 @@ jobs:
           grep -q 'data-capability-registry' dist/index.html
           echo 'CAPABILITY_REGISTRY_BUILD_PASS'
 
+      - name: Verify recruiter-facing portfolio and search boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f dist/portfolio/index.html
+          grep -q '<title>Lucas Mateus — Talent Acquisition' dist/portfolio/index.html
+          grep -q 'Recruiting Operations' dist/portfolio/index.html
+          grep -q 'index,follow,max-image-preview:large' dist/portfolio/index.html
+          grep -q 'https://lucasmateus334-oss.github.io/lucas-capability-os-pages/portfolio/' dist/portfolio/index.html
+          grep -q 'https://www.linkedin.com/in/lucasmateus/' dist/portfolio/index.html
+          grep -q 'Independent Applied R' dist/portfolio/index.html
+          grep -q 'noindex,nofollow' dist/index.html
+          grep -q './portfolio/' src/pages/index.astro
+          echo 'RECRUITER_PORTFOLIO_SEARCH_BOUNDARY_PASS'
+
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
@@ -114,6 +131,7 @@ jobs:
             sleep 1
           done
           curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/ > /dev/null
+          curl --fail --silent http://127.0.0.1:4321/lucas-capability-os-pages/portfolio/ > /dev/null
           export CHROME_PATH="$(node -e "console.log(require('@playwright/test').chromium.executablePath())")"
           timeout 240s npx lhci autorun --config=./lighthouserc.desktop.cjs
           timeout 240s npx lhci autorun --config=./lighthouserc.mobile.cjs
@@ -161,4 +179,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
 
-# O que isso faz: valida e publica o snapshot público usando dependências fixadas pelo package-lock, preservando o boundary sanitizado e encerrando execuções travadas de forma fail-fast.
+# O que isso faz: valida o snapshot R&D, o portfólio profissional, seus limites de indexação e publica somente após build, browser, fresh-eyes e Lighthouse passarem.

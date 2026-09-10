@@ -1,37 +1,29 @@
-# Capability Lab / Capability OS — Applied R&D Public Snapshot
+# Capability Lab / Capability OS — Independent Applied R&D
 
-Independent applied research exploring evidence-based capability assessment, AI-assisted workflows, evaluation systems, agent architectures, reproducibility, knowledge portability and human/AI operational systems.
+Lucas Mateus independently explores how AI-assisted workflows, evaluation systems, evidence, reproducibility and human-AI collaboration can improve how complex work is structured and validated.
 
-**This project is separate from Lucas Mateus's core professional work in Talent Acquisition and Recruiting Operations.**
+This project is separate from Lucas's core professional career in **Talent Acquisition and Recruiting Operations**.
 
 ## Professional context
 
-The professional identity is the root. Recruiters and hiring managers should start with the public professional portfolio:
+For recruiting, hiring and career context, start here:
 
 - [Lucas Mateus — Professional Portfolio](https://lucasmateus334-oss.github.io/lucas-capability-os-pages/portfolio/)
 - [LinkedIn](https://www.linkedin.com/in/lucasmateus/)
 
-## Publication boundary
+## What this public surface shows
 
-This repository is a **public, sanitized presentation snapshot** only.
+This repository contains a limited public presentation of the Capability Lab / Capability OS project. It exposes selected high-level concepts and capability states without publishing the private implementation behind them.
 
-- Canonical source: private repository.
-- Runtime authority: none.
-- Credentials / secrets: excluded.
-- Execution receipts: excluded.
-- Internal governance and private evidence: excluded.
-- Private implementation details: excluded.
-- Publication target: GitHub Pages.
-- Search posture for the Capability OS surface: intentionally controlled (`noindex,nofollow`).
+The R&D surface remains intentionally `noindex,nofollow`; the professional portfolio is separately indexable.
 
-The public professional portfolio is separately marked `index,follow` so professional identity can be discoverable without making the R&D system the primary public persona.
+## What stays private
 
-## Architecture
+- private source code and implementation details;
+- credentials and secrets;
+- execution receipts and internal evaluation evidence;
+- private governance and working documents;
+- private professional records;
+- canonical internal system state.
 
-Professional identity → professional evidence → selected work → applied R&D.
-
-Not: R&D system → technical terminology → professional identity inferred later.
-
----
-
-Flow note — This repository publishes only sanitized public surfaces. The private repositories remain canonical; public pages cannot expand runtime authority or expose private evidence, credentials, governance, or implementation state.
+The private repositories remain the source of truth. This public repository is presentation-only and does not grant runtime or operational authority.
