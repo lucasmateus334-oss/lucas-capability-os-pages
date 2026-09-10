@@ -177,9 +177,10 @@
 
     const renderStep = (index: number) => {
       const safeIndex = Math.max(0, Math.min(index, steps.length - 1));
+      const meta = stepMeta[safeIndex];
+      if (!meta) return;
       currentStep = safeIndex;
       const scenario = scenarios[currentScenario];
-      const meta = stepMeta[safeIndex];
 
       steps.forEach((button, buttonIndex) => {
         const active = buttonIndex === safeIndex;
