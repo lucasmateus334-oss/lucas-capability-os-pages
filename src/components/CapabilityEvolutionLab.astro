@@ -85,9 +85,10 @@
         const j = Math.floor(Math.random() * (i + 1));
         const left = copy[i];
         const right = copy[j];
-        if (left === undefined || right === undefined) continue;
-        copy[i] = right;
-        copy[j] = left;
+        if (left !== undefined && right !== undefined) {
+          copy[i] = right;
+          copy[j] = left;
+        }
       }
       return copy;
     };
