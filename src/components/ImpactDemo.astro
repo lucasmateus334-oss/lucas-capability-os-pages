@@ -2,54 +2,107 @@
   <header class="impact-head">
     <span>02 / C LAB IN PRACTICE</span>
     <div>
-      <p>Interactive example</p>
-      <h2 id="impact-title">See how the idea translates into real work.</h2>
-      <p class="intro">Choose a context. The demo shows how Capability Lab principles can turn fragmented work into a more structured, evidence-aware and reviewable process.</p>
+      <p>Interactive walkthrough</p>
+      <h2 id="impact-title">Don’t just read it.<br />Try the logic.</h2>
+      <p class="intro">Pick a context, then click through four steps. The experience shows how Capability Lab principles can turn fragmented work into something structured, reviewable and easier to trust.</p>
     </div>
   </header>
 
-  <div class="impact-shell" data-impact-demo>
-    <div class="scenario-tabs" role="tablist" aria-label="Choose an illustrative scenario">
-      <button type="button" role="tab" aria-selected="true" data-scenario="recruiting">Recruiting</button>
-      <button type="button" role="tab" aria-selected="false" data-scenario="learning">Learning & Operations</button>
-      <button type="button" role="tab" aria-selected="false" data-scenario="community">Community / Public Value</button>
+  <div class="impact-shell" data-impact-demo data-tone="recruiting">
+    <div class="scenario-picker">
+      <div class="picker-label">
+        <span>Choose a context</span>
+        <strong>01 / 03</strong>
+      </div>
+      <div class="scenario-tabs" role="tablist" aria-label="Choose an illustrative scenario">
+        <button type="button" role="tab" aria-selected="true" data-scenario="recruiting">
+          <span class="tab-index">01</span>
+          <span class="tab-copy"><strong>Recruiting</strong><small>Hiring + candidate experience</small></span>
+          <span class="tab-arrow">→</span>
+        </button>
+        <button type="button" role="tab" aria-selected="false" data-scenario="learning">
+          <span class="tab-index">02</span>
+          <span class="tab-copy"><strong>Learning & Operations</strong><small>Knowledge + continuity</small></span>
+          <span class="tab-arrow">→</span>
+        </button>
+        <button type="button" role="tab" aria-selected="false" data-scenario="community">
+          <span class="tab-index">03</span>
+          <span class="tab-copy"><strong>Community / Public Value</strong><small>Evidence + accountability</small></span>
+          <span class="tab-arrow">→</span>
+        </button>
+      </div>
     </div>
 
     <div class="scenario-context" aria-live="polite">
-      <span class="scenario-label" data-field="label">Recruiting scenario</span>
+      <div class="context-kicker">
+        <span class="scenario-label" data-field="label">Recruiting scenario</span>
+        <span>Illustrative case</span>
+      </div>
       <h3 data-field="title">A high-volume hiring process is scattered across notes, spreadsheets and individual judgment.</h3>
       <p data-field="summary">The problem is not simply speed. Important criteria, evidence and handoffs can become hard to trace when work is fragmented across people and tools.</p>
+      <button type="button" class="start-button" data-action="start">Walk through the 4 steps <span>↓</span></button>
     </div>
 
-    <ol class="impact-flow" aria-label="Illustrative Capability Lab workflow">
-      <li>
-        <span>01</span>
-        <strong>Raw work</strong>
-        <p data-field="input">Candidate signals, role requirements, interview notes and operational tasks arrive in different formats.</p>
-      </li>
-      <li>
-        <span>02</span>
-        <strong>Structure</strong>
-        <p data-field="structure">AI-assisted workflows help organize inputs into explicit criteria, tasks and evidence references.</p>
-      </li>
-      <li>
-        <span>03</span>
-        <strong>Human review</strong>
-        <p data-field="review">People keep decision authority while checking evidence, exceptions and context before a conclusion is accepted.</p>
-      </li>
-      <li>
-        <span>04</span>
-        <strong>Verifiable output</strong>
-        <p data-field="output">The resulting process is easier to inspect, explain, repeat and improve instead of depending on memory alone.</p>
-      </li>
-    </ol>
+    <div class="journey" data-journey>
+      <div class="journey-head">
+        <div>
+          <span>Follow the transformation</span>
+          <strong>Step <b data-progress>1</b> of 4</strong>
+        </div>
+        <div class="progress-track" aria-hidden="true"><span data-progress-bar></span></div>
+      </div>
 
-    <div class="impact-value">
-      <div>
+      <ol class="impact-flow" aria-label="Illustrative Capability Lab workflow">
+        <li>
+          <button type="button" data-step="0" aria-current="step">
+            <span class="step-number">01</span>
+            <span class="step-state">START HERE</span>
+            <strong>Raw work</strong>
+            <p data-field="input">Candidate signals, role requirements, interview notes and operational tasks arrive in different formats.</p>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-step="1">
+            <span class="step-number">02</span>
+            <span class="step-state">ORGANIZE</span>
+            <strong>Structure</strong>
+            <p data-field="structure">AI-assisted workflows help organize inputs into explicit criteria, tasks and evidence references.</p>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-step="2">
+            <span class="step-number">03</span>
+            <span class="step-state">CHECK</span>
+            <strong>Human review</strong>
+            <p data-field="review">People keep decision authority while checking evidence, exceptions and context before a conclusion is accepted.</p>
+          </button>
+        </li>
+        <li>
+          <button type="button" data-step="3">
+            <span class="step-number">04</span>
+            <span class="step-state">RESULT</span>
+            <strong>Verifiable output</strong>
+            <p data-field="output">The resulting process is easier to inspect, explain, repeat and improve instead of depending on memory alone.</p>
+          </button>
+        </li>
+      </ol>
+
+      <div class="active-step" aria-live="polite">
+        <div class="active-marker"><span data-active-number>01</span></div>
+        <div>
+          <span class="active-kicker" data-active-kicker>START HERE · RAW WORK</span>
+          <p data-active-text>Candidate signals, role requirements, interview notes and operational tasks arrive in different formats.</p>
+        </div>
+        <button type="button" class="next-step" data-next>Next step →</button>
+      </div>
+    </div>
+
+    <div class="impact-value" data-result>
+      <div class="value-main">
         <span>Potential value</span>
         <p data-field="value">Clearer criteria, more traceable handoffs and a stronger basis for consistent candidate communication and process review.</p>
       </div>
-      <div>
+      <div class="value-method">
         <span>What C Lab adds</span>
         <p data-field="capability">A method for separating assumptions from evidence and making the path from input to decision visible.</p>
       </div>
@@ -96,15 +149,57 @@
     }
   };
 
+  const stepMeta = [
+    { kicker: 'START HERE · RAW WORK', field: 'input' },
+    { kicker: 'ORGANIZE · STRUCTURE', field: 'structure' },
+    { kicker: 'CHECK · HUMAN REVIEW', field: 'review' },
+    { kicker: 'RESULT · VERIFIABLE OUTPUT', field: 'output' }
+  ] as const;
+
   type ScenarioKey = keyof typeof scenarios;
   type ScenarioField = keyof (typeof scenarios)['recruiting'];
 
   document.querySelectorAll<HTMLElement>('[data-impact-demo]').forEach((root) => {
     const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-scenario]'));
     const fields = Array.from(root.querySelectorAll<HTMLElement>('[data-field]'));
+    const steps = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-step]'));
+    const progress = root.querySelector<HTMLElement>('[data-progress]');
+    const progressBar = root.querySelector<HTMLElement>('[data-progress-bar]');
+    const activeNumber = root.querySelector<HTMLElement>('[data-active-number]');
+    const activeKicker = root.querySelector<HTMLElement>('[data-active-kicker]');
+    const activeText = root.querySelector<HTMLElement>('[data-active-text]');
+    const next = root.querySelector<HTMLButtonElement>('[data-next]');
+    const start = root.querySelector<HTMLButtonElement>('[data-action="start"]');
+    const journey = root.querySelector<HTMLElement>('[data-journey]');
+    const result = root.querySelector<HTMLElement>('[data-result]');
+    let currentScenario: ScenarioKey = 'recruiting';
+    let currentStep = 0;
 
-    const render = (key: ScenarioKey) => {
+    const renderStep = (index: number) => {
+      const safeIndex = Math.max(0, Math.min(index, steps.length - 1));
+      currentStep = safeIndex;
+      const scenario = scenarios[currentScenario];
+      const meta = stepMeta[safeIndex];
+
+      steps.forEach((button, buttonIndex) => {
+        const active = buttonIndex === safeIndex;
+        if (active) button.setAttribute('aria-current', 'step');
+        else button.removeAttribute('aria-current');
+      });
+
+      if (progress) progress.textContent = String(safeIndex + 1);
+      if (progressBar) progressBar.style.width = `${((safeIndex + 1) / steps.length) * 100}%`;
+      if (activeNumber) activeNumber.textContent = String(safeIndex + 1).padStart(2, '0');
+      if (activeKicker) activeKicker.textContent = meta.kicker;
+      if (activeText) activeText.textContent = scenario[meta.field];
+      if (next) next.textContent = safeIndex === steps.length - 1 ? 'Restart ↺' : 'Next step →';
+      result?.classList.toggle('is-revealed', safeIndex === steps.length - 1);
+    };
+
+    const renderScenario = (key: ScenarioKey) => {
+      currentScenario = key;
       const scenario = scenarios[key];
+      root.dataset.tone = key;
 
       buttons.forEach((button) => {
         const active = button.dataset.scenario === key;
@@ -115,35 +210,80 @@
         const fieldName = field.dataset.field as ScenarioField | undefined;
         if (fieldName) field.textContent = scenario[fieldName];
       });
+
+      renderStep(0);
     };
 
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         const key = button.dataset.scenario as ScenarioKey | undefined;
-        if (key && key in scenarios) render(key);
+        if (key && key in scenarios) renderScenario(key);
       });
+    });
+
+    steps.forEach((button) => {
+      button.addEventListener('click', () => renderStep(Number(button.dataset.step ?? 0)));
+    });
+
+    next?.addEventListener('click', () => renderStep(currentStep === steps.length - 1 ? 0 : currentStep + 1));
+    start?.addEventListener('click', () => {
+      journey?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      renderStep(0);
     });
   });
 </script>
 
 <style>
-  .impact-demo{padding:86px 0;border-bottom:1px solid #111}
-  .impact-head{display:grid;grid-template-columns:220px 1fr;gap:38px;align-items:start;margin-bottom:50px}
+  .impact-demo{padding:72px 0 94px;border-bottom:1px solid #111}
+  .impact-head{display:grid;grid-template-columns:220px 1fr;gap:38px;align-items:start;margin-bottom:42px}
   .impact-head>span{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6c6c67;letter-spacing:.05em}
   .impact-head p{margin:0 0 12px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#6f6f69}
-  .impact-head h2{max-width:1050px;margin:0;font-size:clamp(44px,6vw,88px);line-height:.94;letter-spacing:-.065em;font-weight:500}
-  .impact-head .intro{max-width:760px;margin:24px 0 0;font-size:15px;line-height:1.65;text-transform:none;letter-spacing:0;color:#565651}
-  .impact-shell{border:1px solid #111;background:#ecefe9}
-  .scenario-tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #111}
-  .scenario-tabs button{min-height:54px;padding:0 18px;border:0;border-right:1px solid #b8bcb6;background:transparent;color:#4d514d;font:600 11px Arial,Helvetica,sans-serif;text-align:left;cursor:pointer}
-  .scenario-tabs button:last-child{border-right:0}.scenario-tabs button[aria-selected="true"]{background:#151715;color:#fff}.scenario-tabs button:focus-visible{outline:2px solid #111;outline-offset:-4px}
-  .scenario-context{padding:34px;border-bottom:1px solid #b8bcb6}.scenario-label,.impact-flow span,.impact-value span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.07em;color:#5d665f}
-  .scenario-context h3{max-width:1100px;margin:14px 0 16px;font-size:clamp(28px,4vw,54px);line-height:1;letter-spacing:-.045em;font-weight:500}
-  .scenario-context p{max-width:840px;margin:0;font-size:14px;line-height:1.7;color:#525751}
-  .impact-flow{display:grid;grid-template-columns:repeat(4,1fr);margin:0;padding:0;list-style:none;border-bottom:1px solid #b8bcb6}
-  .impact-flow li{min-height:255px;padding:26px;border-right:1px solid #b8bcb6}.impact-flow li:last-child{border-right:0}.impact-flow strong{display:block;margin:44px 0 12px;font-size:18px}.impact-flow p{margin:0;font-size:13px;line-height:1.65;color:#555a54}
-  .impact-value{display:grid;grid-template-columns:1fr 1fr}.impact-value>div{padding:26px 30px}.impact-value>div:first-child{border-right:1px solid #b8bcb6}.impact-value p{max-width:650px;margin:14px 0 0;font-size:15px;line-height:1.6}
-  .impact-note{margin:0;padding:18px 30px;border-top:1px solid #b8bcb6;font-size:10px;line-height:1.55;color:#6c716b;background:rgba(255,255,255,.25)}
-  @media(max-width:980px){.impact-head{grid-template-columns:1fr;gap:18px}.impact-flow{grid-template-columns:1fr 1fr}.impact-flow li:nth-child(2){border-right:0}.impact-flow li:nth-child(-n+2){border-bottom:1px solid #b8bcb6}}
-  @media(max-width:640px){.impact-demo{padding:58px 0}.scenario-tabs{grid-template-columns:1fr}.scenario-tabs button{border-right:0;border-bottom:1px solid #b8bcb6}.scenario-tabs button:last-child{border-bottom:0}.scenario-context{padding:24px 20px}.impact-flow{grid-template-columns:1fr}.impact-flow li,.impact-flow li:nth-child(2){min-height:0;padding:24px 20px;border-right:0;border-bottom:1px solid #b8bcb6}.impact-flow li:last-child{border-bottom:0}.impact-flow strong{margin:24px 0 10px}.impact-value{grid-template-columns:1fr}.impact-value>div{padding:24px 20px}.impact-value>div:first-child{border-right:0;border-bottom:1px solid #b8bcb6}.impact-note{padding:16px 20px}}
+  .impact-head h2{max-width:1050px;margin:0;font-size:clamp(48px,7vw,104px);line-height:.88;letter-spacing:-.07em;font-weight:500}
+  .impact-head .intro{max-width:760px;margin:24px 0 0;font-size:16px;line-height:1.65;text-transform:none;letter-spacing:0;color:#4f534e}
+
+  .impact-shell{--accent:#176b52;--accent-soft:#dfeee8;--accent-ink:#0c4534;border:1px solid #111;background:#fff;box-shadow:0 18px 60px rgba(17,17,15,.08);transition:background .25s ease}
+  .impact-shell[data-tone="learning"]{--accent:#3457d5;--accent-soft:#e2e8ff;--accent-ink:#20398e}
+  .impact-shell[data-tone="community"]{--accent:#b94d1d;--accent-soft:#f9e4da;--accent-ink:#7c2d0b}
+
+  .scenario-picker{display:grid;grid-template-columns:180px 1fr;border-bottom:1px solid #111;background:#111;color:#fff}
+  .picker-label{padding:22px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid #3c3c39}
+  .picker-label span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em;color:#aaa}
+  .picker-label strong{font-size:22px;font-weight:500}
+  .scenario-tabs{display:grid;grid-template-columns:repeat(3,1fr)}
+  .scenario-tabs button{position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;min-height:98px;padding:18px;border:0;border-right:1px solid #3c3c39;background:#171715;color:#ddd;text-align:left;cursor:pointer;transition:background .2s ease,color .2s ease,transform .2s ease}
+  .scenario-tabs button:last-child{border-right:0}.scenario-tabs button:hover{background:#242421}.scenario-tabs button:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+  .scenario-tabs button[aria-selected="true"]{background:var(--accent);color:#fff}
+  .tab-index{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;opacity:.7}.tab-copy{display:grid;gap:5px}.tab-copy strong{font-size:13px}.tab-copy small{font-size:10px;font-weight:400;opacity:.72}.tab-arrow{font-size:18px;transition:transform .2s ease}.scenario-tabs button:hover .tab-arrow,.scenario-tabs button[aria-selected="true"] .tab-arrow{transform:translateX(4px)}
+
+  .scenario-context{position:relative;padding:46px 44px 40px;border-bottom:1px solid #d4d4cf;background:linear-gradient(120deg,var(--accent-soft),#fff 68%);overflow:hidden}
+  .scenario-context:after{content:'';position:absolute;right:-70px;top:-100px;width:300px;height:300px;border-radius:50%;border:70px solid color-mix(in srgb,var(--accent) 18%,transparent);pointer-events:none}
+  .context-kicker{display:flex;justify-content:space-between;gap:20px;position:relative;z-index:1}.context-kicker span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink)}
+  .scenario-context h3{position:relative;z-index:1;max-width:1080px;margin:18px 0 18px;font-size:clamp(32px,4.5vw,62px);line-height:.96;letter-spacing:-.05em;font-weight:500}
+  .scenario-context>p{position:relative;z-index:1;max-width:780px;margin:0;font-size:15px;line-height:1.68;color:#414541}
+  .start-button{position:relative;z-index:1;margin-top:28px;min-height:44px;padding:0 17px;border:0;background:var(--accent);color:#fff;font-size:11px;font-weight:700;cursor:pointer}.start-button span{display:inline-block;margin-left:8px}.start-button:hover{filter:brightness(.92)}
+
+  .journey{scroll-margin-top:80px;background:#f7f7f4}
+  .journey-head{display:grid;grid-template-columns:220px 1fr;gap:28px;align-items:end;padding:22px 26px;border-bottom:1px solid #c7c7c1}.journey-head>div:first-child{display:flex;justify-content:space-between;gap:10px;grid-column:1/-1}.journey-head span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em;color:#72726c}.journey-head strong{font:600 11px ui-monospace,SFMono-Regular,Menlo,monospace}.journey-head b{color:var(--accent)}
+  .progress-track{grid-column:1/-1;height:4px;background:#ddd}.progress-track span{display:block;width:25%;height:100%;background:var(--accent);transition:width .28s ease}
+
+  .impact-flow{display:grid;grid-template-columns:repeat(4,1fr);margin:0;padding:0;list-style:none;border-bottom:1px solid #c7c7c1}
+  .impact-flow li{border-right:1px solid #c7c7c1}.impact-flow li:last-child{border-right:0}
+  .impact-flow button{width:100%;min-height:260px;padding:24px;border:0;background:transparent;color:#191a18;text-align:left;cursor:pointer;transition:background .22s ease,color .22s ease,transform .22s ease}
+  .impact-flow button:hover{background:#ecece7}.impact-flow button:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}.impact-flow button[aria-current="step"]{background:var(--accent);color:#fff}
+  .step-number,.step-state{display:block;font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.07em}.step-number{opacity:.65}.step-state{margin-top:8px;color:var(--accent);opacity:.95}.impact-flow button[aria-current="step"] .step-state{color:#fff}
+  .impact-flow strong{display:block;margin:48px 0 12px;font-size:19px}.impact-flow p{margin:0;font-size:12px;line-height:1.62;color:#5a5e58}.impact-flow button[aria-current="step"] p{color:rgba(255,255,255,.84)}
+
+  .active-step{display:grid;grid-template-columns:72px 1fr auto;gap:24px;align-items:center;padding:24px 28px;border-bottom:1px solid #111;background:#111;color:#fff}
+  .active-marker{display:grid;place-items:center;width:54px;height:54px;border:1px solid #555;border-radius:50%;font:600 11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent-soft)}
+  .active-kicker{display:block;margin-bottom:7px;font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:var(--accent-soft)}
+  .active-step p{max-width:760px;margin:0;font-size:14px;line-height:1.55;color:#e7e7e2}.next-step{min-height:42px;padding:0 16px;border:1px solid #777;background:transparent;color:#fff;font-size:11px;font-weight:700;cursor:pointer}.next-step:hover{background:#fff;color:#111}
+
+  .impact-value{display:grid;grid-template-columns:1.15fr .85fr;border-bottom:1px solid #111;transition:box-shadow .25s ease}.impact-value.is-revealed{box-shadow:inset 0 6px 0 var(--accent)}
+  .impact-value>div{padding:34px}.impact-value>div:first-child{border-right:1px solid #c7c7c1}.impact-value span{font:600 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-ink)}
+  .impact-value p{max-width:680px;margin:16px 0 0;font-size:17px;line-height:1.52}.value-main{background:var(--accent-soft)}.value-main p{font-size:clamp(20px,2.1vw,31px);line-height:1.2;letter-spacing:-.025em}.value-method{background:#fff}
+  .impact-note{margin:0;padding:16px 28px;font-size:10px;line-height:1.55;color:#6c716b;background:#f2f2ee}
+
+  @media(max-width:980px){.impact-head{grid-template-columns:1fr;gap:18px}.scenario-picker{grid-template-columns:1fr}.picker-label{display:none}.scenario-tabs{grid-template-columns:1fr}.scenario-tabs button{min-height:72px;border-right:0;border-bottom:1px solid #3c3c39}.scenario-tabs button:last-child{border-bottom:0}.impact-flow{grid-template-columns:1fr 1fr}.impact-flow li:nth-child(2){border-right:0}.impact-flow li:nth-child(-n+2){border-bottom:1px solid #c7c7c1}.active-step{grid-template-columns:60px 1fr}.next-step{grid-column:2;width:max-content}.impact-value{grid-template-columns:1fr}.impact-value>div:first-child{border-right:0;border-bottom:1px solid #c7c7c1}}
+  @media(max-width:640px){.impact-demo{padding:52px 0 70px}.impact-head h2{font-size:clamp(48px,16vw,70px)}.scenario-context{padding:30px 20px}.context-kicker{flex-direction:column;gap:6px}.scenario-context:after{display:none}.scenario-context h3{font-size:clamp(32px,11vw,48px)}.impact-flow{grid-template-columns:1fr}.impact-flow li,.impact-flow li:nth-child(2){border-right:0;border-bottom:1px solid #c7c7c1}.impact-flow li:last-child{border-bottom:0}.impact-flow button{min-height:0;padding:22px 20px}.impact-flow strong{margin:24px 0 9px}.active-step{grid-template-columns:48px 1fr;gap:15px;padding:22px 20px}.active-marker{width:42px;height:42px}.next-step{grid-column:1/-1;width:100%}.impact-value>div{padding:26px 20px}.impact-note{padding:15px 20px}}
+  @media(prefers-reduced-motion:reduce){.scenario-tabs button,.tab-arrow,.progress-track span{transition:none}.journey{scroll-behavior:auto}}
 </style>
