@@ -58,6 +58,36 @@ test('mobile fresh-eyes surface contains wide registry inside its scroller', asy
   await capture(page, 'home-base-mobile');
 });
 
+test('interactive impact demo switches contexts without leaving the public snapshot', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('./#impact-demo');
+  const demo = page.locator('[data-impact-demo]');
+  await expect(demo).toBeVisible();
+  await expect(demo.locator('[data-field="label"]')).toHaveText('Recruiting scenario');
+  await demo.locator('[data-scenario="learning"]').click();
+  await expect(demo.locator('[data-field="label"]')).toHaveText('Learning & Operations scenario');
+  await expect(demo.locator('[data-field="title"]')).toContainText('onboarding');
+  await demo.locator('[data-scenario="community"]').click();
+  await expect(demo.locator('[data-field="label"]')).toHaveText('Community / Public Value scenario');
+  await expect(demo.locator('[data-field="value"]')).toContainText('transparency');
+  await expect(demo).toContainText('does not send or store visitor data');
+  const geometry = await documentGeometry(page);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'impact-demo-desktop');
+});
+
+test('mobile impact demo remains readable and interactive', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('./#impact-demo');
+  const demo = page.locator('[data-impact-demo]');
+  await expect(demo).toBeVisible();
+  await demo.locator('[data-scenario="community"]').click();
+  await expect(demo.locator('[data-field="label"]')).toHaveText('Community / Public Value scenario');
+  const geometry = await documentGeometry(page);
+  expect(geometry.overflow, JSON.stringify(geometry, null, 2)).toBe(0);
+  await capture(page, 'impact-demo-mobile');
+});
+
 test('desktop professional portfolio is recruiter-readable and contained', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('./portfolio/');

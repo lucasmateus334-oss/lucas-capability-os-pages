@@ -11,6 +11,18 @@ For recruiting, hiring and career context, start here:
 - [Lucas Mateus — Professional Portfolio](https://lucasmateus334-oss.github.io/lucas-capability-os-pages/portfolio/)
 - [LinkedIn](https://www.linkedin.com/in/lucasmateus/)
 
+## Try the idea in practice
+
+The public snapshot includes an interactive, browser-only demonstration of how Capability Lab principles can translate into different contexts:
+
+- Recruiting;
+- Learning & Operations;
+- Community / Public Value.
+
+[Open the interactive C Lab example](https://lucasmateus334-oss.github.io/lucas-capability-os-pages/#impact-demo)
+
+The scenarios are illustrative. They do not claim production deployment, guaranteed outcomes or automated decision-making, and the demo does not send or store visitor data.
+
 ## What this public surface shows
 
 This repository contains a limited public presentation of the Capability Lab / Capability OS project. It exposes selected high-level concepts and capability states without publishing the private implementation behind them.
