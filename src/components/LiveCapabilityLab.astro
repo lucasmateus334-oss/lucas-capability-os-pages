@@ -4,266 +4,46 @@
     <div>
       <p class="eyebrow">Capability Evolution Lab · Experiment 02</p>
       <h2 id="live-title">Give C Lab a problem.<br />Watch the method work.</h2>
-      <p class="intro">Write a real problem in plain language. You will see a quick AI answer and a second answer that goes through the C Lab operating loop first.</p>
+      <p class="intro">Write a real problem in plain language. The same problem will go through a quick AI answer and a more structured C Lab process.</p>
     </div>
   </header>
 
-  <div class="live-shell" data-live-lab data-endpoint="https://capability-os-home-base-cs16-previe.vercel.app/api/live-experiment">
-    <section class="input-stage" aria-label="Live experiment input">
-      <div class="input-copy">
-        <span class="step-label">YOUR PROBLEM</span>
-        <h3>No special prompt needed.</h3>
-        <p>Explain the problem like you would explain it to a smart teenager.</p>
-      </div>
-      <div class="composer">
-        <textarea data-problem maxlength="700" rows="5" placeholder="Example: Our small team has 30 days to launch a mentoring program, but information is scattered and nobody agrees on what success means."></textarea>
-        <div class="samples" aria-label="Example problems">
-          <button type="button" data-sample="We have 300 job applicants, notes are scattered across different places, and our team needs a fair and clear way to decide what to review first.">Hiring</button>
-          <button type="button" data-sample="A new team is starting next month, but important knowledge lives in old documents and in the heads of a few experienced people.">Team onboarding</button>
-          <button type="button" data-sample="A community project has many activities, but we do not have a clear way to show what is working, what is uncertain, and what should change next.">Community project</button>
-        </div>
-        <div class="run-row">
-          <button type="button" class="run-button" data-run>Run live experiment →</button>
-          <small>20–700 characters · no account · no storage</small>
-        </div>
-        <p class="input-error" data-input-error hidden></p>
-      </div>
-    </section>
-
-    <section class="working-stage" data-working hidden aria-live="polite">
-      <div class="working-head">
-        <div>
-          <span class="step-label">SAME PROBLEM · TWO METHODS</span>
-          <h3>Watch the work, not private reasoning.</h3>
-        </div>
-        <div class="live-status"><span class="pulse"></span><b data-live-status>Running</b></div>
-      </div>
-
-      <div class="lanes">
-        <article class="lane quick-lane">
-          <div class="lane-title">
-            <span>A</span>
-            <div><b>Quick AI</b><small>one pass</small></div>
-          </div>
-          <ol class="mini-flow">
-            <li data-quick-step="0"><i></i><span>Read the problem</span></li>
-            <li data-quick-step="1"><i></i><span>Write an answer</span></li>
-          </ol>
-          <p class="lane-note">Fast and useful, but most checks stay implicit.</p>
-        </article>
-
-        <article class="lane clab-lane">
-          <div class="lane-title">
-            <span>B</span>
-            <div><b>AI + C Lab</b><small>operating loop</small></div>
-          </div>
-          <ol class="clab-flow">
-            <li data-clab-step="0"><i></i><div><b>1. Understand the goal</b><span>What are we actually trying to solve?</span><p data-trace="goal"></p></div></li>
-            <li data-clab-step="1"><i></i><div><b>2. Separate facts from guesses</b><span>What do we know, assume or still need?</span><p data-trace="known"></p></div></li>
-            <li data-clab-step="2"><i></i><div><b>3. Build checkable pieces</b><span>Turn the problem into steps we can inspect.</span><p data-trace="plan"></p></div></li>
-            <li data-clab-step="3"><i></i><div><b>4. Challenge the draft</b><span>Look for weak points before accepting it.</span><p data-trace="critique"></p></div></li>
-            <li data-clab-step="4"><i></i><div><b>5. Add human review</b><span>Mark where a person should check context.</span><p data-trace="review"></p></div></li>
-            <li data-clab-step="5"><i></i><div><b>6. Build the final answer</b><span>Answer with uncertainty and checkpoints visible.</span></div></li>
-          </ol>
-        </article>
-      </div>
-    </section>
-
-    <section class="results-stage" data-results hidden>
-      <header class="results-head">
-        <span class="step-label">RESULT</span>
-        <h3>Same problem. Different operating method.</h3>
-      </header>
-
-      <div class="answers">
-        <article>
-          <div class="answer-head"><span>A</span><b>Quick AI</b></div>
-          <p data-baseline></p>
-        </article>
-        <article class="clab-answer">
-          <div class="answer-head"><span>B</span><b>AI + C Lab</b></div>
-          <p data-clab-answer></p>
-        </article>
-      </div>
-
-      <div class="comparison">
-        <div class="comparison-title">
-          <span class="step-label">MODEL-ASSISTED CHECK</span>
-          <h4>What changed?</h4>
-          <p>The evaluator sees only the two final answers. It does not automatically favor C Lab.</p>
-        </div>
-        <div class="score-grid" data-score-grid></div>
-      </div>
-
-      <p class="result-note" data-disclosure>Visible progress shows short work-state summaries, not hidden chain-of-thought. Scores are an illustrative model-assisted comparison, not scientific validation.</p>
-      <button type="button" class="again" data-run-again>Try another problem ↺</button>
-    </section>
-
-    <section class="live-error" data-live-error hidden>
-      <span>LIVE ENGINE</span>
-      <h3>The live model is not connected yet.</h3>
-      <p>The interface and secure backend contract are ready. Experiment 01 above remains fully usable while the server-side Gemini connection is activated.</p>
-    </section>
-
-    <p class="privacy-note">Designed for general planning and learning experiments. Do not paste confidential, medical, legal or other sensitive personal information. The public interface does not intentionally store your problem.</p>
+  <div class="live-shell" data-live-wrapper data-app-url="__CAPLAB_APPS_SCRIPT_WEB_APP_URL__">
+    <div class="pending" data-live-pending>
+      <span>GOOGLE LIVE ENGINE</span>
+      <h3>Secure no-billing connection pending.</h3>
+      <p>The live interface is ready. Production activates only after the Google Apps Script endpoint passes a real Gemini smoke test.</p>
+    </div>
+    <iframe data-live-frame title="Capability Evolution Lab live experiment" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
   </div>
+
+  <p class="privacy-note">The LIVE experiment is isolated from the static public site. The Gemini credential stays server-side in Google Apps Script and is never shipped to GitHub Pages.</p>
 </section>
 
 <script>
-  type ScoreItem = { baseline: number; clab: number; why: string };
-  type LivePayload = {
-    baseline: string;
-    clab: string;
-    trace: Record<string, string>;
-    evaluation: Record<string, ScoreItem>;
-    disclosure?: string;
-  };
+  document.querySelectorAll<HTMLElement>('[data-live-wrapper]').forEach((root) => {
+    const appUrl = root.dataset.appUrl || '';
+    const frame = root.querySelector<HTMLIFrameElement>('[data-live-frame]');
+    const pending = root.querySelector<HTMLElement>('[data-live-pending]');
+    const valid = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec(?:\?.*)?$/.test(appUrl);
+    if (valid && frame) {
+      frame.src = appUrl;
+      frame.hidden = false;
+      if (pending) pending.hidden = true;
+    }
+  });
 
-  document.querySelectorAll<HTMLElement>('[data-live-lab]').forEach((root) => {
-    const endpoint = root.dataset.endpoint || '';
-    const problem = root.querySelector<HTMLTextAreaElement>('[data-problem]');
-    const run = root.querySelector<HTMLButtonElement>('[data-run]');
-    const working = root.querySelector<HTMLElement>('[data-working]');
-    const results = root.querySelector<HTMLElement>('[data-results]');
-    const liveError = root.querySelector<HTMLElement>('[data-live-error]');
-    const inputError = root.querySelector<HTMLElement>('[data-input-error]');
-    const status = root.querySelector<HTMLElement>('[data-live-status]');
-    const baseline = root.querySelector<HTMLElement>('[data-baseline]');
-    const clabAnswer = root.querySelector<HTMLElement>('[data-clab-answer]');
-    const scoreGrid = root.querySelector<HTMLElement>('[data-score-grid]');
-    const disclosure = root.querySelector<HTMLElement>('[data-disclosure]');
-    const quickSteps = Array.from(root.querySelectorAll<HTMLElement>('[data-quick-step]'));
-    const clabSteps = Array.from(root.querySelectorAll<HTMLElement>('[data-clab-step]'));
-    const traceNodes = Array.from(root.querySelectorAll<HTMLElement>('[data-trace]'));
-
-    const setActiveStep = (index: number) => {
-      clabSteps.forEach((step, current) => {
-        step.classList.toggle('is-active', current === index);
-        step.classList.toggle('is-done', current < index);
-      });
-    };
-
-    const reset = () => {
-      results?.setAttribute('hidden', '');
-      liveError?.setAttribute('hidden', '');
-      working?.setAttribute('hidden', '');
-      if (inputError) inputError.hidden = true;
-      quickSteps.forEach((step) => step.classList.remove('is-active', 'is-done'));
-      clabSteps.forEach((step) => step.classList.remove('is-active', 'is-done'));
-      traceNodes.forEach((node) => { node.textContent = ''; });
-    };
-
-    root.querySelectorAll<HTMLButtonElement>('[data-sample]').forEach((button) => {
-      button.addEventListener('click', () => {
-        if (problem) problem.value = button.dataset.sample || '';
-        problem?.focus();
-      });
-    });
-
-    const renderScores = (evaluation: Record<string, ScoreItem>) => {
-      if (!scoreGrid) return;
-      const labels: Record<string, string> = {
-        clarity: 'Clarity',
-        traceability: 'Traceability',
-        uncertainty: 'Handles uncertainty',
-        reviewability: 'Easy to review'
-      };
-      scoreGrid.innerHTML = '';
-      Object.entries(labels).forEach(([key, label]) => {
-        const item = evaluation[key];
-        if (!item) return;
-        const row = document.createElement('article');
-        row.className = 'score-row';
-        row.innerHTML = `<div class="score-label"><b>${label}</b><small>${item.why || ''}</small></div><div class="score-bars"><div><span>Quick AI</span><i><em style="width:${Math.max(0, Math.min(100, item.baseline * 25))}%"></em></i><b>${item.baseline}/4</b></div><div class="clab-score"><span>C Lab</span><i><em style="width:${Math.max(0, Math.min(100, item.clab * 25))}%"></em></i><b>${item.clab}/4</b></div></div>`;
-        scoreGrid.appendChild(row);
-      });
-    };
-
-    const execute = async () => {
-      const value = problem?.value.trim() || '';
-      reset();
-      if (value.length < 20 || value.length > 700) {
-        if (inputError) {
-          inputError.textContent = 'Write at least 20 characters and keep it under 700.';
-          inputError.hidden = false;
-        }
-        return;
-      }
-
-      if (working) working.hidden = false;
-      working?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      run?.setAttribute('disabled', '');
-      if (status) status.textContent = 'Reading the problem';
-      quickSteps[0]?.classList.add('is-active');
-      setActiveStep(0);
-
-      const labels = ['Understanding the goal', 'Separating facts from guesses', 'Building checkable pieces', 'Challenging the draft', 'Adding human review', 'Building the final answer'];
-      let visualStep = 0;
-      const timer = window.setInterval(() => {
-        quickSteps[0]?.classList.add('is-done');
-        quickSteps[1]?.classList.add('is-active');
-        visualStep = Math.min(visualStep + 1, clabSteps.length - 1);
-        setActiveStep(visualStep);
-        if (status) status.textContent = labels[visualStep] || 'Working';
-      }, 950);
-
-      try {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          cache: 'no-store',
-          credentials: 'omit',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-C-Lab-Client': 'public-live-v2'
-          },
-          body: JSON.stringify({ problem: value })
-        });
-
-        if (!response.ok) throw new Error(String(response.status));
-        const payload = await response.json() as LivePayload;
-        window.clearInterval(timer);
-        quickSteps.forEach((step) => step.classList.add('is-done'));
-        clabSteps.forEach((step) => step.classList.add('is-done'));
-        if (status) status.textContent = 'Complete';
-
-        traceNodes.forEach((node) => {
-          const key = node.dataset.trace || '';
-          node.textContent = payload.trace?.[key] || '';
-        });
-        if (baseline) baseline.textContent = payload.baseline || '';
-        if (clabAnswer) clabAnswer.textContent = payload.clab || '';
-        renderScores(payload.evaluation || {});
-        if (disclosure && payload.disclosure) disclosure.textContent = payload.disclosure;
-        if (results) results.hidden = false;
-        results?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } catch {
-        window.clearInterval(timer);
-        if (working) working.hidden = true;
-        if (liveError) liveError.hidden = false;
-        liveError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } finally {
-        run?.removeAttribute('disabled');
-      }
-    };
-
-    run?.addEventListener('click', execute);
-    root.querySelector<HTMLButtonElement>('[data-run-again]')?.addEventListener('click', () => {
-      reset();
-      problem?.focus();
-      problem?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://script.google.com' && !event.origin.endsWith('.googleusercontent.com')) return;
+    const data = event.data as { type?: string; height?: number };
+    if (data?.type !== 'caplab-live-height' || !Number.isFinite(data.height)) return;
+    const height = Math.max(680, Math.min(2600, Number(data.height)));
+    document.querySelectorAll<HTMLIFrameElement>('[data-live-frame]').forEach((frame) => {
+      if (event.source === frame.contentWindow) frame.style.height = `${height}px`;
     });
   });
 </script>
 
 <style>
-  .live-lab{padding:96px 0;border-bottom:1px solid #111}
-  .live-head{display:grid;grid-template-columns:220px 1fr;gap:38px;margin-bottom:48px}.live-head>span,.eyebrow,.step-label{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.07em;color:#6c6c67}.eyebrow{margin:0 0 14px;text-transform:uppercase}.live-head h2{margin:0;font-size:clamp(52px,7vw,108px);line-height:.9;letter-spacing:-.075em;font-weight:500}.intro{max-width:820px;margin:24px 0 0;font-size:18px;line-height:1.55;color:#52524e}
-  .live-shell{border:1px solid #111;background:#f8f7f2;box-shadow:0 28px 80px rgba(20,20,18,.12)}
-  .input-stage{display:grid;grid-template-columns:.7fr 1.3fr;gap:54px;padding:38px;border-bottom:1px solid #c7c6bf}.input-copy h3{margin:18px 0 10px;font-size:32px;letter-spacing:-.04em}.input-copy p{max-width:370px;margin:0;font-size:14px;line-height:1.6;color:#5d5d58}.composer textarea{width:100%;resize:vertical;min-height:148px;padding:20px;border:1px solid #898a84;background:#fff;color:#111;font:400 18px/1.5 Arial,Helvetica,sans-serif}.composer textarea:focus{outline:3px solid #1e6750;outline-offset:2px}.samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.samples button{border:1px solid #b8b8b1;background:#efefe9;padding:9px 12px;font-size:11px;cursor:pointer}.samples button:hover{background:#e2e9e4}.run-row{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:18px}.run-button,.again{border:0;background:#111;color:#fff;padding:14px 18px;font-weight:700;cursor:pointer}.run-button:disabled{opacity:.5;cursor:wait}.run-row small{font:500 9px ui-monospace,SFMono-Regular,Menlo,monospace;color:#74746e}.input-error{margin:10px 0 0;color:#9f2f21;font-size:12px}
-  .working-stage{padding:38px;background:#10110f;color:#f4f4ef}.working-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:28px}.working-head h3{margin:10px 0 0;font-size:30px}.working-stage .step-label{color:#999b93}.live-status{display:flex;align-items:center;gap:9px;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}.pulse{width:9px;height:9px;border-radius:50%;background:#68d391;box-shadow:0 0 0 0 rgba(104,211,145,.45);animation:livePulse 1.5s infinite}@keyframes livePulse{70%{box-shadow:0 0 0 10px rgba(104,211,145,0)}100%{box-shadow:0 0 0 0 rgba(104,211,145,0)}}
-  .lanes{display:grid;grid-template-columns:.62fr 1.38fr;gap:1px;background:#343530;border:1px solid #343530}.lane{background:#171815;padding:26px}.lane-title{display:flex;gap:14px;align-items:center}.lane-title>span,.answer-head span{display:grid;place-items:center;width:34px;height:34px;border:1px solid #777;font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace}.lane-title div{display:grid}.lane-title b{font-size:18px}.lane-title small{margin-top:3px;color:#95978f;font:500 9px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}.mini-flow,.clab-flow{list-style:none;margin:34px 0 0;padding:0}.mini-flow li,.clab-flow li{position:relative;display:flex;gap:14px;padding:0 0 28px;color:#777a72}.mini-flow li:last-child,.clab-flow li:last-child{padding-bottom:0}.mini-flow li i,.clab-flow li i{flex:0 0 13px;width:13px;height:13px;margin-top:2px;border:1px solid #666;border-radius:50%;background:#171815;transition:.25s ease}.mini-flow li:not(:last-child)::after,.clab-flow li:not(:last-child)::after{content:"";position:absolute;left:6px;top:18px;bottom:6px;width:1px;background:#494a45}.mini-flow li.is-active,.clab-flow li.is-active{color:#fff}.mini-flow li.is-active i,.clab-flow li.is-active i{background:#f1bf56;border-color:#f1bf56;box-shadow:0 0 0 4px rgba(241,191,86,.12)}.mini-flow li.is-done,.clab-flow li.is-done{color:#d8dad2}.mini-flow li.is-done i,.clab-flow li.is-done i{background:#63b987;border-color:#63b987}.clab-flow li div{display:grid;gap:5px}.clab-flow li b{font-size:14px}.clab-flow li span,.mini-flow span{font-size:12px;line-height:1.45}.clab-flow li p{display:none;margin:5px 0 0;padding:10px 12px;border-left:2px solid #63b987;background:#20221e;color:#c9cbc3;font-size:11px;line-height:1.5}.clab-flow li.is-done p:not(:empty){display:block}.lane-note{margin:38px 0 0;color:#8d8f87;font-size:11px;line-height:1.5}
-  .results-stage{padding:38px;border-top:1px solid #111}.results-head h3{margin:12px 0 30px;font-size:clamp(34px,5vw,68px);line-height:.95;letter-spacing:-.055em;font-weight:500}.answers{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#bbbcb5;border:1px solid #bbbcb5}.answers article{min-height:320px;padding:28px;background:#fff}.answers .clab-answer{background:#e6eee8}.answer-head{display:flex;gap:12px;align-items:center}.answer-head b{font-size:16px}.answers article>p{white-space:pre-wrap;margin:44px 0 0;font-size:14px;line-height:1.7;color:#3e413d}.comparison{display:grid;grid-template-columns:.65fr 1.35fr;gap:50px;margin-top:48px;padding-top:38px;border-top:1px solid #bbbcb5}.comparison-title h4{margin:12px 0;font-size:34px;letter-spacing:-.04em}.comparison-title p{max-width:360px;margin:0;color:#666862;font-size:12px;line-height:1.55}.score-grid{border-top:1px solid #aaa}.score-row{display:grid;grid-template-columns:.45fr 1.55fr;gap:28px;padding:18px 0;border-bottom:1px solid #ccc}.score-label{display:grid;align-content:start;gap:6px}.score-label b{font-size:13px}.score-label small{font-size:10px;line-height:1.4;color:#777970}.score-bars{display:grid;gap:10px}.score-bars>div{display:grid;grid-template-columns:72px 1fr 42px;gap:10px;align-items:center}.score-bars span{font-size:10px}.score-bars i{height:8px;background:#deded8;overflow:hidden}.score-bars em{display:block;height:100%;background:#666}.score-bars .clab-score em{background:#1f7657}.score-bars b{text-align:right;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace}.result-note,.privacy-note{margin:28px 0 0;font:500 9px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#74766f}.again{margin-top:18px}.live-error{padding:38px;background:#fff4dd;border-top:1px solid #d8b96e}.live-error span{font:700 9px ui-monospace,SFMono-Regular,Menlo,monospace}.live-error h3{margin:10px 0;font-size:28px}.live-error p{max-width:760px;margin:0;font-size:13px;line-height:1.6}.privacy-note{margin:0;padding:17px 38px;border-top:1px solid #d0d0c8;background:#f0efe9}
-  [hidden]{display:none!important}
-  @media(max-width:980px){.live-head,.input-stage,.lanes,.comparison{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.working-head{align-items:flex-start;flex-direction:column}}
-  @media(max-width:640px){.live-lab{padding:58px 0}.input-stage,.working-stage,.results-stage,.live-error{padding:22px}.privacy-note{padding:15px 22px}.run-row{align-items:flex-start;flex-direction:column}.lane{padding:22px}.answers article{min-height:0;padding:22px}.score-row{grid-template-columns:1fr}.score-bars>div{grid-template-columns:66px 1fr 38px}.composer textarea{font-size:16px}}
+  .live-lab{padding:96px 0;border-bottom:1px solid #111}.live-head{display:grid;grid-template-columns:220px 1fr;gap:38px;margin-bottom:48px}.live-head>span,.eyebrow{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.07em;color:#6c6c67}.eyebrow{margin:0 0 14px;text-transform:uppercase}.live-head h2{margin:0;font-size:clamp(52px,7vw,108px);line-height:.9;letter-spacing:-.075em;font-weight:500}.intro{max-width:820px;margin:24px 0 0;font-size:18px;line-height:1.55;color:#52524e}.live-shell{border:1px solid #111;background:#f8f7f2;box-shadow:0 28px 80px rgba(20,20,18,.12);overflow:hidden}.pending{padding:46px}.pending>span{font:700 10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.07em;color:#6b6b65}.pending h3{margin:16px 0 10px;font-size:34px;letter-spacing:-.045em}.pending p{max-width:700px;margin:0;font-size:14px;line-height:1.65;color:#5d5d58}.live-shell iframe{display:block;width:100%;height:980px;border:0;background:#f7f6f1}.privacy-note{margin:16px 0 0;max-width:900px;font-size:10px;line-height:1.55;color:#74746e}@media(max-width:760px){.live-lab{padding:64px 0}.live-head{grid-template-columns:1fr;gap:16px}.live-head h2{font-size:clamp(46px,14vw,72px)}.pending{padding:26px}.live-shell iframe{height:1380px}}
 </style>
