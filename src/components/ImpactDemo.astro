@@ -96,13 +96,15 @@
     }
   };
 
-  document.querySelectorAll('[data-impact-demo]').forEach((root) => {
-    const buttons = Array.from(root.querySelectorAll('[data-scenario]'));
-    const fields = Array.from(root.querySelectorAll('[data-field]'));
+  type ScenarioKey = keyof typeof scenarios;
+  type ScenarioField = keyof (typeof scenarios)['recruiting'];
 
-    const render = (key) => {
+  document.querySelectorAll<HTMLElement>('[data-impact-demo]').forEach((root) => {
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-scenario]'));
+    const fields = Array.from(root.querySelectorAll<HTMLElement>('[data-field]'));
+
+    const render = (key: ScenarioKey) => {
       const scenario = scenarios[key];
-      if (!scenario) return;
 
       buttons.forEach((button) => {
         const active = button.dataset.scenario === key;
@@ -110,13 +112,16 @@
       });
 
       fields.forEach((field) => {
-        const fieldName = field.dataset.field;
-        if (fieldName && scenario[fieldName]) field.textContent = scenario[fieldName];
+        const fieldName = field.dataset.field as ScenarioField | undefined;
+        if (fieldName) field.textContent = scenario[fieldName];
       });
     };
 
     buttons.forEach((button) => {
-      button.addEventListener('click', () => render(button.dataset.scenario));
+      button.addEventListener('click', () => {
+        const key = button.dataset.scenario as ScenarioKey | undefined;
+        if (key && key in scenarios) render(key);
+      });
     });
   });
 </script>
