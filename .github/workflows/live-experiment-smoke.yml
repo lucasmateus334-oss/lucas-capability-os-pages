@@ -30,12 +30,28 @@ jobs:
             const browser = await chromium.launch({headless:true});
             const page = await browser.newPage({viewport:{width:1280,height:900}});
             await page.goto(process.env.LIVE_URL, {waitUntil:'domcontentloaded', timeout:60000});
-            await page.locator('#problem').fill('Our team has 30 days to launch a mentoring program, but information is scattered and nobody agrees on what success means.');
-            await page.locator('#run').click();
-            await page.locator('#results').waitFor({state:'visible', timeout:90000});
-            const baseline=(await page.locator('#baseline').innerText()).trim();
-            const clab=(await page.locator('#clab').innerText()).trim();
-            const scores=(await page.locator('#scoreGrid').innerText()).trim();
+            await page.waitForTimeout(3000);
+            console.log('FINAL_URL='+page.url());
+            console.log('TITLE='+(await page.title()));
+            await page.screenshot({path:'live-experiment-smoke.png', fullPage:true});
+
+            let appFrame = null;
+            for (const frame of page.frames()) {
+              console.log('FRAME='+frame.url());
+              if (await frame.locator('#problem').count()) { appFrame = frame; break; }
+            }
+            if (!appFrame) {
+              const text=(await page.locator('body').innerText().catch(()=>'' )).slice(0,1200);
+              console.log('TOP_BODY='+text.replace(/\s+/g,' '));
+              throw new Error('Apps Script UI frame with #problem was not found');
+            }
+
+            await appFrame.locator('#problem').fill('Our team has 30 days to launch a mentoring program, but information is scattered and nobody agrees on what success means.');
+            await appFrame.locator('#run').click();
+            await appFrame.locator('#results').waitFor({state:'visible', timeout:90000});
+            const baseline=(await appFrame.locator('#baseline').innerText()).trim();
+            const clab=(await appFrame.locator('#clab').innerText()).trim();
+            const scores=(await appFrame.locator('#scoreGrid').innerText()).trim();
             if (baseline.length < 40) throw new Error('Baseline answer too short or missing');
             if (clab.length < 40) throw new Error('C Lab answer too short or missing');
             if (!/Traceability/i.test(scores)) throw new Error('Evaluation scores missing');
