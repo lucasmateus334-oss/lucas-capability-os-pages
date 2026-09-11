@@ -9,13 +9,13 @@ Allow ChatGPT, Gemini or another AI surface to hand a message to the Relay in on
 ## Canonical link
 
 ```text
-https://lucasmateus334-oss.github.io/lucas-capability-os-pages/relay/#text=<percent-encoded UTF-8 message>
+https://lucas-mateus-hq.github.io/lucas-capability-os-pages/relay/#text=<percent-encoded UTF-8 message>
 ```
 
 Backward-compatible packed form:
 
 ```text
-https://lucasmateus334-oss.github.io/lucas-capability-os-pages/relay/#m=<base64url UTF-8 message>
+https://lucas-mateus-hq.github.io/lucas-capability-os-pages/relay/#m=<base64url UTF-8 message>
 ```
 
 ## Authority boundary

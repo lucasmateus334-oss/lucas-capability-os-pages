@@ -27,17 +27,17 @@ Talent Acquisition · Recruiting Operations · International Recruiting · Talen
 
 ## Selected work
 
-**[Professional Portfolio](https://lucasmateus334-oss.github.io/lucas-capability-os-pages/portfolio/)** — concise overview of experience, capabilities and selected evidence for recruiters and hiring managers.
+**[Professional Portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)** — concise overview of experience, capabilities and selected evidence for recruiters and hiring managers.
 
 ## Applied R&D
 
-**[Capability Lab / Capability OS](https://lucasmateus334-oss.github.io/lucas-capability-os-pages/)** — independent applied R&D exploring how AI-assisted workflows, evaluation, evidence, reproducibility and human-AI collaboration can improve the structure and validation of complex work.
+**[Capability Lab / Capability OS](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/)** — independent applied R&D exploring how AI-assisted workflows, evaluation, evidence, reproducibility and human-AI collaboration can improve the structure and validation of complex work.
 
-**[Try the interactive C Lab example](https://lucasmateus334-oss.github.io/lucas-capability-os-pages/#impact-demo)** — choose a recruiting, learning/operations or community scenario and see how the evidence-first workflow translates into practice.
+**[Try the interactive C Lab example](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/#impact-demo)** — choose a recruiting, learning/operations or community scenario and see how the evidence-first workflow translates into practice.
 
 This work is separate from my core professional career in Talent Acquisition and Recruiting Operations. The public R&D surface is intentionally limited; private implementation, credentials and internal evidence are not published.
 
 ## Connect
 
 - [LinkedIn](https://www.linkedin.com/in/lucasmateus/)
-- [Professional Portfolio](https://lucasmateus334-oss.github.io/lucas-capability-os-pages/portfolio/)
+- [Professional Portfolio](https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/)

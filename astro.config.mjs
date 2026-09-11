@@ -31,7 +31,7 @@ const publicSurfaceIntegration = {
 
 export default defineConfig({
   output: 'static',
-  site: 'https://lucasmateus334-oss.github.io',
+  site: 'https://lucas-mateus-hq.github.io',
   base,
   integrations: [publicSurfaceIntegration],
 });

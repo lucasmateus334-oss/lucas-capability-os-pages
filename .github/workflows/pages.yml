@@ -104,7 +104,7 @@ jobs:
           grep -q '<title>Lucas Mateus — Talent Acquisition' dist/portfolio/index.html
           grep -q 'Recruiting Operations' dist/portfolio/index.html
           grep -q 'index,follow,max-image-preview:large' dist/portfolio/index.html
-          grep -q 'https://lucasmateus334-oss.github.io/lucas-capability-os-pages/portfolio/' dist/portfolio/index.html
+          grep -q 'https://lucas-mateus-hq.github.io/lucas-capability-os-pages/portfolio/' dist/portfolio/index.html
           grep -q 'https://www.linkedin.com/in/lucasmateus/' dist/portfolio/index.html
           grep -q 'Independent Applied R' dist/portfolio/index.html
           grep -q 'noindex,nofollow' dist/index.html
