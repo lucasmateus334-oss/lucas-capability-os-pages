@@ -23,6 +23,12 @@ The public snapshot includes an interactive, browser-only demonstration of how C
 
 The scenarios are illustrative. They do not claim production deployment, guaranteed outcomes or automated decision-making, and the demo does not send or store visitor data.
 
+## Public artifact
+
+**[Capability Evidence Protocol v0.1](public/protocol/CAPABILITY_EVIDENCE_PROTOCOL_v0.1.md)** is an experimental, model-agnostic protocol for separating capability claims from inspectable evidence, independent evaluation and promotion decisions.
+
+It includes a machine-readable JSON Schema and an example receipt. The artifact is publicly inspectable, while the private Capability Lab runtime and canonical evidence remain private. No reuse license has been granted yet; licensing will be defined separately before the protocol is presented as open source.
+
 ## What this public surface shows
 
 This repository contains a limited public presentation of the Capability Lab / Capability OS project. It exposes selected high-level concepts and capability states without publishing the private implementation behind them.
