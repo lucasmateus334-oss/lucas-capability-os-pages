@@ -1,0 +1,72 @@
+name: One-time public username migration
+
+on:
+  push:
+    branches:
+      - chore/username-migration-lucas-mateus-hq
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: chore/username-migration-lucas-mateus-hq
+
+      - name: Replace legacy public username everywhere
+        shell: python
+        run: |
+          from pathlib import Path
+
+          root = Path('.')
+          old = 'lucas' + 'mateus334-oss'
+          new = 'lucas-mateus-hq'
+          changed = []
+
+          for path in root.rglob('*'):
+              if not path.is_file() or '.git' in path.parts:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except (UnicodeDecodeError, OSError):
+                  continue
+              if old in text:
+                  path.write_text(text.replace(old, new), encoding='utf-8')
+                  changed.append(str(path))
+
+          print('Changed files:')
+          for path in changed:
+              print(f'- {path}')
+
+          remaining = []
+          for path in root.rglob('*'):
+              if not path.is_file() or '.git' in path.parts:
+                  continue
+              try:
+                  if old in path.read_text(encoding='utf-8'):
+                      remaining.append(str(path))
+              except (UnicodeDecodeError, OSError):
+                  pass
+
+          if remaining:
+              raise SystemExit(f'Legacy username remains in: {remaining}')
+
+      - name: Remove one-time migration workflow
+        run: rm .github/workflows/one-time-username-migration.yml
+
+      - name: Commit migration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --quiet && { echo 'No migration changes found'; exit 1; }
+          git commit -m 'chore: migrate public identity to lucas-mateus-hq' -m 'Updates legacy username references across the public surface, SEO metadata, Pages configuration, CI assertions and documentation.'
+          git push origin HEAD:chore/username-migration-lucas-mateus-hq
