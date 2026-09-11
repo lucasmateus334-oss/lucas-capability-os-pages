@@ -1,3 +1,4 @@
+# Apps Script redeploy validation trigger — 2026-09-11
 name: Experiment 02 Live Gemini Smoke
 
 on:
@@ -69,3 +70,5 @@ jobs:
           path: live-experiment-smoke.png
           if-no-files-found: ignore
           retention-days: 7
+
+# O que isso faz: executa uma validação real do Apps Script + Gemini antes do merge do Experimento 02.
