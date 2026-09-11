@@ -1,4 +1,3 @@
-# Apps Script redeploy validation trigger — 2026-09-11
 name: Experiment 02 Live Gemini Smoke
 
 on:
@@ -34,22 +33,36 @@ jobs:
             await page.waitForTimeout(3000);
             console.log('FINAL_URL='+page.url());
             console.log('TITLE='+(await page.title()));
-            await page.screenshot({path:'live-experiment-smoke.png', fullPage:true});
 
             let appFrame = null;
             for (const frame of page.frames()) {
               console.log('FRAME='+frame.url());
               if (await frame.locator('#problem').count()) { appFrame = frame; break; }
             }
-            if (!appFrame) {
-              const text=(await page.locator('body').innerText().catch(()=>'' )).slice(0,1200);
-              console.log('TOP_BODY='+text.replace(/\s+/g,' '));
-              throw new Error('Apps Script UI frame with #problem was not found');
-            }
+            if (!appFrame) throw new Error('Apps Script UI frame with #problem was not found');
 
             await appFrame.locator('#problem').fill('Our team has 30 days to launch a mentoring program, but information is scattered and nobody agrees on what success means.');
             await appFrame.locator('#run').click();
-            await appFrame.locator('#results').waitFor({state:'visible', timeout:90000});
+
+            let state = 'timeout';
+            for (let i = 0; i < 120; i++) {
+              if (await appFrame.locator('#results').isVisible().catch(()=>false)) { state = 'results'; break; }
+              if (await appFrame.locator('#error').isVisible().catch(()=>false)) { state = 'error'; break; }
+              await page.waitForTimeout(1000);
+            }
+
+            await page.screenshot({path:'live-experiment-smoke.png', fullPage:true});
+            if (state === 'error') {
+              const msg=(await appFrame.locator('#error').innerText()).trim();
+              console.log('LIVE_ERROR='+msg);
+              throw new Error('Apps Script/Gemini returned error: '+msg);
+            }
+            if (state !== 'results') {
+              const status=(await appFrame.locator('#status').innerText().catch(()=>'' )).trim();
+              console.log('LIVE_STATUS='+status);
+              throw new Error('Timed out waiting for live result');
+            }
+
             const baseline=(await appFrame.locator('#baseline').innerText()).trim();
             const clab=(await appFrame.locator('#clab').innerText()).trim();
             const scores=(await appFrame.locator('#scoreGrid').innerText()).trim();
@@ -59,7 +72,6 @@ jobs:
             console.log('LIVE_APPS_SCRIPT=PASS');
             console.log('BASELINE_CHARS='+baseline.length);
             console.log('CLAB_CHARS='+clab.length);
-            await page.screenshot({path:'live-experiment-smoke.png', fullPage:true});
             await browser.close();
           })().catch(err=>{ console.error(err); process.exit(1); });
           NODE
@@ -71,4 +83,4 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-# O que isso faz: executa uma validação real do Apps Script + Gemini antes do merge do Experimento 02.
+# O que isso faz: executa uma validação real do Apps Script + Gemini antes do merge e expõe erros do servidor sem revelar credenciais.
