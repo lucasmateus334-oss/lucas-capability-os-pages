@@ -8,7 +8,7 @@
     </div>
   </header>
 
-  <div class="live-shell" data-live-wrapper data-app-url="__CAPLAB_APPS_SCRIPT_WEB_APP_URL__">
+  <div class="live-shell" data-live-wrapper data-app-url="https://script.google.com/macros/s/AKfycbwjxa81lNy4aY1ATp767p8x7SXLdymtlbvgOlhyoeYa3uUrDqIivU6253kxkGmM38ybmw/exec">
     <div class="pending" data-live-pending>
       <span>GOOGLE LIVE ENGINE</span>
       <h3>Secure no-billing connection pending.</h3>
@@ -26,7 +26,8 @@
     const frame = root.querySelector<HTMLIFrameElement>('[data-live-frame]');
     const pending = root.querySelector<HTMLElement>('[data-live-pending]');
     const valid = /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec(?:\?.*)?$/.test(appUrl);
-    if (valid && frame) {
+    const localPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    if (valid && frame && !localPreview) {
       frame.src = appUrl;
       frame.hidden = false;
       if (pending) pending.hidden = true;
